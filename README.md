@@ -13,11 +13,11 @@
 - Also, because of the pay wall in alarm apps.
 
 ## User Stories
-- As a user, I want to be able to add a alarm to my alarm list
+- As a user, I want to be able to add an alarm to my alarm list
 - As a user, I want to be able view the list of active alarms
 - As a user, I want to be able remove alarms from my alarm list
 - As a user, I want to be able to add saved settings
-- As a user, I want to be able to add settings to a settings list
+- As a user, I want to be able to add a setting to the settings list
 - As a user, I want to be able to remove settings from my settings list
 - As a user, I want to be able to view the list of settings
 - As a user, I want to be able to sort the list of alarms and settings
