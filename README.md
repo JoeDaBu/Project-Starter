@@ -12,5 +12,19 @@
 - I chose this project because I was annoyed with my alarm clock.
 - Also, because of the pay wall in alarm apps.
 
-An example of text with **bold** and *italic* fonts.  Note that the IntelliJ markdown previewer doesn't seem to render 
-the bold and italic fonts correctly but they will appear correctly on GitHub.
+## User Stories
+- As a user, I want to be able to add a alarm to my alarm list
+- As a user, I want to be able view the list of active alarms
+- As a user, I want to be able remove alarms from my alarm list
+- As a user, I want to be able to add saved settings
+- As a user, I want to be able to add settings to a settings list
+- As a user, I want to be able to remove settings from my settings list
+- As a user, I want to be able to view the list of settings
+- As a user, I want to be able to sort the list of alarms and settings
+### For the Future
+- As a user, I want to be able select the audio type to be played when the alarm to go off
+- As a user, I want to be able select the puzzle to complete in order to stop the alarm
+- As a user, I want to be able access audio files from my computer to be played
+- As a user, I want to be able to open links when the alarm goes off for videos, audio files, etc.
+- As a user, I want to be able to track my alarm schedule
+- As a user, I want to be able sort my alarm and settings list by clicking and holding
