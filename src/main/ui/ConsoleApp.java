@@ -209,6 +209,7 @@ public class ConsoleApp {
         try {
             selected.sortAlarms();
         } catch (Exception e) {
+            assert selected.size() == 0;
             e.printStackTrace();
         }
         System.out.println("Successfully Sorted Alarms:");

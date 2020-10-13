@@ -1,16 +1,13 @@
-/*
 package model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-*/
 /*The source of time(the class that reads the
 current date and time), Aslo ticks every second to match
 real time.
- *//*
-
+ */
 
 public class TimeClock {
     public SimpleDateFormat time;
@@ -40,4 +37,3 @@ public class TimeClock {
         return date.format(completeTime);
     }
 }
-*/

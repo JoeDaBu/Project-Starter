@@ -74,7 +74,9 @@ public class AlarmList {
         if (alarms.size() == 0) {
             throw new Exception("There Are No Alarms To Sort");
         } else {
+            ArrayList<Alarm> oldAlarms = alarms;
             alarms = sorter();
+            assert alarms != oldAlarms;
         }
     }
 
@@ -125,7 +127,7 @@ public class AlarmList {
         return alarms.size();
     }
 
-    /*public boolean alarmSounds() {
+    public boolean alarmSounds() {
         boolean t = false;
         for (Alarm a : alarms) {
             if (a.alarmGoesOff()) {
@@ -134,6 +136,5 @@ public class AlarmList {
         }
         return t;
     }
-     */
 
 }
