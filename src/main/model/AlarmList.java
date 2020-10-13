@@ -125,7 +125,7 @@ public class AlarmList {
         return alarms.size();
     }
 
-    public boolean alarmSounds() {
+    /*public boolean alarmSounds() {
         boolean t = false;
         for (Alarm a : alarms) {
             if (a.alarmGoesOff()) {
@@ -134,5 +134,6 @@ public class AlarmList {
         }
         return t;
     }
+     */
 
 }

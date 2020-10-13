@@ -91,7 +91,7 @@ public class Alarm {
     }
 
 
-    public boolean alarmGoesOff() {
+    /*public boolean alarmGoesOff() {
         Date t = Calendar.getInstance().getTime();
         SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
         String h = hourFormat.format(t);
@@ -101,4 +101,5 @@ public class Alarm {
         assert h.equals("01");
         return (h.equals(Integer.toString(hours)) && m.equals(Integer.toString(minutes)));
     }
+     */
 }
