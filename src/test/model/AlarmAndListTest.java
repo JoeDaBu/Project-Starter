@@ -148,7 +148,7 @@ class AlarmAndListTest {
     @Test
     public void testViewAlarm() {
         listTest.addAlarm(test);
-        assertNull(listTest.viewAlarm("x"));
+        assertNull(listTest.viewer("x"));
     }
 
     @Test
@@ -158,7 +158,7 @@ class AlarmAndListTest {
         testArray.add("Wednesday");
         Alarm a = new Alarm(7, 50, testArray, "a");
         listTest.addAlarm(a);
-        assertEquals(listTest.viewAlarm("a"), a);
+        assertEquals(listTest.viewer("a"), a);
     }
 
     @Test

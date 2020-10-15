@@ -1,5 +1,7 @@
 package model;
 
+import model.exceptions.EmptyList;
+
 import java.util.ArrayList;
 
 /*The class alarmList stores alarms created and is the list
@@ -42,7 +44,7 @@ public class AlarmList {
         return alarms;
     }
 
-    //Requires: newAlarm to be different from all other alarms in the alarm
+    //Requires: newAlarm to have a different name from all other alarms in the alarm
     //list
     //Modifies: this
     //Effects: replaces alarm with the alarm name, name, with Alarm new alarm
@@ -57,8 +59,20 @@ public class AlarmList {
         return null;
     }
 
+    //Effects: throws an exception if the alarms list is empty otherwise
+    //calls viewer
+    public Alarm viewAlarm(String name) throws EmptyList {
+        Alarm a;
+        if (alarms.size() == 0) {
+            throw new EmptyList();
+        } else {
+            a = viewer(name);
+            return a;
+        }
+    }
+
     //Effects: Returns the alarm called name from the list of alarms
-    public Alarm viewAlarm(String name) {
+    public Alarm viewer(String name) {
         for (Alarm a : alarms) {
             if (a.getAlarmName().equals(name)) {
                 return a;
@@ -68,11 +82,11 @@ public class AlarmList {
     }
 
     //Modifies: this
-    //Effects: replaces alarms with the sorted verison of alarms by the time they go off
+    //Effects: replaces alarms with the sorted version of alarms by the time they go off
     //and throws an exception when trying to sort an empty list of alarms
-    public void sortAlarms() throws Exception {
+    public void sortAlarms() throws EmptyList {
         if (alarms.size() == 0) {
-            throw new Exception("There Are No Alarms To Sort");
+            throw new EmptyList();
         } else {
             ArrayList<Alarm> oldAlarms = alarms;
             alarms = sorter();

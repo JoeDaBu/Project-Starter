@@ -20,7 +20,7 @@ public class Alarm {
     private String alarmName;
 
     /*Requires: dofWeek to be a non-empty list with strings of
-    only the days of the week, and h to be within 0 to 24. and m to be
+    only the days of the week, and h to be within 0 to 23. and m to be
     within 0 to 59, and name to be a non-empty string
     Effects: creates an Alarm with alarmName set to name, occurring on
     the days of the week set to dofWeek, at time set to t

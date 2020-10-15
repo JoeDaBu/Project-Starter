@@ -2,6 +2,7 @@ package ui;
 
 import model.Alarm;
 import model.AlarmList;
+import model.exceptions.EmptyList;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -85,27 +86,90 @@ public class ConsoleApp {
     }
 
     //Modifies: This
-    //Effects: adds an alarm to an alarmList
+    //Effects: calls checks to see if inputs are valid, if so calls
+    //doAddAlarShortener, otherwise keeps looping
     private void doAddAlarm() {
         AlarmList selected = selectAlarmList();
-        ArrayList<String> dofWeek = new ArrayList<>();
+        Boolean keepGoing = true;
+        while (keepGoing) {
+            String t = validName(selected);
+            if (t == null) {
+                continue;
+            }
+            while (keepGoing) {
+                int h = validHour();
+                if (h == -1) {
+                    continue;
+                }
 
-        System.out.println("Enter the Name of Your New Alarm:");
-        String name = input.next();
+                while (keepGoing) {
+                    int m = validMinutes();
+                    if (m == -1) {
+                        continue;
+                    }
 
-        System.out.println("Enter Hours:");
-        int hours = input.nextInt();
+                    doAddShortener(selected,h,m,daysOfTheWeek(),t);
+                    keepGoing = false;
+                }
+            }
+        }
+    }
 
-        System.out.println("Enter Minutes:");
-        int minutes = input.nextInt();
-
-        dofWeek = daysOfTheWeek();
-        Alarm a = new Alarm(hours, minutes, dofWeek, name);
+    //Modifies: this
+    //Effects: adds an alarm to the selected alarmList
+    private void doAddShortener(AlarmList selected, int h, int m, ArrayList<String> dofWeek, String t) {
+        Alarm a = new Alarm(h, m, dofWeek, t);
         selected.addAlarm(a);
-
-        System.out.println("Success alarm " + name + " has been added the list of Alarms");
+        System.out.println("Success alarm " + t + " has been added the list of Alarms");
         System.out.println(a.alarmToString());
     }
+
+    //Effects: checks if an input name is valid and can be added to a list
+    //if so returns the name, otherwise returns null
+    private String validName(AlarmList selected) {
+        System.out.println("Enter the Name of Your New Alarm:");
+        String name = input.next();
+        Alarm a = null;
+        String b = "";
+        try {
+            a = selected.viewAlarm(name);
+        } catch (EmptyList emptyList) {
+            b = "No items in List";
+        }
+        if (b.equals("No items in List") || (a == null)) {
+            return name;
+        } else {
+            System.out.println("That Alarm Already Exists");
+            return null;
+        }
+    }
+
+    //Effects: checks if an input hour is a valid time, if so
+    //returns the hour, otherwise returns -1
+    private int validHour() {
+        System.out.println("Enter Hours:");
+        int hours = input.nextInt();
+        if (hours < 24 && hours >= 0) {
+            return hours;
+        } else {
+            System.out.println("That is Not A Valid Hour");
+            return -1;
+        }
+    }
+
+    //Effects: checks if an input minutes is a valid time, if so
+    //returns the hour, otherwise returns -1
+    private int validMinutes() {
+        System.out.println("Enter Minutes:");
+        int minutes = input.nextInt();
+        if (minutes > 59 || minutes < 0) {
+            System.out.println("That Is Not A Valid Minute");
+            return -1;
+        } else {
+            return minutes;
+        }
+    }
+
 
     //Modifies: ArrayList<String>
     //Effects: processes user input regarding adding an alarm with days of the week
@@ -174,30 +238,42 @@ public class ConsoleApp {
             System.out.println("Enter Name of Alarm:");
             String name = input.next();
 
-            Alarm remove = selected.removeAlarm("name");
+            Alarm remove = selected.removeAlarm(name);
             if (remove == null) {
                 System.out.println("Invalid Alarm Name...\nPlease Try Again!");
             } else {
                 System.out.println("Successfully Removed " + remove.alarmToString() + "from Alarms");
             }
+            System.out.println("Alarms That Remain:");
             printAlarms(selected);
         }
     }
 
-    //Effects:shows the alarm with nae anem in the list of alarms
+    //Effects: calls deViewer
     private void doViewAlarm() {
         AlarmList selected = selectAlarmList();
+        doViewer(selected);
+
+    }
+
+    //Effects:shows the alarm with name, name, in the list of alarms
+    private void doViewer(AlarmList selected) {
         if (selected.size() == 0) {
             System.out.println("There Are No Alarms To View");
         } else {
-            System.out.println("Enter Name of Alarm:");
+            System.out.println("Please Write The Name Of The Alarm you Would Like to View");
             String name = input.next();
 
-            Alarm view = selected.viewAlarm("name");
+            Alarm view = null;
+            try {
+                view = selected.viewAlarm(name);
+            } catch (EmptyList emptyList) {
+                System.out.println("There Are No Alarms To View");
+            }
             if (view == null) {
                 System.out.println("Invalid Alarm Name...\nPlease Try Again!");
             } else {
-                System.out.println("Success!\n Showing Alarm " + name + "\n" + view.alarmToString());
+                System.out.println("Success!\nShowing Alarm " + name + "\n" + view.alarmToString());
             }
         }
     }
@@ -206,14 +282,17 @@ public class ConsoleApp {
     //Effects: sorts an alarmList if it is not empty, otherwise an exception is caught
     private void doSortAlarms() {
         AlarmList selected = selectAlarmList();
-        try {
-            selected.sortAlarms();
-        } catch (Exception e) {
-            assert selected.size() == 0;
-            e.printStackTrace();
+        if (selected.size() == 0) {
+            try {
+                selected.sortAlarms();
+            } catch (EmptyList e) {
+                assert selected.size() == 0;
+                System.out.println("There Are No Alarms To Sort");
+            }
+        } else {
+            System.out.println("Successfully Sorted Alarms:");
+            printAlarms(selected);
         }
-        System.out.println("Successfully Sorted Alarms:");
-        printAlarms(selected);
     }
 
     //Effects: shows all the alarms in the alarmList in the console
@@ -231,7 +310,7 @@ public class ConsoleApp {
 
         while (!(selection.equals("m") || selection.equals("u"))) {
             if (selection != "") {
-                System.out.println("Alarms Do Not Exist");
+                System.out.println("AlarmList Does Not Exist");
             }
             System.out.println("\nSelect User");
             System.out.println("\tMy Alarms(m)");
