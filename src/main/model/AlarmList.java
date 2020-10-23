@@ -1,19 +1,26 @@
 package model;
 
 import model.exceptions.EmptyList;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import persistence.Writable;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /*The class alarmList stores alarms created and is the list
 of active alarms that are to go off later.
 This list can be edited to add and remove alarms
  */
 
-public class AlarmList {
+public class AlarmList implements Writable {
+    private String name;
     private ArrayList<Alarm> alarms;
 
     //Effects: Creates a new empty list of alarms
-    public AlarmList() {
+    public AlarmList(String name) {
+        this.name = name;
         alarms = new ArrayList<>();
     }
 
@@ -84,18 +91,18 @@ public class AlarmList {
     //Modifies: this
     //Effects: replaces alarms with the sorted version of alarms by the time they go off
     //and throws an exception when trying to sort an empty list of alarms
-    public void sortAlarms() throws EmptyList {
+    public void sortAlarmsByTime() throws EmptyList {
         if (alarms.size() == 0) {
             throw new EmptyList();
         } else {
             ArrayList<Alarm> oldAlarms = alarms;
-            alarms = sorter();
+            alarms = timeSorter();
             assert alarms != oldAlarms;
         }
     }
 
     //Effects: sorts the list alarms by the time they go off, with the earliest first
-    public ArrayList<Alarm> sorter() {
+    public ArrayList<Alarm> timeSorter() {
         ArrayList<Alarm> alarmsByEarliest = new ArrayList<>();
         alarmsByEarliest.add(alarms.get(0));
         int n = 1;
@@ -104,7 +111,7 @@ public class AlarmList {
             int alarmsMinutes = alarms.get(i).getMinutes();
             int earlyAlarmLat = alarmsByEarliest.get(alarmsByEarliest.size() - 1).getHours();
             int earlyAlarmLatestM = alarmsByEarliest.get(alarmsByEarliest.size() - 1).getMinutes();
-            if (alarmsHours > earlyAlarmLat || (alarmsHours == earlyAlarmLat && alarmsMinutes > earlyAlarmLatestM)) {
+            if (alarmsHours > earlyAlarmLat || (alarmsHours == earlyAlarmLat && alarmsMinutes >= earlyAlarmLatestM)) {
                 alarmsByEarliest.add(alarms.get(i));
             } else {
                 for (int t = 0; t < alarmsByEarliest.size(); t++) {
@@ -118,6 +125,12 @@ public class AlarmList {
             }
         }
         return alarmsByEarliest;
+    }
+
+
+    public ArrayList<Alarm> alphabeticallySorter() {
+        Collections.sort(alarms, Comparator.comparing(Alarm::getAlarmName));
+        return alarms;
     }
 
     //Effects: converts the list alarms to a string of all the alarms
@@ -137,7 +150,7 @@ public class AlarmList {
     }
 
     //Effects:returns the size of the list of alarms
-    public int size() {
+    public int numAlarms() {
         return alarms.size();
     }
 
@@ -151,4 +164,34 @@ public class AlarmList {
         return t;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", name);
+        json.put("alarms", alarmsToJson());
+        return json;
+    }
+
+    //returns alarms in the alarmlist as a json array
+    public JSONArray alarmsToJson() {
+        JSONArray jsonArray = new JSONArray();
+
+        for (Alarm a : alarms) {
+            jsonArray.put(a.toJson());
+        }
+
+        return jsonArray;
+    }
+
+    //Effects: returns the name of the alarm list
+    public String getName() {
+        return name;
+    }
+
+    //Modifies: This
+    //Effects: changes the alarmlist name to name and returns it
+    public String setName(String name) {
+        this.name = name;
+        return name;
+    }
 }

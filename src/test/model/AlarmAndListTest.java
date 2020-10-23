@@ -16,8 +16,8 @@ class AlarmAndListTest {
     public void createAlarmsAndLists() {
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Friday");
-        test = new Alarm(8, 30, testArray, "alarmTest");
-        listTest = new AlarmList();
+        test = new Alarm("alarmTest", 8, 30, testArray);
+        listTest = new AlarmList("listTest");
     }
 
     @Test
@@ -57,7 +57,7 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         ArrayList<Alarm> alarms = listTest.getAlarms();
         assertEquals(alarms.size(), 2);
@@ -77,7 +77,7 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         assertEquals(listTest.removeAlarm("a"), a);
         ArrayList<Alarm> alarms = listTest.getAlarms();
@@ -90,7 +90,7 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         assertEquals(listTest.removeAlarm("alarmTest"), test);
         ArrayList<Alarm> alarms = listTest.getAlarms();
@@ -109,12 +109,12 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         ArrayList<String> dofWeek = new ArrayList<>();
         dofWeek.add("Thursday");
         dofWeek.add("Tuesday");
-        Alarm newAlarm = new Alarm(5, 5, dofWeek, "newAlarm");
+        Alarm newAlarm = new Alarm("newAlarm", 5, 5, dofWeek);
         assertEquals(listTest.changeAlarm("alarmTest", newAlarm), test);
         ArrayList<Alarm> alarms = listTest.getAlarms();
         assertEquals(alarms.get(0).getAlarmName(), newAlarm.getAlarmName());
@@ -125,12 +125,12 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         ArrayList<String> dofWeek = new ArrayList<>();
         dofWeek.add("Thursday");
         dofWeek.add("Friday");
-        Alarm newAlarm2 = new Alarm(2, 9, dofWeek, "newAlarm2");
+        Alarm newAlarm2 = new Alarm("newAlarm2", 2, 9, dofWeek);
         assertEquals(listTest.changeAlarm("a", newAlarm2), a);
         ArrayList<Alarm> alarms = listTest.getAlarms();
         assertEquals(alarms.get(1).getAlarmName(), newAlarm2.getAlarmName());
@@ -141,7 +141,7 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         assertNull(listTest.changeAlarm("x", a));
     }
 
@@ -156,7 +156,7 @@ class AlarmAndListTest {
         listTest.addAlarm(test);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("Wednesday");
-        Alarm a = new Alarm(7, 50, testArray, "a");
+        Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         assertEquals(listTest.viewer("a"), a);
     }

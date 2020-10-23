@@ -30,3 +30,11 @@
 - As a user, I want to be able to track my alarm schedule
 - As a user, I want to be able to sort my alarm and settings list by clicking and holding
 - As a user, I want to add a settingsList, and a savedsettings classes
+
+##Citations:
+The Console App took heavy influence from the CPSC 210 Teller App
+Found at: https://github.students.cs.ubc.ca/CPSC210/TellerApp
+
+The implementation of saving and loading data took heavy influence from the CPSC 210 JsonDemo
+Found at: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+

@@ -1,0 +1,17 @@
+{
+    "alarms": [
+      {
+          "name": "PM",
+          "hour": 23,
+          "minutes": 30,
+          "Days of the Week": [ "Saturday", "Sunday"]
+      },
+      {
+          "name": "AM",
+          "hour": 9,
+          "minutes": 20,
+          "Days of the Week": []
+      }
+    ],
+    "name": "My alarm list"
+}

@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistence.Writable;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,7 +14,7 @@ like the time it should go off, on what days, and its name.
 An alarm can be edited to change anyone of its parameters.
  */
 
-public class Alarm {
+public class Alarm implements Writable {
     //private Clock time;
     private int hours;
     private int minutes;
@@ -25,7 +28,7 @@ public class Alarm {
     Effects: creates an Alarm with alarmName set to name, occurring on
     the days of the week set to dofWeek, at time set to t
      */
-    public Alarm(int h, int m, ArrayList<String> dofWeek, String name) {
+    public Alarm(String name, int h, int m, ArrayList<String> dofWeek) {
         hours = h;
         daysOfTheWeek = dofWeek;
         alarmName = name;
@@ -100,5 +103,15 @@ public class Alarm {
         String m = minuteFormat.format(t);
         assert h.equals("01");
         return (h.equals(Integer.toString(hours)) && m.equals(Integer.toString(minutes)));
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("name", alarmName);
+        json.put("hour", hours);
+        json.put("minutes", minutes);
+        json.put("Days of the Week", daysOfTheWeek);
+        return json;
     }
 }
