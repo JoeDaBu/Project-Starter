@@ -1,4 +1,4 @@
-package model;
+package model.unused;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;

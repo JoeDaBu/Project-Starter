@@ -1,4 +1,4 @@
-package model;
+package model.unused;
 //a class of settings later to be defined
 
 public class SettingsList {

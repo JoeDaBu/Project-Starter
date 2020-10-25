@@ -1,4 +1,4 @@
-package model;
+package model.unused;
 
 import java.util.ArrayList;
 //a class saving settingLists

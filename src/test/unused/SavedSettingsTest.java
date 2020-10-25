@@ -1,5 +1,7 @@
-package model;
+package unused;
 
+import model.unused.SavedSettings;
+import model.unused.SettingsList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

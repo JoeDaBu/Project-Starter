@@ -128,9 +128,14 @@ public class AlarmList implements Writable {
     }
 
 
-    public ArrayList<Alarm> alphabeticallySorter() {
-        Collections.sort(alarms, Comparator.comparing(Alarm::getAlarmName));
-        return alarms;
+    public ArrayList<Alarm> alphabeticallySorter() throws EmptyList {
+        int size = alarms.size();
+        if (size == 0) {
+            throw new EmptyList();
+        } else {
+            Collections.sort(alarms, Comparator.comparing(Alarm::getAlarmName));
+            return alarms;
+        }
     }
 
     //Effects: converts the list alarms to a string of all the alarms
@@ -154,7 +159,7 @@ public class AlarmList implements Writable {
         return alarms.size();
     }
 
-    public boolean alarmSounds() {
+    /*public boolean alarmSounds() {
         boolean t = false;
         for (Alarm a : alarms) {
             if (a.alarmGoesOff()) {
@@ -164,6 +169,8 @@ public class AlarmList implements Writable {
         return t;
     }
 
+     */
+
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -172,7 +179,7 @@ public class AlarmList implements Writable {
         return json;
     }
 
-    //returns alarms in the alarmlist as a json array
+    //returns alarms in the alarmList as a json array
     public JSONArray alarmsToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -189,7 +196,7 @@ public class AlarmList implements Writable {
     }
 
     //Modifies: This
-    //Effects: changes the alarmlist name to name and returns it
+    //Effects: changes the alarmList name to name and returns it
     public String setName(String name) {
         this.name = name;
         return name;

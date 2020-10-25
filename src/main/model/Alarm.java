@@ -94,7 +94,7 @@ public class Alarm implements Writable {
     }
 
 
-    public boolean alarmGoesOff() {
+    /*public boolean alarmGoesOff() {
         Date t = Calendar.getInstance().getTime();
         SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
         String h = hourFormat.format(t);
@@ -104,6 +104,8 @@ public class Alarm implements Writable {
         assert h.equals("01");
         return (h.equals(Integer.toString(hours)) && m.equals(Integer.toString(minutes)));
     }
+
+     */
 
     @Override
     public JSONObject toJson() {
