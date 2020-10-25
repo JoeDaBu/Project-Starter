@@ -13,7 +13,7 @@ import java.util.Scanner;
 //a class running and setting alarms into motion
 
 public class ConsoleApp {
-    public static final String JSON_STORE = "./data/alarmlist.json";
+    private static String JSON_STORE;
     private Scanner input;
     private AlarmList mine;
     private AlarmList user;
@@ -31,8 +31,6 @@ public class ConsoleApp {
         mine = new AlarmList("My Alarm List");
         user = new AlarmList("User Alarm List");
         input = new Scanner(System.in);
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
     }
 
     //Modifies: this
@@ -84,9 +82,18 @@ public class ConsoleApp {
         }
     }
 
+    private String persistenceLocation() {
+        System.out.println("Write The Name Of The Alarm List");
+        String name = input.nextLine();
+        String location = "./data/" + name + ".json";
+        return location;
+    }
+
     //Effects: saves alarmList to to file
     private void doSaveAlarms() {
         AlarmList selected = selectAlarmList();
+        JSON_STORE = persistenceLocation();
+        jsonWriter = new JsonWriter(JSON_STORE);
         try {
             jsonWriter.open();
             jsonWriter.write(selected);
@@ -101,7 +108,8 @@ public class ConsoleApp {
     //Effects: loads alarmList from file
     private void doLoadAlarms() {
         AlarmList selected = selectAlarmList();
-
+        JSON_STORE = persistenceLocation();
+        jsonReader = new JsonReader(JSON_STORE);
         try {
             if (selected.getName().equals("My Alarm List")) {
                 mine = jsonReader.read();

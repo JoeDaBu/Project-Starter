@@ -1,9 +1,9 @@
 {
     "alarms": [{
-        "hour": 23,
+        "hour": 9,
         "Days of the Week": ["Monday"],
-        "minutes": 10,
-        "name": "Joe"
+        "minutes": 20,
+        "name": "Joe 4"
     }],
     "name": "My Alarm List"
 }
