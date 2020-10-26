@@ -33,19 +33,19 @@ public class DaysList {
     }
 
     //Modifies: this
-    //Effects: adds day to the list of days
-    public void addDay(DaysOfTheWeek day) {
-        daysList.add(day);
-        try {
-            sortDays();
-        } catch (EmptyList emptyList) {
-            System.out.println("Impossible Outcome Reached, EmptyList exception thrown for a non empty list");
+    //Effects: adds day to the list of days, it the day already exist throws
+    // the alreay exists exception
+    public void addDay(DaysOfTheWeek day) throws ItemAlreadyExists {
+        if (daysList.contains(day)) {
+            throw new ItemAlreadyExists();
         }
+        daysList.add(day);
+        daysList = sortDaysSorter();
     }
 
-    //Requires: day to be in the list of days
     //Modifies: this
-    //Effects: removes day from the list of days
+    //Effects: removes day from the list of days, otherwise throws empty list if the list
+    //was empty or list object non existent if the object to remove is not in the list
     public void removeDay(DaysOfTheWeek day) throws EmptyList, ListObjectNonExistent {
         if (daysList.size() == 0) {
             throw new EmptyList();
@@ -57,13 +57,10 @@ public class DaysList {
         sortDays();
     }
 
-    //Requires: change day to be in the list of days
     //Modifies: this
-    //Effects: changes change day to new in the list of days
+    //Effects: changes change day to new in the list of days, throws list object is newDay
+    // already exist, or change day doesn't
     public void changeDay(DaysOfTheWeek changeDay, DaysOfTheWeek newDay) throws ListObject {
-        if (daysList.contains(newDay)) {
-            throw new ItemAlreadyExists();
-        }
         removeDay(changeDay);
         addDay(newDay);
         sortDays();
@@ -115,6 +112,7 @@ public class DaysList {
                 for (int i = 0; i < sortedDaysList.size(); i++) {
                     if (d.showDayNum() < sortedDaysList.get(i).showDayNum()) {
                         sortedDaysList.add(i, d);
+                        break;
                     }
                 }
             }

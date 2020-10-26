@@ -1,6 +1,7 @@
 package model;
 
 import model.exceptions.EmptyList;
+import model.exceptions.ItemAlreadyExists;
 import model.exceptions.ListObject;
 import model.exceptions.ListObjectNonExistent;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,13 +17,17 @@ public class DaysListTest {
     @BeforeEach
     public void makeDaysAndLists() {
         testList = new DaysList();
-        testList.addDay(Monday);
-        assertEquals(testList.getDays().get(0), Monday);
-        testList.addDay(Friday);
-        assertEquals(testList.getDays().get(1), Friday);
-        testList.addDay(Saturday);
-        testList.addDay(Thursday);
-        testList.addDay(Sunday);
+        try {
+            testList.addDay(Monday);
+            assertEquals(testList.getDays().get(0), Monday);
+            testList.addDay(Friday);
+            assertEquals(testList.getDays().get(1), Friday);
+            testList.addDay(Saturday);
+            testList.addDay(Thursday);
+            testList.addDay(Sunday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail("No exception expected");
+        }
         testList2 = new DaysList();
     }
 
@@ -41,7 +46,7 @@ public class DaysListTest {
     @Test
     public void testRemoveDayNotContained() {
         try {
-            testList.removeDay(Sunday);
+            testList.removeDay(Tuesday);
             fail("Sunday is not contained within testList");
         } catch (EmptyList emptyList) {
             fail("TestList is a non empty list");
@@ -91,7 +96,25 @@ public class DaysListTest {
     @Test
     public void testShowDays() {
         String t = testList.showDays();
-        String expectedT = "";
+        String expectedT = "Monday, Thursday, Friday, Saturday, Sunday";
         assertEquals(t, expectedT);
+    }
+
+    @Test
+    public void testShowDaysEmpty() {
+        String empty = testList2.showDays();
+        assertEquals(empty, "There Are No Days to Show");
+    }
+
+    @Test
+    public void testChangeDayAlreadyExists() {
+        try {
+            testList.changeDay(Sunday, Monday);
+            fail("Expected ItemAlreadyExist exception");
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            //expected
+        } catch (ListObject listObject) {
+            fail("test is not expected to reach this point");
+        }
     }
 }
