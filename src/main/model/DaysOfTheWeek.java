@@ -8,20 +8,24 @@ public enum DaysOfTheWeek {
 
     int dayNum;
 
+    //Effects: matches each day with its corresponding number
     DaysOfTheWeek(int i) {
         dayNum = i;
     }
 
-    DaysOfTheWeek showDay() {
-        for (DaysOfTheWeek m : DaysOfTheWeek.values()) {
-            if (dayNum == m.dayNum) {
-                return m;
-            }
-        }
-        throw new NotADay();
-    }
 
+    //Effects: returns the day's number
     int showDayNum() {
         return dayNum;
     }
+
+    //    //Effects: returns the day based on the day number given
+//    DaysOfTheWeek showDay() {
+//        for (DaysOfTheWeek m : DaysOfTheWeek.values()) {
+//            if (dayNum == m.dayNum) {
+//                return m;
+//            }
+//        }
+//        throw new NotADay();
+//    }
 }

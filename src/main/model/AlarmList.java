@@ -78,6 +78,7 @@ public class AlarmList implements Writable {
         }
     }
 
+    //Requires: A non empty list
     //Effects: Returns the alarm called name from the list of alarms
     public Alarm viewer(String name) {
         for (Alarm a : alarms) {
@@ -101,6 +102,7 @@ public class AlarmList implements Writable {
         }
     }
 
+    //Requires: A non empty list
     //Effects: sorts the list alarms by the time they go off, with the earliest first
     public ArrayList<Alarm> timeSorter() {
         ArrayList<Alarm> alarmsByEarliest = new ArrayList<>();
@@ -138,7 +140,7 @@ public class AlarmList implements Writable {
         }
     }
 
-    //Effects: converts the list alarms to a string of all the alarms
+    //Effects: converts the list alarms to a string of all the alarms and returns it
     public String showAlarms() {
         String show;
         if (alarms.size() == 0) {
