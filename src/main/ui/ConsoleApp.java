@@ -2,6 +2,7 @@ package ui;
 
 import model.Alarm;
 import model.AlarmList;
+import model.DaysList;
 import model.exceptions.EmptyList;
 import persistence.JsonReader;
 import persistence.JsonWriter;
@@ -248,10 +249,10 @@ public class ConsoleApp {
 
     //Modifies: ArrayList<String>
     //Effects: processes user input regarding adding an alarm with days of the week
-    private ArrayList<String> daysOfTheWeek() {
+    private DaysList daysOfTheWeek() {
         boolean keepGoing = true;
         String command = null;
-        ArrayList<String> dofWeek = new ArrayList<>();
+        DaysList dofWeek = new DaysList();
 
         while (keepGoing) {
             initForDaysOfTheWeek();
@@ -264,10 +265,8 @@ public class ConsoleApp {
                 String day = processCommandDays(command);
                 if ((day.equals("Invalid"))) {
                     System.out.println("\nOops That Is Not A Known Day!\n");
-                } else if (dofWeek.contains(day)) {
-                    System.out.println("\nOops That Day Is Already In The Alarm!\n");
                 } else {
-                    dofWeek.add(day);
+                    dofWeek.addDay(day);
                 }
             }
         }
@@ -349,7 +348,7 @@ public class ConsoleApp {
 
     //Modifies: this
     //Effects: adds an alarm to the selected alarmList
-    private void doAddShortener(AlarmList selected, int h, int m, ArrayList<String> dofWeek, String t) {
+    private void doAddShortener(AlarmList selected, int h, int m, DaysList dofWeek, String t) {
         Alarm a = new Alarm(t, h, m, dofWeek);
         selected.addAlarm(a);
         System.out.println("Success alarm " + t + " has been added the list of Alarms");

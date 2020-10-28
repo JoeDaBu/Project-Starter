@@ -1,12 +1,13 @@
 package model;
 
+import model.exceptions.ItemAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static model.DaysOfTheWeek.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class AlarmAndListTest {
     public Alarm test;
@@ -14,8 +15,12 @@ class AlarmAndListTest {
 
     @BeforeEach
     public void createAlarmsAndLists() {
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Friday");
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Friday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail("item already exists");
+        }
         test = new Alarm("alarmTest", 8, 30, testArray);
         listTest = new AlarmList("listTest");
     }
@@ -38,9 +43,14 @@ class AlarmAndListTest {
 
     @Test
     public void testChangeDaysOfTheWeek() {
-        ArrayList<String> newWeek = new ArrayList<>();
-        newWeek.add("Monday");
-        newWeek.add("Sunday");
+        DaysList newWeek = new DaysList();
+        try {
+            newWeek.addDay(Monday);
+            newWeek.addDay(Sunday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail("item already exist was thrown");
+        }
+
         test.changeDaysOfTheWeek(newWeek);
         assertEquals(newWeek, test.getDaysOfTheWeek());
     }
@@ -55,8 +65,12 @@ class AlarmAndListTest {
     @Test
     public void testAddAlarm2() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Wednesday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         ArrayList<Alarm> alarms = listTest.getAlarms();
@@ -75,8 +89,12 @@ class AlarmAndListTest {
     @Test
     public void testRemoveAlarm2() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Wednesday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         assertEquals(listTest.removeAlarm("a"), a);
@@ -88,8 +106,12 @@ class AlarmAndListTest {
     @Test
     public void testRemoveAlarm3() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Wednesday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         assertEquals(listTest.removeAlarm("alarmTest"), test);
@@ -107,40 +129,53 @@ class AlarmAndListTest {
     @Test
     public void testChangeAlarm() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
-        Alarm a = new Alarm("a", 7, 50, testArray);
-        listTest.addAlarm(a);
-        ArrayList<String> dofWeek = new ArrayList<>();
-        dofWeek.add("Thursday");
-        dofWeek.add("Tuesday");
-        Alarm newAlarm = new Alarm("newAlarm", 5, 5, dofWeek);
-        assertEquals(listTest.changeAlarm("alarmTest", newAlarm), test);
-        ArrayList<Alarm> alarms = listTest.getAlarms();
-        assertEquals(alarms.get(0).getAlarmName(), newAlarm.getAlarmName());
+        DaysList testArray = new DaysList();
+
+        try {
+            testArray.addDay(Wednesday);
+            Alarm a = new Alarm("a", 7, 50, testArray);
+            listTest.addAlarm(a);
+            DaysList dofWeek = new DaysList();
+            dofWeek.addDay(Tuesday);
+            dofWeek.addDay(Thursday);
+            Alarm newAlarm = new Alarm("newAlarm", 5, 5, dofWeek);
+            assertEquals(listTest.changeAlarm("alarmTest", newAlarm), test);
+            ArrayList<Alarm> alarms = listTest.getAlarms();
+            assertEquals(alarms.get(0).getAlarmName(), newAlarm.getAlarmName());
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
     }
 
     @Test
     public void testChangeAlarm2() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
-        Alarm a = new Alarm("a", 7, 50, testArray);
-        listTest.addAlarm(a);
-        ArrayList<String> dofWeek = new ArrayList<>();
-        dofWeek.add("Thursday");
-        dofWeek.add("Friday");
-        Alarm newAlarm2 = new Alarm("newAlarm2", 2, 9, dofWeek);
-        assertEquals(listTest.changeAlarm("a", newAlarm2), a);
-        ArrayList<Alarm> alarms = listTest.getAlarms();
-        assertEquals(alarms.get(1).getAlarmName(), newAlarm2.getAlarmName());
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Wednesday);
+            Alarm a = new Alarm("a", 7, 50, testArray);
+            listTest.addAlarm(a);
+            DaysList dofWeek = new DaysList();
+            dofWeek.addDay(Thursday);
+            dofWeek.addDay(Friday);
+            Alarm newAlarm2 = new Alarm("newAlarm2", 2, 9, dofWeek);
+            assertEquals(listTest.changeAlarm("a", newAlarm2), a);
+            ArrayList<Alarm> alarms = listTest.getAlarms();
+            assertEquals(alarms.get(1).getAlarmName(), newAlarm2.getAlarmName());
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
     }
 
     @Test
     public void testChangeAlarm3() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Wednesday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
         Alarm a = new Alarm("a", 7, 50, testArray);
         assertNull(listTest.changeAlarm("x", a));
     }
@@ -154,8 +189,12 @@ class AlarmAndListTest {
     @Test
     public void testViewAlarmListWithTheAlarm() {
         listTest.addAlarm(test);
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("Wednesday");
+        DaysList testArray = new DaysList();
+        try {
+            testArray.addDay(Wednesday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
         assertEquals(listTest.viewer("a"), a);

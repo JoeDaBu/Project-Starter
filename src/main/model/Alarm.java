@@ -19,7 +19,7 @@ public class Alarm implements Writable {
     private int hours;
     private int minutes;
     //private LocalTime localTime;
-    private ArrayList<String> daysOfTheWeek;
+    private DaysList daysOfTheWeek;
     private String alarmName;
 
     /*Requires: dofWeek to be a non-empty list with strings of
@@ -28,7 +28,7 @@ public class Alarm implements Writable {
     Effects: creates an Alarm with alarmName set to name, occurring on
     the days of the week set to dofWeek, at time set to t
      */
-    public Alarm(String name, int h, int m, ArrayList<String> dofWeek) {
+    public Alarm(String name, int h, int m, DaysList dofWeek) {
         hours = h;
         daysOfTheWeek = dofWeek;
         alarmName = name;
@@ -54,7 +54,7 @@ public class Alarm implements Writable {
     }
 
     //Effects: returns the days of the week the alarm will go off
-    public ArrayList<String> getDaysOfTheWeek() {
+    public DaysList getDaysOfTheWeek() {
         return daysOfTheWeek;
     }
 
@@ -81,7 +81,7 @@ public class Alarm implements Writable {
     //Requires: dofWeek to be a non-empty list
     //Modifies: This
     //Effects: resets daysOfTheWeek to dofWeek
-    public void changeDaysOfTheWeek(ArrayList<String> dofWeek) {
+    public void changeDaysOfTheWeek(DaysList dofWeek) {
         daysOfTheWeek = dofWeek;
     }
 

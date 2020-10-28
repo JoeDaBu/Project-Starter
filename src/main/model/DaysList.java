@@ -66,6 +66,21 @@ public class DaysList {
         sortDays();
     }
 
+    //Effects: converts daysList to an array
+    public Object[] toArray() {
+        return daysList.toArray();
+    }
+
+    //Effects: returns the size of daysList
+    public int size() {
+        return daysList.size();
+    }
+
+    //Effects: gets the object at index i in days list and returns it
+    public DaysOfTheWeek get(int i) {
+        return daysList.get(i);
+    }
+
     //Effects: returns daysList
     public ArrayList<DaysOfTheWeek> getDays() {
         return daysList;

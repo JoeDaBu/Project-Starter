@@ -2,6 +2,9 @@ package persistence;
 
 import model.Alarm;
 import model.AlarmList;
+import model.DaysList;
+import model.DaysOfTheWeek;
+import model.exceptions.ItemAlreadyExists;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -65,11 +68,15 @@ public class JsonReader {
         String name = nextAlarm.getString("name");
         Integer hour = nextAlarm.getInt("hour");
         Integer minutes = nextAlarm.getInt("minutes");
-        ArrayList<String> dofWeek = new ArrayList();
+        DaysList dofWeek = new DaysList();
         JSONArray jsonArrayDofWeek = nextAlarm.getJSONArray("Days of the Week");
         for (Object json : jsonArrayDofWeek) {
-            String nextDay = json.toString();
-            dofWeek.add(nextDay);
+            DaysOfTheWeek nextDay = DaysOfTheWeek.valueOf(json.toString());
+            try {
+                dofWeek.addDay(nextDay);
+            } catch (ItemAlreadyExists itemAlreadyExists) {
+                System.out.println("Item Already Exists");
+            }
         }
         Alarm alarm = new Alarm(name, hour, minutes, dofWeek);
         al.addAlarm(alarm);
