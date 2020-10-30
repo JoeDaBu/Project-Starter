@@ -99,7 +99,6 @@ public class AlarmList implements Writable {
         } else {
             ArrayList<Alarm> oldAlarms = alarms;
             alarms = timeSorter();
-            assert alarms != oldAlarms;
         }
     }
 
@@ -114,7 +113,7 @@ public class AlarmList implements Writable {
             int alarmsMinutes = alarms.get(i).getMinutes();
             int earlyAlarmLat = alarmsByEarliest.get(alarmsByEarliest.size() - 1).getHours();
             int earlyAlarmLatestM = alarmsByEarliest.get(alarmsByEarliest.size() - 1).getMinutes();
-            if (alarmsHours > earlyAlarmLat || (alarmsHours == earlyAlarmLat && alarmsMinutes >= earlyAlarmLatestM)) {
+            if (alarmsHours > earlyAlarmLat || (alarmsHours == earlyAlarmLat && alarmsMinutes > earlyAlarmLatestM)) {
                 alarmsByEarliest.add(alarms.get(i));
             } else {
                 for (int t = 0; t < alarmsByEarliest.size(); t++) {
@@ -130,7 +129,8 @@ public class AlarmList implements Writable {
         return alarmsByEarliest;
     }
 
-
+    //Modifies: this
+    //Effects: sorts alarms list by name
     public ArrayList<Alarm> alphabeticallySorter() throws EmptyList {
         int size = alarms.size();
         if (size == 0) {

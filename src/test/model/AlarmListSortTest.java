@@ -16,6 +16,14 @@ public class AlarmListSortTest {
     public Alarm test2;
     public Alarm test3;
     public Alarm test4;
+    public Alarm test5;
+    public Alarm test6;
+    public Alarm test7;
+    public Alarm test8;
+    public Alarm test9;
+    public Alarm test10;
+    public Alarm test11;
+    public Alarm test12;
     public AlarmList testList;
 
     @BeforeEach
@@ -30,6 +38,14 @@ public class AlarmListSortTest {
         test2 = new Alarm("e2", 9, 35, dofWeek);
         test3 = new Alarm("a3", 10, 30, dofWeek);
         test4 = new Alarm("v4", 1, 0, dofWeek);
+        test5 = new Alarm("jo", 23, 59, dofWeek);
+        test6 = new Alarm("g", 23, 59, dofWeek);
+        test7 = new Alarm("ga", 13, 59, dofWeek);
+        test8 = new Alarm("gan", 0, 0, dofWeek);
+        test9 = new Alarm("gand", 0, 0, dofWeek);
+        test10 = new Alarm("gando", 0, 0, dofWeek);
+        test11 = new Alarm("gandol", 9, 31, dofWeek);
+        test12 = new Alarm("gandolf", 9, 36, dofWeek);
         testList = new AlarmList("testList");
         testList.addAlarm(test);
         testList.addAlarm(test2);
@@ -78,6 +94,39 @@ public class AlarmListSortTest {
     public void testSorterTime() {
         ArrayList<Alarm> t = null;
         try {
+            testList.addAlarm(test5);
+            testList.addAlarm(test6);
+            testList.addAlarm(test7);
+            testList.addAlarm(test8);
+            testList.addAlarm(test9);
+            testList.addAlarm(test10);
+            testList.addAlarm(test11);
+            testList.addAlarm(test12);
+            testList.sortAlarmsByTime();
+        } catch (EmptyList emptyList) {
+            fail("Caught an EmptyList expected a non empty list");
+        }
+        System.out.println(testList);
+        ArrayList<Alarm> testArray = testList.getAlarms();
+        assertEquals(testArray.get(0), test10);
+        assertEquals(testArray.get(1), test9);
+        assertEquals(testArray.get(2), test8);
+        assertEquals(testArray.get(3), test4);
+        assertEquals(testArray.get(4), test);
+        assertEquals(testArray.get(5), test11);
+        assertEquals(testArray.get(6), test2);
+        assertEquals(testArray.get(7), test12);
+        assertEquals(testArray.get(8), test3);
+        assertEquals(testArray.get(9), test7);
+        assertEquals(testArray.get(10), test6);
+        assertEquals(testArray.get(11), test5);
+    }
+
+    @Test
+    public void testSorterTimeHard() {
+        ArrayList<Alarm> t = null;
+        try {
+            testList.addAlarm(test5);
             testList.sortAlarmsByTime();
         } catch (EmptyList emptyList) {
             fail("Caught an EmptyList expected a non empty list");
