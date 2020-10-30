@@ -1,3 +1,4 @@
+/*
 package model.unused;
 
 import java.util.ArrayList;
@@ -11,18 +12,22 @@ public class SavedSettings {
         settings = new ArrayList<>();
     }
 
-    /*Requires: a to have a unique name
+    */
+/*Requires: a to have a unique name
     Modifies: this
-    Effects: add the settingsList s to the list settings*/
+    Effects: add the settingsList s to the list settings*//*
+
     public void addSettings(SettingsList s) {
         settings.add(s);
     }
 
-    /*
+    */
+/*
     Modifies:this
     Effects: removes the settingsList called name from the list of settings,
     and if an alarm was removed, returns the removed settingsList, otherwise
-    returns null*/
+    returns null*//*
+
     public SettingsList removeSettings(String name) {
         for (SettingsList s : settings) {
             if (s.getSettingsName().equals(name)) {
@@ -63,3 +68,4 @@ public class SavedSettings {
         return null;
     }
 }
+*/

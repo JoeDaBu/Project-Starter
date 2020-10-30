@@ -1,3 +1,4 @@
+/*
 package ui;
 
 import javax.swing.*;
@@ -72,3 +73,4 @@ public class Clock extends JFrame {
 
     }
 }
+*/

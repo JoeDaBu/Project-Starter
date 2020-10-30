@@ -1,3 +1,4 @@
+/*
 package unused;
 
 import model.unused.SavedSettings;
@@ -79,3 +80,4 @@ public class SavedSettingsTest {
         assertEquals(settingsList.getSetting2(), "10");
     }
 }
+*/
