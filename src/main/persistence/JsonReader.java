@@ -72,11 +72,8 @@ public class JsonReader {
         JSONArray jsonArrayDofWeek = nextAlarm.getJSONArray("Days of the Week");
         for (Object json : jsonArrayDofWeek) {
             DaysOfTheWeek nextDay = DaysOfTheWeek.valueOf(json.toString());
-            try {
-                dofWeek.addDay(nextDay);
-            } catch (ItemAlreadyExists itemAlreadyExists) {
-                System.out.println("Item Already Exists");
-            }
+
+            dofWeek.add(nextDay);
         }
         Alarm alarm = new Alarm(name, hour, minutes, dofWeek);
         al.addAlarm(alarm);

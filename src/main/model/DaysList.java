@@ -42,11 +42,17 @@ public class DaysList {
 
     //Modifies: this
     //Effects: adds day to the list of days, it the day already exist throws
-    // the alreay exists exception
+    // the already exists exception
     public void addDay(DaysOfTheWeek day) throws ItemAlreadyExists {
         if (daysList.contains(day)) {
             throw new ItemAlreadyExists();
         }
+        add(day);
+    }
+
+    //Modifies: this
+    //Effects: adds day to days list
+    public void add(DaysOfTheWeek day) {
         daysList.add(day);
         daysList = sortDaysSorter();
     }
