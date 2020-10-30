@@ -104,7 +104,7 @@ public class AlarmList implements Writable {
 
     //Requires: A non empty list
     //Effects: sorts the list alarms by the time they go off, with the earliest first
-    public ArrayList<Alarm> timeSorter() {
+    private ArrayList<Alarm> timeSorter() {
         ArrayList<Alarm> alarmsByEarliest = new ArrayList<>();
         alarmsByEarliest.add(alarms.get(0));
         int n = 1;

@@ -130,7 +130,7 @@ public class DaysList {
     //Requires: Duplicate days do not exist, and daysList to be a non empty list
     //Effects: returns a new list sorted days list that is days list but sorted
     //by the order the days appear in a new week
-    public ArrayList<DaysOfTheWeek> sortDaysSorter() {
+    private ArrayList<DaysOfTheWeek> sortDaysSorter() {
         ArrayList<DaysOfTheWeek> sortedDaysList = new ArrayList<>();
         for (DaysOfTheWeek d : daysList) {
             if (sortedDaysList.isEmpty()) {
