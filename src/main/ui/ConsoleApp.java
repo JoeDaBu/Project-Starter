@@ -91,6 +91,7 @@ public class ConsoleApp {
         }
     }
 
+    //Effects: converts the next input into the location of where to save or load an alarmList
     private String persistenceLocation() {
         System.out.println("Write The Name Of The Alarm List");
         String name = input.nextLine();
@@ -98,6 +99,7 @@ public class ConsoleApp {
         return location;
     }
 
+    //Modifies: this
     //Effects: saves alarmList to to file
     private void doSaveAlarms() {
         AlarmList selected = selectAlarmList();
@@ -341,6 +343,7 @@ public class ConsoleApp {
         return dofWeek;
     }
 
+    //Effects: returns default days list if no days in input, otherwise returns daays list
     private DaysList defaultDayOfWeek(DaysList daysList) {
         if (daysList.size() == 0) {
             return defaultList;
@@ -557,6 +560,8 @@ public class ConsoleApp {
         System.out.println("Type Stop to stop adding days");
     }
 
+    //Modifies: this
+    //Effects: creates the default list of days with everyday
     private void setupDefaultList() {
         defaultList = new DaysList();
         try {
