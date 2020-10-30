@@ -69,7 +69,7 @@ class AlarmAndListTest {
         try {
             testArray.addDay(Wednesday);
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
@@ -93,7 +93,7 @@ class AlarmAndListTest {
         try {
             testArray.addDay(Wednesday);
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
@@ -110,7 +110,7 @@ class AlarmAndListTest {
         try {
             testArray.addDay(Wednesday);
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);
@@ -143,7 +143,7 @@ class AlarmAndListTest {
             ArrayList<Alarm> alarms = listTest.getAlarms();
             assertEquals(alarms.get(0).getAlarmName(), newAlarm.getAlarmName());
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
     }
 
@@ -163,7 +163,7 @@ class AlarmAndListTest {
             ArrayList<Alarm> alarms = listTest.getAlarms();
             assertEquals(alarms.get(1).getAlarmName(), newAlarm2.getAlarmName());
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
     }
 
@@ -174,7 +174,7 @@ class AlarmAndListTest {
         try {
             testArray.addDay(Wednesday);
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
         Alarm a = new Alarm("a", 7, 50, testArray);
         assertNull(listTest.changeAlarm("x", a));
@@ -193,7 +193,7 @@ class AlarmAndListTest {
         try {
             testArray.addDay(Wednesday);
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            fail();
+            fail("iae");
         }
         Alarm a = new Alarm("a", 7, 50, testArray);
         listTest.addAlarm(a);

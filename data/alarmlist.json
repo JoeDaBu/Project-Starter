@@ -1,9 +1,48 @@
 {
-    "alarms": [{
-        "hour": 9,
-        "Days of the Week": ["Monday"],
-        "minutes": 20,
-        "name": "Joe 4"
-    }],
+    "alarms": [
+        {
+            "hour": 5,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 10,
+            "name": "Joe"
+        },
+        {
+            "hour": 5,
+            "Days of the Week": [
+                "Tuesday",
+                "Thursday"
+            ],
+            "minutes": 56,
+            "name": "Gandolf"
+        },
+        {
+            "hour": 6,
+            "Days of the Week": ["Monday"],
+            "minutes": 10,
+            "name": "Joe3"
+        },
+        {
+            "hour": 7,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 30,
+            "name": "Joe2"
+        }
+    ],
     "name": "My Alarm List"
 }

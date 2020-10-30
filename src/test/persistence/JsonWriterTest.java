@@ -3,12 +3,16 @@ package persistence;
 
 import model.Alarm;
 import model.AlarmList;
+import model.DaysList;
+import model.exceptions.ItemAlreadyExists;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static model.DaysOfTheWeek.Saturday;
+import static model.DaysOfTheWeek.Sunday;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -51,10 +55,10 @@ class JsonWriterTest extends JsonTest {
     void testWriterGeneralAlarmList() {
         try {
             AlarmList al = new AlarmList("My alarm list");
-            al.addAlarm(new Alarm("AM", 9, 30, new ArrayList<String>()));
-            ArrayList<String> weekend = new ArrayList<>();
-            weekend.add("Saturday");
-            weekend.add("Sunday");
+            al.addAlarm(new Alarm("AM", 9, 30, new DaysList()));
+            DaysList weekend = new DaysList();
+            weekend.addDay(Saturday);
+            weekend.addDay(Sunday);
             al.addAlarm(new Alarm("PM", 23, 30, weekend));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralAlarmList.json");
             writer.open();
@@ -66,11 +70,13 @@ class JsonWriterTest extends JsonTest {
             assertEquals("My alarm list", al.getName());
             ArrayList<Alarm> alarms = al.getAlarms();
             assertEquals(2, alarms.size());
-            checkAlarm("AM", 9, 30, new ArrayList<String>(), alarms.get(0));
+            checkAlarm("AM", 9, 30, new DaysList(), alarms.get(0));
             checkAlarm("PM", 23, 30, weekend, alarms.get(1));
 
         } catch (IOException e) {
             fail("Exception should not have been thrown");
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail("iae");
         }
     }
 }

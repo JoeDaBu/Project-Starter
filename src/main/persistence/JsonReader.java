@@ -53,7 +53,7 @@ public class JsonReader {
 
     //Modifies: al
     //Effects: analyzes and breaks down alarms from JSON object and adds them
-    //to the alarmlist
+    //to the alarmList
     private void addAlarms(AlarmList al, JSONObject jsonObject) {
         JSONArray jsonArray = jsonObject.getJSONArray("alarms");
         for (Object json : jsonArray) {
@@ -63,7 +63,7 @@ public class JsonReader {
     }
 
     //Modifies:al
-    //Effects: analyzes and breaks down alarm from JSON and adds it to alarmlist
+    //Effects: analyzes and breaks down alarm from JSON and adds it to alarmList
     private void addAlarm(AlarmList al, JSONObject nextAlarm) {
         String name = nextAlarm.getString("name");
         Integer hour = nextAlarm.getInt("hour");

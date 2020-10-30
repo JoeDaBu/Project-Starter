@@ -1,11 +1,13 @@
 package model;
 
 import model.exceptions.EmptyList;
+import model.exceptions.ItemAlreadyExists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 
+import static model.DaysOfTheWeek.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -18,8 +20,12 @@ public class AlarmListSortTest {
 
     @BeforeEach
     public void makeList() {
-        ArrayList<String> dofWeek = new ArrayList<>();
-        dofWeek.add("Monday");
+        DaysList dofWeek = new DaysList();
+        try {
+            dofWeek.addDay(Monday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            fail();
+        }
         test = new Alarm("t1", 9, 30, dofWeek);
         test2 = new Alarm("e2", 9, 35, dofWeek);
         test3 = new Alarm("a3", 10, 30, dofWeek);

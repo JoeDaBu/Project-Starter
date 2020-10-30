@@ -113,7 +113,7 @@ public class Alarm implements Writable {
         json.put("name", alarmName);
         json.put("hour", hours);
         json.put("minutes", minutes);
-        json.put("Days of the Week", daysOfTheWeek);
+        json.put("Days of the Week", daysOfTheWeek.daysList);
         return json;
     }
 }
