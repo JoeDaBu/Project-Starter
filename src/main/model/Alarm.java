@@ -4,10 +4,11 @@ import org.json.JSONObject;
 import persistence.Writable;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.Year;
+import java.time.temporal.TemporalAdjusters;
+import java.util.*;
 
 /*The Alarm class store info about a specific alarm
 like the time it should go off, on what days, and its name.
@@ -15,12 +16,11 @@ An alarm can be edited to change anyone of its parameters.
  */
 
 public class Alarm implements Writable {
-    //private Clock time;
     private int hours;
     private int minutes;
-    //private LocalTime localTime;
     private DaysList daysOfTheWeek;
     private String alarmName;
+    private ArrayList<Calendar> dateList;
 
     /*Requires: dofWeek to be a non-empty list with strings of
     only the days of the week, and h to be within 0 to 23. and m to be
@@ -33,6 +33,8 @@ public class Alarm implements Writable {
         daysOfTheWeek = dofWeek;
         alarmName = name;
         minutes = m;
+        dateList = new ArrayList<>();
+        createAlarmDate();
     }
 
     //Effects: returns the time at which the alarm will go off
@@ -93,19 +95,33 @@ public class Alarm implements Writable {
         return alarm;
     }
 
-
-    /*public boolean alarmGoesOff() {
-        Date t = Calendar.getInstance().getTime();
-        SimpleDateFormat hourFormat = new SimpleDateFormat("hh");
-        String h = hourFormat.format(t);
-        System.out.println("01");
-        SimpleDateFormat minuteFormat = new SimpleDateFormat("mm");
-        String m = minuteFormat.format(t);
-        assert h.equals("01");
-        return (h.equals(Integer.toString(hours)) && m.equals(Integer.toString(minutes)));
+    public void makeTasks() {
+        for (Calendar date: dateList) {
+            Timer timer = new Timer();
+            AlarmTask task = new AlarmTask();
+            timer.schedule(task, date.getTime());
+        }
     }
 
-     */
+    public void createAlarmDate() {
+        Calendar date = Calendar.getInstance();
+        date.set(Calendar.YEAR, Year.now().getValue());
+        date.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
+        date.set(Calendar.HOUR_OF_DAY, hours);
+        date.set(Calendar.MINUTE, minutes);
+        date.set(Calendar.SECOND,0);
+        date.set(Calendar.MILLISECOND,0);
+        for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            date.set(Calendar.DAY_OF_MONTH, getNextOccurrence(daysOfTheWeek.get(i)));
+            dateList.add(date);
+        }
+        makeTasks();
+    }
+
+    public int getNextOccurrence(DaysOfTheWeek days) {
+        LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.of((days.showDayNum()))));
+        return nextOrSame.getDayOfMonth();
+    }
 
     @Override
     public JSONObject toJson() {
