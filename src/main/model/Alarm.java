@@ -150,8 +150,23 @@ public class Alarm implements Writable {
 
     //Effects: returns the integer value of when the specified day will occur next in the month, or if its today
     public int getNextOccurrence(DaysOfTheWeek days) {
-        LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.of((days.showDayNum()))));
-        return nextOrSame.getDayOfMonth();
+        DayOfWeek day = (DayOfWeek.of((days.showDayNum())));
+        LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(day));
+
+        Calendar current = Calendar.getInstance();
+        Boolean today = (nextOrSame.getDayOfMonth() == current.get(Calendar.DAY_OF_MONTH));
+        Boolean hourPrior = (hours < current.get(Calendar.HOUR_OF_DAY));
+        Boolean hourEqual = (hours == current.get(Calendar.HOUR_OF_DAY));
+        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) > minutes);
+
+        if (today && (timePrior || hourPrior)) {
+            LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
+            return next.getDayOfMonth();
+
+        } else {
+            return nextOrSame.getDayOfMonth();
+
+        }
     }
 
     @Override

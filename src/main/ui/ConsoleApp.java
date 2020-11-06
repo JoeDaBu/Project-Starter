@@ -54,6 +54,7 @@ public class ConsoleApp {
             command = command.toLowerCase();
 
             if (command.equals("q") || command.equals("quit")) {
+                doQuit();
                 keepGoing = false;
             } else {
                 processCommand(command);
@@ -102,6 +103,17 @@ public class ConsoleApp {
         String name = input.nextLine();
         String location = "./data/" + name + ".json";
         return location;
+    }
+
+    //Modifies: This
+    //Effects: Stops all timer Tasks
+    private void doQuit() {
+        for (int i = 0; i < mine.getAlarms().size(); i++) {
+            mine.getAlarms().get(i).cancelAlarmTask();
+        }
+        for (int m = 0; m < user.getAlarms().size(); m++) {
+            user.getAlarms().get(m).cancelAlarmTask();
+        }
     }
 
     //Modifies: this
