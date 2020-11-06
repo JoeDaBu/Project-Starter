@@ -58,6 +58,11 @@ public class ConsoleApp {
             } else {
                 processCommand(command);
             }
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                System.out.println("Thread Interrupted");
+            }
         }
         System.out.println("Goodnight, See you Tomorrow!");
 
@@ -323,7 +328,7 @@ public class ConsoleApp {
 
         while (keepGoing) {
             initForDaysOfTheWeek();
-            command = input.next();
+            command = input.nextLine();
             command = command.toLowerCase();
 
             if (command.equals("stop")) {
@@ -477,7 +482,7 @@ public class ConsoleApp {
     //returns the hour, otherwise returns -1
     private int validHourAdd() {
         System.out.println("Enter Hours:");
-        int hours = input.nextInt();
+        int hours = Integer.parseInt(input.nextLine());
         if (hours < 24 && hours >= 0) {
             return hours;
         } else {
@@ -491,7 +496,7 @@ public class ConsoleApp {
     //returns the hour, otherwise returns -1
     private int validMinutesAdd() {
         System.out.println("Enter Minutes:");
-        int minutes = input.nextInt();
+        int minutes = Integer.parseInt(input.nextLine());
         if (minutes > 59 || minutes < 0) {
             System.out.println("That Is Not A Valid Minute");
             return -1;

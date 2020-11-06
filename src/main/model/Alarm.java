@@ -3,12 +3,13 @@ package model;
 import org.json.JSONObject;
 import persistence.Writable;
 
-import java.text.SimpleDateFormat;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
 import java.util.*;
+
+import static model.DaysOfTheWeek.*;
 
 /*The Alarm class store info about a specific alarm
 like the time it should go off, on what days, and its name.
@@ -20,7 +21,7 @@ public class Alarm implements Writable {
     private int minutes;
     private DaysList daysOfTheWeek;
     private String alarmName;
-    private ArrayList<Calendar> dateList;
+    private ArrayList<Timer> timerList;
 
     /*Requires: dofWeek to be a non-empty list with strings of
     only the days of the week, and h to be within 0 to 23. and m to be
@@ -29,12 +30,29 @@ public class Alarm implements Writable {
     the days of the week set to dofWeek, at time set to t
      */
     public Alarm(String name, int h, int m, DaysList dofWeek) {
+        timerList = new ArrayList<>();
         hours = h;
-        daysOfTheWeek = dofWeek;
         alarmName = name;
         minutes = m;
-        dateList = new ArrayList<>();
-        createAlarmDate();
+        if (dofWeek.size() == 0) {
+            daysOfTheWeek = everyday();
+        } else {
+            daysOfTheWeek = dofWeek;
+        }
+        createAlarmTask();
+    }
+
+    //Effects:Creates the default day when no input is put in for dofWeek
+    public DaysList everyday() {
+        DaysList defaultList = new DaysList();
+        defaultList.add(Monday);
+        defaultList.add(Tuesday);
+        defaultList.add(Wednesday);
+        defaultList.add(Thursday);
+        defaultList.add(Friday);
+        defaultList.add(Saturday);
+        defaultList.add(Sunday);
+        return defaultList;
     }
 
     //Effects: returns the time at which the alarm will go off
@@ -71,6 +89,8 @@ public class Alarm implements Writable {
     public void changeTime(int h, int m) {
         hours = h;
         minutes = m;
+        cancelAlarmTask();
+        createAlarmTask();
     }
 
     //Requires: name to be an non-empty string
@@ -78,6 +98,8 @@ public class Alarm implements Writable {
     //Effects: resets alarmName to name
     public void changeAlarmName(String name) {
         alarmName = name;
+        cancelAlarmTask();
+        createAlarmTask();
     }
 
     //Requires: dofWeek to be a non-empty list
@@ -85,6 +107,8 @@ public class Alarm implements Writable {
     //Effects: resets daysOfTheWeek to dofWeek
     public void changeDaysOfTheWeek(DaysList dofWeek) {
         daysOfTheWeek = dofWeek;
+        cancelAlarmTask();
+        createAlarmTask();
     }
 
     //Effects: converts the alarm to a string beginning with the alarm name, then time
@@ -95,29 +119,36 @@ public class Alarm implements Writable {
         return alarm;
     }
 
-    public void makeTasks() {
-        for (Calendar date: dateList) {
-            Timer timer = new Timer();
-            AlarmTask task = new AlarmTask();
-            timer.schedule(task, date.getTime());
+    //Modifies: This
+    //Effects: Stops all Timers in this alarm
+    public void cancelAlarmTask() {
+        for (Timer t: timerList) {
+            t.cancel();
         }
+        timerList = new ArrayList<>();
     }
 
-    public void createAlarmDate() {
-        Calendar date = Calendar.getInstance();
-        date.set(Calendar.YEAR, Year.now().getValue());
-        date.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
-        date.set(Calendar.HOUR_OF_DAY, hours);
-        date.set(Calendar.MINUTE, minutes);
-        date.set(Calendar.SECOND,0);
-        date.set(Calendar.MILLISECOND,0);
+    //Modifies: This
+    //Effects: Sets the timer at the specified time, for each day listed
+    public void createAlarmTask() {
         for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            Calendar date = Calendar.getInstance();
+            date.set(Calendar.YEAR, Year.now().getValue());
+            date.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
             date.set(Calendar.DAY_OF_MONTH, getNextOccurrence(daysOfTheWeek.get(i)));
-            dateList.add(date);
+            date.set(Calendar.HOUR_OF_DAY, hours);
+            date.set(Calendar.MINUTE, minutes);
+            date.set(Calendar.SECOND, 0);
+            date.set(Calendar.MILLISECOND, 0);
+
+            Timer timer = new Timer(alarmName);
+            AlarmTask task = new AlarmTask();
+            timer.schedule(task, date.getTime(), 604800000);
+            timerList.add(timer);
         }
-        makeTasks();
     }
 
+    //Effects: returns the integer value of when the specified day will occur next in the month, or if its today
     public int getNextOccurrence(DaysOfTheWeek days) {
         LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(DayOfWeek.of((days.showDayNum()))));
         return nextOrSame.getDayOfMonth();

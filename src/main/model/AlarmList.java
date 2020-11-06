@@ -39,6 +39,7 @@ public class AlarmList implements Writable {
     public Alarm removeAlarm(String name) {
         for (Alarm ala : alarms) {
             if (ala.getAlarmName().equals(name)) {
+                ala.cancelAlarmTask();
                 alarms.remove(ala);
                 return ala;
             }
@@ -60,6 +61,7 @@ public class AlarmList implements Writable {
     public Alarm changeAlarm(String name, Alarm newAlarm) {
         for (int i = 0; i < alarms.size(); i++) {
             if (alarms.get(i).getAlarmName().equals(name)) {
+                alarms.get(i).cancelAlarmTask();
                 return alarms.set(i, newAlarm);
             }
         }
@@ -162,17 +164,6 @@ public class AlarmList implements Writable {
         return alarms.size();
     }
 
-    /*public boolean alarmSounds() {
-        boolean t = false;
-        for (Alarm a : alarms) {
-            if (a.alarmGoesOff()) {
-                t = true;
-            }
-        }
-        return t;
-    }
-
-     */
 
     @Override
     public JSONObject toJson() {
