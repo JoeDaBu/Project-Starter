@@ -4,9 +4,6 @@ import model.Alarm;
 import model.DaysList;
 
 
-import java.util.ArrayList;
-import java.util.zip.DataFormatException;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {

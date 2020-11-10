@@ -21,8 +21,13 @@
 ##Phase 2 User Stories
 - As a user, I want to be able to save my AlarmList  to file
 - As a user, I want to be able to load my AlarmList from file
+- As a user, I want to be able to sort Alarms alphabetically
 - As a user, I want to be able to quit from the application window, I want any changes to be saved without having to be prompted to
 - As a user, when I start the application I want to be given the option to load my AlarmList
+
+##Phase 3 User Stories
+- As a user, I want my alarms to write a message when they do off
+- As a user, I want to be able to sort alarms by time they will go off
 
 ### For the Future
 - As a user, I want to be able select the audio type to be played when the alarm to go off

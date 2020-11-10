@@ -1,26 +1,22 @@
 package model;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-
-import model.DaysOfTheWeek;
 import model.exceptions.EmptyList;
 import model.exceptions.ItemAlreadyExists;
 import model.exceptions.ListObject;
 import model.exceptions.ListObjectNonExistent;
 
+import java.util.ArrayList;
+
 import static model.DaysOfTheWeek.*;
 
 //list of days of the week
 public class DaysList {
-    ArrayList<DaysOfTheWeek> daysList;
     public static final ArrayList<DaysOfTheWeek> defaultList = new ArrayList<>();
+    ArrayList<DaysOfTheWeek> daysList;
 
     //Effects: creates a new empty list of days
     public DaysList() {
-        daysList = new ArrayList<DaysOfTheWeek>();
+        daysList = new ArrayList<>();
         defaultList.add(Monday);
         defaultList.add(Tuesday);
         defaultList.add(Wednesday);

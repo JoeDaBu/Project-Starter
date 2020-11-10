@@ -2,12 +2,16 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
+import ui.AlarmTask;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Year;
 import java.time.temporal.TemporalAdjusters;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Timer;
 
 import static model.DaysOfTheWeek.*;
 
@@ -34,7 +38,7 @@ public class Alarm implements Writable {
         hours = h;
         alarmName = name;
         minutes = m;
-        if (dofWeek.size() == 0) {
+        if ((dofWeek == null) || (dofWeek.size() == 0)) {
             daysOfTheWeek = everyday();
         } else {
             daysOfTheWeek = dofWeek;
@@ -115,14 +119,13 @@ public class Alarm implements Writable {
     //it goes off, and on what days
     public String alarmToString() {
         String day = Arrays.toString(daysOfTheWeek.toArray());
-        String alarm = alarmName + " " + hours + ":" + minutes + " " + day;
-        return alarm;
+        return alarmName + " " + hours + ":" + minutes + " " + day;
     }
 
     //Modifies: This
     //Effects: Stops all Timers in this alarm
     public void cancelAlarmTask() {
-        for (Timer t: timerList) {
+        for (Timer t : timerList) {
             t.cancel();
         }
         timerList = new ArrayList<>();
@@ -177,5 +180,9 @@ public class Alarm implements Writable {
         json.put("minutes", minutes);
         json.put("Days of the Week", daysOfTheWeek.daysList);
         return json;
+    }
+
+    public ArrayList<Timer> getTimerList() {
+        return timerList;
     }
 }

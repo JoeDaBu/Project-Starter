@@ -99,7 +99,6 @@ public class AlarmList implements Writable {
         if (alarms.size() == 0) {
             throw new EmptyList();
         } else {
-            ArrayList<Alarm> oldAlarms = alarms;
             alarms = timeSorter();
         }
     }
@@ -109,7 +108,6 @@ public class AlarmList implements Writable {
     private ArrayList<Alarm> timeSorter() {
         ArrayList<Alarm> alarmsByEarliest = new ArrayList<>();
         alarmsByEarliest.add(alarms.get(0));
-        int n = 1;
         for (int i = 1; i < alarms.size(); i++) {
             int alarmsHours = alarms.get(i).getHours();
             int alarmsMinutes = alarms.get(i).getMinutes();

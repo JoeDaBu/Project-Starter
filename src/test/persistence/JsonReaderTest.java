@@ -2,14 +2,12 @@ package persistence;
 
 import model.Alarm;
 import model.AlarmList;
-import model.AlarmList;
 import model.DaysList;
 import model.exceptions.ItemAlreadyExists;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static model.DaysOfTheWeek.Saturday;
 import static model.DaysOfTheWeek.Sunday;
@@ -22,7 +20,7 @@ class JsonReaderTest extends JsonTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/noSuchFile.json");
         try {
-            AlarmList alarmList = reader.read();
+            reader.read();
             fail("IOException expected");
         } catch (IOException e) {
             // pass

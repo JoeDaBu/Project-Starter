@@ -1,9 +1,13 @@
 package model;
 
 import model.exceptions.ItemAlreadyExists;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.AlarmTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 import static model.DaysOfTheWeek.*;
@@ -12,9 +16,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class AlarmAndListTest {
     public Alarm test;
     public AlarmList listTest;
+    AlarmTask task;
+
+    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final PrintStream originalOut = System.out;
+    private final PrintStream originalErr = System.err;
 
     @BeforeEach
     public void createAlarmsAndLists() {
+        System.setOut(new PrintStream(outContent));
+        System.setErr(new PrintStream(errContent));
+        task = new AlarmTask();
         DaysList testArray = new DaysList();
         try {
             testArray.addDay(Friday);
@@ -23,6 +36,12 @@ class AlarmAndListTest {
         }
         test = new Alarm("alarmTest", 8, 30, testArray);
         listTest = new AlarmList("listTest");
+    }
+
+    @AfterEach
+    public void restoreStreams() {
+        System.setOut(originalOut);
+        System.setErr(originalErr);
     }
 
     @Test
@@ -204,5 +223,34 @@ class AlarmAndListTest {
     public void testAlarmToString() {
         String a = "alarmTest 8:30 [Friday]";
         assertEquals(test.alarmToString(), a);
+    }
+
+    @Test
+    public void testTimer() {
+        Alarm a = new Alarm("Joe", 9, 30, null);
+        assertEquals(a.getTimerList().size(), 7);
+        a.cancelAlarmTask();
+        assertEquals(a.getTimerList().size(), 0);
+    }
+
+    @Test
+    public void testTimer2() {
+        DaysList daysList = new DaysList();
+        Alarm a = new Alarm("Joe", 9, 30, daysList);
+        assertEquals(a.getTimerList().size(), 7);
+        a.cancelAlarmTask();
+        assertEquals(a.getTimerList().size(), 0);
+    }
+
+    @Test
+    public void testTimer3() {
+        DaysList daysList = new DaysList();
+        daysList.add(Monday);
+        daysList.add(Friday);
+        daysList.add(Wednesday);
+        Alarm a = new Alarm("Joe", 9, 30, daysList);
+        assertEquals(a.getTimerList().size(), 3);
+        a.cancelAlarmTask();
+        assertEquals(a.getTimerList().size(), 0);
     }
 }

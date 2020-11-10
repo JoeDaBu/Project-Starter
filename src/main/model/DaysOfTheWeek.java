@@ -1,6 +1,5 @@
 package model;
 
-import model.exceptions.NotADay;
 
 //Represents the days of the week with corresponding int values
 public enum DaysOfTheWeek {

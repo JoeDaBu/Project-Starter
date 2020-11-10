@@ -6,7 +6,7 @@ import model.exceptions.ListObject;
 import model.exceptions.ListObjectNonExistent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.Main;
+
 
 import static model.DaysOfTheWeek.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -60,9 +60,7 @@ public class DaysListTest {
     public void testRemoveDay() {
         try {
             testList.removeDay(Sunday);
-        } catch (EmptyList emptyList) {
-            fail("expected not exception");
-        } catch (ListObjectNonExistent listObjectNonExistent) {
+        } catch (EmptyList | ListObjectNonExistent emptyList) {
             fail("expected not exception");
         }
         assertEquals(testList.dayListSize(), 4);

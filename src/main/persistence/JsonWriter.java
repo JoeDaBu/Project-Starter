@@ -10,8 +10,8 @@ import java.io.PrintWriter;
 //Writes the JSON representation of AlarmList to file
 public class JsonWriter {
     public static final int TAB = 4;
-    private PrintWriter writer;
     private final String destination;
+    private PrintWriter writer;
 
     //Effects: constructs writer to write to destination file
     public JsonWriter(String destination) {
@@ -26,7 +26,7 @@ public class JsonWriter {
     }
 
     //Modifies: This
-    //Effects: writes ALarmList to file as a JSON representation
+    //Effects: writes AlarmList to file as a JSON representation
     public void write(AlarmList a) {
         JSONObject json = a.toJson();
         saveToFile(json.toString(TAB));

@@ -1,4 +1,3 @@
-/*
 package ui;
 
 import javax.swing.*;
@@ -23,7 +22,7 @@ public class Clock extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setTitle("The Clock");
         setLayout(new FlowLayout());
-        setSize(500, 500);
+        setSize(350, 210);
         setResizable(true);
         setLabels();
         setVisible(true);
@@ -73,4 +72,3 @@ public class Clock extends JFrame {
 
     }
 }
-*/

@@ -4,7 +4,6 @@ import model.Alarm;
 import model.AlarmList;
 import model.DaysList;
 import model.DaysOfTheWeek;
-import model.exceptions.ItemAlreadyExists;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -12,7 +11,6 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 //reads the Alarm List from the file storing JSON data
@@ -24,7 +22,7 @@ public class JsonReader {
         this.source = source;
     }
 
-    //Effects: reads alarmlist from file and returns it;
+    //Effects: reads alarmList from file and returns it;
     // throws IOException if an error occurs reading data from file
     public AlarmList read() throws IOException {
         String jsonData = readFile(source);
@@ -43,7 +41,7 @@ public class JsonReader {
         return contentBuilder.toString();
     }
 
-    //Effects: analyzes and breaks down alarmlist from JSON object and returns it
+    //Effects: analyzes and breaks down alarmList from JSON object and returns it
     private AlarmList parseAlarmList(JSONObject jsonObject) {
         String name = jsonObject.getString("name");
         AlarmList al = new AlarmList(name);

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import static model.DaysOfTheWeek.Saturday;
 import static model.DaysOfTheWeek.Sunday;

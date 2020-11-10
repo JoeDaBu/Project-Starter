@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static model.DaysOfTheWeek.*;
+
 //a class running and setting alarms into motion
 
 public class ConsoleApp {
@@ -360,7 +361,7 @@ public class ConsoleApp {
         return dofWeek;
     }
 
-    //Effects: returns default days list if no days in input, otherwise returns daays list
+    //Effects: returns default days list if no days in input, otherwise returns days list
     private DaysList defaultDayOfWeek(DaysList daysList) {
         if (daysList.size() == 0) {
             return defaultList;
@@ -399,7 +400,7 @@ public class ConsoleApp {
         }
     }
 
-    //Effects: Writes the correct sout statement for do add alarm then sends the input to validName
+    //Effects: Writes the correct s-o-u-t statement for do add alarm then sends the input to validName
     private String validNameAdd(AlarmList selected) {
         System.out.println("Enter the Name of Your New Alarm:");
         return validName(selected);
@@ -451,7 +452,7 @@ public class ConsoleApp {
         System.out.println("Would You Like To Change The Hour Of The Alarm?\n\tyes or no");
         Boolean keepGoing = true;
         int h = 0;
-        Boolean bool =  ifChange();
+        Boolean bool = ifChange();
         if (bool == false) {
             System.out.println("Change Hour Skipped");
             return -1;
