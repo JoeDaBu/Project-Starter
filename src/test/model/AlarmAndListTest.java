@@ -4,7 +4,7 @@ import model.exceptions.ItemAlreadyExists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.AlarmTask;
+import ui.Task.AlarmTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;

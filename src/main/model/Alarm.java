@@ -2,7 +2,7 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
-import ui.AlarmTask;
+import ui.Task.AlarmTask;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -134,20 +134,23 @@ public class Alarm implements Writable {
     //Modifies: This
     //Effects: Sets the timer at the specified time, for each day listed
     public void createAlarmTask() {
-        for (int i = 0; i < daysOfTheWeek.size(); i++) {
-            Calendar date = Calendar.getInstance();
+        for (int i = 0; i < daysOfTheWeek.size(); i++) { //for every day of the alarm creates a timer
+            Calendar date = Calendar.getInstance();//gets current time
             date.set(Calendar.YEAR, Year.now().getValue());
             date.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
             date.set(Calendar.DAY_OF_MONTH, getNextOccurrence(daysOfTheWeek.get(i)));
-            date.set(Calendar.HOUR_OF_DAY, hours);
-            date.set(Calendar.MINUTE, minutes);
+            //sets the date to next occurrence of the input day of the week
+            date.set(Calendar.HOUR_OF_DAY, hours);//sets date hours to hours
+            date.set(Calendar.MINUTE, minutes);//sets date minutes to minutes
             date.set(Calendar.SECOND, 0);
             date.set(Calendar.MILLISECOND, 0);
 
-            Timer timer = new Timer(alarmName);
-            AlarmTask task = new AlarmTask();
+            Timer timer = new Timer(alarmName);//initializes a new timer with name alarmName
+            AlarmTask task = new AlarmTask();//initializes a new alarmTask
             timer.schedule(task, date.getTime(), 604800000);
+            //sets a timer to ring at time input every week
             timerList.add(timer);
+            //adds timer to the list of timers corresponding to this alarm
         }
     }
 

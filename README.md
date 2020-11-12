@@ -43,3 +43,6 @@ Found at: https://github.students.cs.ubc.ca/CPSC210/TellerApp
 The implementation of saving and loading data took heavy influence from the CPSC 210 JsonDemo
 Found at: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 
+Icon Image is from:
+https://society6.com/product/geometric-cool-elephant_wall-clock
+

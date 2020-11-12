@@ -29,6 +29,7 @@ public class ConsoleApp {
 
     //Effects; runs the console app
     public ConsoleApp() {
+        System.out.println("Please Know This Is A 24 Hour Clock System!");
         runConsoleApp();
     }
 
@@ -73,7 +74,7 @@ public class ConsoleApp {
     //Effects: prints out the list of option the user has to modify alarms and
     //alarmLists in the console
     private void displayMenu() {
-        System.out.println("\nMy Alarms:");
+        System.out.println("My Alarms:");
         System.out.println("\tadd alarm--a");
         System.out.println("\tremove alarm--r");
         System.out.println("\tchange alarm--c");
@@ -495,13 +496,22 @@ public class ConsoleApp {
     //returns the hour, otherwise returns -1
     private int validHourAdd() {
         System.out.println("Enter Hours:");
-        int hours = Integer.parseInt(input.nextLine());
-        if (hours < 24 && hours >= 0) {
-            return hours;
-        } else {
-            System.out.println("That is Not A Valid Hour");
-            return -1;
+        Boolean keepGoing = true;
+        int hours = -1;
+        while (keepGoing) {
+            String number = (input.nextLine());
+            try {
+                hours = Integer.parseInt(number);
+                if (hours >= 24 || hours < 0) {
+                    System.out.println("That Is Not A Valid Hour");
+                    hours = -1;
+                }
+                keepGoing = false;
+            } catch (NumberFormatException e) {
+                System.out.println("That Is Not An Integer!");
+            }
         }
+        return hours;
     }
 
 
@@ -509,13 +519,22 @@ public class ConsoleApp {
     //returns the hour, otherwise returns -1
     private int validMinutesAdd() {
         System.out.println("Enter Minutes:");
-        int minutes = Integer.parseInt(input.nextLine());
-        if (minutes > 59 || minutes < 0) {
-            System.out.println("That Is Not A Valid Minute");
-            return -1;
-        } else {
-            return minutes;
+        Boolean keepGoing = true;
+        int minutes = -1;
+        while (keepGoing) {
+            String number = (input.nextLine());
+            try {
+                minutes = Integer.parseInt(number);
+                if (minutes > 59 || minutes < 0) {
+                    System.out.println("That Is Not A Valid Minute");
+                    minutes = -1;
+                }
+                keepGoing = false;
+            } catch (NumberFormatException e) {
+                System.out.println("That Is Not An Integer!");
+            }
         }
+        return minutes;
     }
 
     //Effects: checks if the alarm is valid for doChangeAlarm

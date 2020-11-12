@@ -1,8 +1,10 @@
 package ui;
 
+import ui.gui.AlarmClock;
+
 public class Main {
     public static void main(String[] args) {
-        new Clock();
-        new ConsoleApp();
+        AlarmClock alarmClock = new AlarmClock();
+        //new ConsoleApp();
     }
 }
