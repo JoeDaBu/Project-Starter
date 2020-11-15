@@ -97,7 +97,7 @@ public class ClockPanel extends JPanel {
         time = timeFormat.format(t);//formats the time for the timeLabel
         timeLabel.setText(time);//sets the time for the time label
         day = dayFormat.format(t);
-        dayLabel.setText(day);
+        dayLabel.setText("  " + day + "  ");
         date = dateFormat.format(t);
         dateLabel.setText(date);
 

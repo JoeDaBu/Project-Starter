@@ -143,6 +143,11 @@ public class AlarmList implements Writable {
 
     //Effects: converts the list alarms to a string of all the alarms and returns it
     public String showAlarms() {
+        return showAlarmsBasis(", ");
+    }
+
+    //Effects: converts the list alarms to a string of all the alarms with a separator between every word and returns it
+    private String showAlarmsBasis(String separator) {
         String show;
         if (alarms.size() == 0) {
             show = "There Are No Alarms to Show";
@@ -150,7 +155,27 @@ public class AlarmList implements Writable {
             show = alarms.get(0).alarmToString();
             if (alarms.size() > 1) {
                 for (int i = 1; i < alarms.size(); i++) {
-                    show += ", " + alarms.get(i).alarmToString();
+                    show += separator + alarms.get(i).alarmToString();
+                }
+            }
+        }
+        return show;
+    }
+
+    //Effects: converts the list alarms to a string of all the alarms and returns it
+    public String showAlarmsGui() {
+        String show;
+        if (alarms.size() == 0) {
+            show = "There Are No Alarms to Show";
+        } else {
+            show = alarms.get(0).alarmToString();
+            if (alarms.size() > 1) {
+                for (int i = 1; i < alarms.size(); i++) {
+                    if (i % 2 == 0) {
+                        show += "\n" + alarms.get(i).alarmToString();
+                    } else {
+                        show += ", " + alarms.get(i).alarmToString();
+                    }
                 }
             }
         }

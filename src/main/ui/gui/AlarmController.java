@@ -5,6 +5,7 @@ import model.AlarmList;
 import model.DaysList;
 import model.DaysOfTheWeek;
 import model.exceptions.CancelException;
+import model.exceptions.EmptyList;
 import model.exceptions.ItemAlreadyExists;
 import model.exceptions.NotADay;
 
@@ -27,7 +28,8 @@ public class AlarmController implements ActionListener {
     JButton viewAlarm;
     JButton showAlarms;
     JButton sort;
-    // JButton save; show be in menu bar
+    private Update update;
+    //JButton save; show be in menu bar
     //JButton load; should be in menu bar
 
     AlarmController() {
@@ -53,15 +55,199 @@ public class AlarmController implements ActionListener {
             doRemoveAlarm();
         } else if (e.getSource() == changeAlarm) {
             doChangeAlarm();
-        }  else if (e.getSource() == showAlarms) {
+        } else if (e.getSource() == showAlarms) {
             doShowAlarms();
         } else if (e.getSource() == viewAlarm) {
             doViewAlarm();
-        }  else if (e.getSource() == sort) {
+        } else if (e.getSource() == sort) {
             doSortAlarms();
         }
     }
 
+    private void doSortAlarms() {
+        if (alarmListGUI.numAlarms() == 0) {
+            noItemsExist();
+        } else {
+            try {
+                choseSortAlarms();
+                doShowAlarms();
+            } catch (Exception e) {
+                cancelActionMessage();
+            }
+        }
+    }
+
+    private void choseSortAlarms() {
+        String[] choices = {"Alphabetical", "Time", "Cancel"};
+        int choice = JOptionPane.showOptionDialog(null,
+                "Chose How To Sort",
+                "Sort",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                choices,
+                0);
+        try {
+            if (choice == 0) {
+                alarmListGUI.alphabeticallySorter();
+            } else if (choice == 1) {
+                alarmListGUI.sortAlarmsByTime();
+            } else {
+                throw new CancelException();
+            }
+        } catch (EmptyList emptyList) {
+            System.out.println("Impossible Reached In Sorting");
+        }
+    }
+
+    private void doViewAlarm() {
+        if (alarmListGUI.numAlarms() == 0) {
+            noItemsExist();
+        } else {
+            try {
+                Boolean keepGoing = true;
+                while (keepGoing) {
+                    String name = findAlarmName();
+                    Alarm a = alarmListGUI.viewer(name);
+                    if (a == null) {
+                        alarmDoesNotExist();
+                    } else {
+                        viewAlarm(a);
+                        keepGoing = false;
+                    }
+                }
+            } catch (Exception e) {
+                cancelActionMessage();
+            }
+        }
+    }
+
+    private void viewAlarm(Alarm a) {
+        JOptionPane.showMessageDialog(null,
+                "Alarm:\n" + a.alarmToString(),
+                "View Alarm",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void doShowAlarms() {
+        if (alarmListGUI.numAlarms() == 0) {
+            noItemsExist();
+        } else {
+            String alarms = alarmListGUI.showAlarmsGui();
+            JOptionPane.showMessageDialog(null,
+                    "Alarm List:\n" + alarms,
+                    "All Alarms",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    private void doRemoveAlarm() {
+        if (alarmListGUI.numAlarms() == 0) {
+            noItemsExist();
+        } else {
+            try {
+                Boolean keepGoing = true;
+                while (keepGoing) {
+                    String name = findAlarmName();
+                    Alarm a = alarmListGUI.removeAlarm(name);
+                    if (a == null) {
+                        alarmDoesNotExist();
+                    } else {
+                        successfulRemoval(a);
+                        keepGoing = false;
+                    }
+                }
+            } catch (Exception e) {
+                cancelActionMessage();
+            }
+        }
+    }
+
+    private void doChangeAlarm() {
+        Boolean keepGoing = true;
+        try {
+            alarmListGUI.viewAlarm("test");
+            while (keepGoing) {
+                Alarm oldAlarm = alarmListGUI.viewAlarm(findAlarmName());
+                if (oldAlarm == null) {
+                    alarmDoesNotExist();
+                } else {
+                    String name = changeAlarmName(oldAlarm);
+                    int hour = changeAlarmHour(oldAlarm);
+                    int minutes = changeAlarmMinutes(oldAlarm);
+                    DaysList daysList = changeAlarmDays(oldAlarm);
+                    Alarm newAlarm = new Alarm(name, hour, minutes, daysList);
+                    alarmListGUI.changeAlarm(oldAlarm.getAlarmName(), newAlarm);
+                    viewAlarm(newAlarm);
+                    keepGoing = false;
+                }
+            }
+        } catch (CancelException e) {
+            cancelActionMessage();
+        } catch (EmptyList emptyList) {
+            noItemsExist();
+        }
+    }
+
+    private DaysList changeAlarmDays(Alarm a) {
+        DaysList daysList = new DaysList();
+        int contin = changeAlarmChangeQuestion("Would You Like To Change The Days");
+        if (contin == 2) {
+            throw new CancelException();
+        } else if (contin == 0) {
+            daysList = addAlarmDays();
+        } else {
+            daysList = a.getDaysOfTheWeek();
+        }
+        return daysList;
+    }
+
+    private int changeAlarmMinutes(Alarm a) {
+        int minutes = -1;
+        int contin = changeAlarmChangeQuestion("Would You Like To Change The Minutes");
+        if (contin == 2) {
+            throw new CancelException();
+        } else if (contin == 0) {
+            minutes = addAlarmMinutes();
+        } else {
+            minutes = a.getMinutes();
+        }
+        return minutes;
+    }
+
+    private int changeAlarmHour(Alarm a) {
+        int hour = -1;
+        int contin = changeAlarmChangeQuestion("Would You Like To Change The Hour");
+        if (contin == 2) {
+            throw new CancelException();
+        } else if (contin == 0) {
+            hour = addAlarmHour();
+        } else {
+            hour = a.getHours();
+        }
+        return hour;
+    }
+
+    private String changeAlarmName(Alarm a) {
+        String name = null;
+        int contin = changeAlarmChangeQuestion("Would You Like To Change The Name");
+        if (contin == 2) {
+            throw new CancelException();
+        } else if (contin == 0) {
+            name = addAlarmName();
+        } else {
+            name = a.getAlarmName();
+        }
+        return name;
+    }
+
+
+    private int changeAlarmChangeQuestion(String changeFactor) {
+        return JOptionPane.showConfirmDialog(null,
+                changeFactor,
+                "Change Alarm",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+    }
 
     private void doAddAlarm() {
         try {
@@ -71,11 +257,9 @@ public class AlarmController implements ActionListener {
             DaysList days = addAlarmDays();
             Alarm a = new Alarm(name, hours, minutes, days);
             alarmListGUI.addAlarm(a);
+            //Update.update();
         } catch (CancelException cancelException) {
-            JOptionPane.showMessageDialog(null,
-                    "Action Was Cancelled!",
-                    "Cancelled",
-                    JOptionPane.WARNING_MESSAGE);//replace later
+            cancelActionMessage();
         }
     }
 
@@ -103,24 +287,31 @@ public class AlarmController implements ActionListener {
         return days;
     }
 
-    private String getStringAddAlarmDay() {
-        return JOptionPane.showInputDialog(null,
-                "Note: Canceling Sets Day To Everyday \nEnter Day:",
-                "Add Alarm",
-                JOptionPane.QUESTION_MESSAGE);
-    }
-
-    private void addAlarmDaysError(String s) {
-        JOptionPane.showMessageDialog(null,
-                s, "Invalid",
-                JOptionPane.ERROR_MESSAGE);
-    }
-
     private int addAlarmMinutes() {
-        int minutes = Integer.parseInt(JOptionPane.showInputDialog(null,
-                "Enter Alarm Minutes:",
-                "Add Alarm",
-                JOptionPane.QUESTION_MESSAGE));
+
+        int minutes = -1;
+        Boolean keepGoing = true;
+        while (keepGoing) {
+            String number = JOptionPane.showInputDialog(null,
+                    "Enter Alarm Minutes:",
+                    "New Alarm Minutes",
+                    JOptionPane.QUESTION_MESSAGE);
+            if (number == null) {
+                throw new CancelException();
+            } else {
+
+                try {
+                    minutes = Integer.parseInt(number);
+                    if (minutes < 60 && minutes >= 0) {
+                        keepGoing = false;
+                    } else {
+                        addAlarmIntError("That is Not A Valid Minute!");
+                    }
+                } catch (NumberFormatException e) {
+                    addAlarmIntError("That is Not An Integer!");
+                }
+            }
+        }
         return minutes;
     }
 
@@ -130,7 +321,7 @@ public class AlarmController implements ActionListener {
         while (keepGoing) {
             String number = JOptionPane.showInputDialog(null,
                     "Enter Alarm Hour:",
-                    "Add Alarm",
+                    "New Alarm Hour",
                     JOptionPane.QUESTION_MESSAGE);
             if (number == null) {
                 throw new CancelException();
@@ -141,41 +332,77 @@ public class AlarmController implements ActionListener {
                     if (hours < 24 && hours >= 0) {
                         keepGoing = false;
                     } else {
-                        addAlarmHourError("That is Not A Valid Hour!", "Error", JOptionPane.ERROR_MESSAGE);
+                        addAlarmIntError("That is Not A Valid Hour!");
                     }
                 } catch (NumberFormatException e) {
-                    addAlarmHourError("That is Not An Integer!", "Error", JOptionPane.ERROR_MESSAGE);
+                    addAlarmIntError("That is Not An Integer!");
                 }
             }
         }
         return hours;
     }
 
-    private void addAlarmHourError(String s, String error, int errorMessage) {
-        JOptionPane.showMessageDialog(null,
-                s,
-                error,
-                errorMessage);
-    }
-
     private String addAlarmName() throws CancelException {
         String name = "";
         Boolean keepGoing = true;
         while (keepGoing) {
-            name = getAddAlarmName();
-            if (name.equals("")) {
-                getWarningAddAlarmName();
-                int contin = getWarningOptionAddAlarmName();
-                if (contin == 0) {
+            name = getInputAlarmName("New Alarm Name");
+            if (name != null) {
+                if (name.equals("")) {
+                    getWarningAddAlarmName();
+                    int contin = getWarningOptionAddAlarmName();
+                    if (contin == 0) {
+                        keepGoing = false;
+                    }
+                } else {
                     keepGoing = false;
                 }
-            } else if (name == null) {
-                throw new CancelException();
             } else {
-                keepGoing = false;
+                throw new CancelException();
             }
         }
         return name;
+    }
+
+    private String findAlarmName() {
+        String name = getInputAlarmName("Find Alarm");
+        if (name == null) {
+            throw  new CancelException();
+        }
+        return name;
+    }
+
+    private String getStringAddAlarmDay() {
+        return JOptionPane.showInputDialog(null,
+                "Note: Canceling Sets Day To Everyday(and/or ends the application)\nEnter Day:",
+                "New Alarm Days",
+                JOptionPane.QUESTION_MESSAGE);
+    }
+
+    private void addAlarmDaysError(String s) {
+        JOptionPane.showMessageDialog(null,
+                s, "Invalid",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void addAlarmIntError(String s) {
+        JOptionPane.showMessageDialog(null,
+                s, "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
+
+    private void cancelActionMessage() {
+        JOptionPane.showMessageDialog(null,
+                "Action Was Cancelled!",
+                "Cancelled",
+                JOptionPane.WARNING_MESSAGE);//replace later
+    }
+
+    private String getInputAlarmName(String title) {
+        return JOptionPane.showInputDialog(null,
+                    "Enter Alarm Name:",
+                    title,
+                    JOptionPane.QUESTION_MESSAGE);
     }
 
     private void getWarningAddAlarmName() {
@@ -191,13 +418,26 @@ public class AlarmController implements ActionListener {
                 "Warning", JOptionPane.YES_NO_OPTION);
     }
 
-    private String getAddAlarmName() {
-        return JOptionPane.showInputDialog(null,
-                "Enter Alarm Name:",
-                "Add Alarm",
-                JOptionPane.QUESTION_MESSAGE);
+    private void noItemsExist() {
+        JOptionPane.showMessageDialog(null,
+                "No Alarms Exist!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
     }
 
+    private void successfulRemoval(Alarm a) {
+        JOptionPane.showMessageDialog(null,
+                "Success Removed Alarm:\n"
+                        + "\t" + a.alarmToString()
+                        + "\n\t :)");
+    }
+
+    private void alarmDoesNotExist() {
+        JOptionPane.showMessageDialog(null,
+                "No Such Alarm Exists!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE);
+    }
 
     private void addButton() {
         addAlarm = new JButton();
