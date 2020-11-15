@@ -29,11 +29,12 @@ public class ClockPanel extends JPanel {
         Border border = BorderFactory.createLineBorder(Color.green, 5); //creates a border
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         setLabels();
-        setVisible(true);
-        timer = new Timer();
         setBackground(new Color(0,0,0));
         setBorder(border);
         setBounds(0,0, 390, 170);
+        setVisible(true);
+
+        timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
             public void run() {

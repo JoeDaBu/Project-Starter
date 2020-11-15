@@ -77,28 +77,6 @@ public class AlarmController implements ActionListener {
         }
     }
 
-    private void choseSortAlarms() {
-        String[] choices = {"Alphabetical", "Time", "Cancel"};
-        int choice = JOptionPane.showOptionDialog(null,
-                "Chose How To Sort",
-                "Sort",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                choices,
-                0);
-        try {
-            if (choice == 0) {
-                alarmListGUI.alphabeticallySorter();
-            } else if (choice == 1) {
-                alarmListGUI.sortAlarmsByTime();
-            } else {
-                throw new CancelException();
-            }
-        } catch (EmptyList emptyList) {
-            System.out.println("Impossible Reached In Sorting");
-        }
-    }
 
     private void doViewAlarm() {
         if (alarmListGUI.numAlarms() == 0) {
@@ -122,12 +100,6 @@ public class AlarmController implements ActionListener {
         }
     }
 
-    private void viewAlarm(Alarm a) {
-        JOptionPane.showMessageDialog(null,
-                "Alarm:\n" + a.alarmToString(),
-                "View Alarm",
-                JOptionPane.INFORMATION_MESSAGE);
-    }
 
     private void doShowAlarms() {
         if (alarmListGUI.numAlarms() == 0) {
@@ -154,12 +126,27 @@ public class AlarmController implements ActionListener {
                         alarmDoesNotExist();
                     } else {
                         successfulRemoval(a);
+                        update.updateRemove(name, a);
                         keepGoing = false;
                     }
                 }
             } catch (Exception e) {
                 cancelActionMessage();
             }
+        }
+    }
+
+    private void doAddAlarm() {
+        try {
+            String name = addAlarmName();
+            int hours = addAlarmHour();
+            int minutes = addAlarmMinutes();
+            DaysList days = addAlarmDays();
+            Alarm a = new Alarm(name, hours, minutes, days);
+            alarmListGUI.addAlarm(a);
+            update.updateAdd(name, a);
+        } catch (CancelException cancelException) {
+            cancelActionMessage();
         }
     }
 
@@ -187,6 +174,10 @@ public class AlarmController implements ActionListener {
         } catch (EmptyList emptyList) {
             noItemsExist();
         }
+    }
+
+    public void setUpdate(Update update) {
+        this.update = update;
     }
 
     private DaysList changeAlarmDays(Alarm a) {
@@ -241,27 +232,36 @@ public class AlarmController implements ActionListener {
         return name;
     }
 
-
-    private int changeAlarmChangeQuestion(String changeFactor) {
-        return JOptionPane.showConfirmDialog(null,
-                changeFactor,
-                "Change Alarm",
-                JOptionPane.YES_NO_CANCEL_OPTION);
-    }
-
-    private void doAddAlarm() {
+    private void choseSortAlarms() {
+        String[] choices = {"Alphabetical", "Time", "Cancel"};
+        int choice = JOptionPane.showOptionDialog(null,
+                "Chose How To Sort",
+                "Sort",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                choices,
+                0);
         try {
-            String name = addAlarmName();
-            int hours = addAlarmHour();
-            int minutes = addAlarmMinutes();
-            DaysList days = addAlarmDays();
-            Alarm a = new Alarm(name, hours, minutes, days);
-            alarmListGUI.addAlarm(a);
-            //Update.update();
-        } catch (CancelException cancelException) {
-            cancelActionMessage();
+            if (choice == 0) {
+                alarmListGUI.alphabeticallySorter();
+            } else if (choice == 1) {
+                alarmListGUI.sortAlarmsByTime();
+            } else {
+                throw new CancelException();
+            }
+        } catch (EmptyList emptyList) {
+            System.out.println("Impossible Reached In Sorting");
         }
     }
+
+    private void viewAlarm(Alarm a) {
+        JOptionPane.showMessageDialog(null,
+                "Alarm:\n" + a.alarmToString(),
+                "View Alarm",
+                JOptionPane.INFORMATION_MESSAGE);
+    }
+
 
     private DaysList addAlarmDays() {
         DaysList days = new DaysList();
@@ -348,14 +348,18 @@ public class AlarmController implements ActionListener {
         while (keepGoing) {
             name = getInputAlarmName("New Alarm Name");
             if (name != null) {
-                if (name.equals("")) {
-                    getWarningAddAlarmName();
-                    int contin = getWarningOptionAddAlarmName();
-                    if (contin == 0) {
+                if (alarmListGUI.viewer(name) == null) {
+                    if (name.equals("")) {
+                        getWarningAddAlarmName();
+                        int contin = getWarningOptionAddAlarmName();
+                        if (contin == 0) {
+                            keepGoing = false;
+                        }
+                    } else {
                         keepGoing = false;
                     }
                 } else {
-                    keepGoing = false;
+                    nameAlreadyExistError();
                 }
             } else {
                 throw new CancelException();
@@ -364,12 +368,17 @@ public class AlarmController implements ActionListener {
         return name;
     }
 
+
     private String findAlarmName() {
         String name = getInputAlarmName("Find Alarm");
         if (name == null) {
-            throw  new CancelException();
+            throw new CancelException();
         }
         return name;
+    }
+
+    public Update getUpdate() {
+        return update;
     }
 
     private String getStringAddAlarmDay() {
@@ -377,6 +386,19 @@ public class AlarmController implements ActionListener {
                 "Note: Canceling Sets Day To Everyday(and/or ends the application)\nEnter Day:",
                 "New Alarm Days",
                 JOptionPane.QUESTION_MESSAGE);
+    }
+
+    private int changeAlarmChangeQuestion(String changeFactor) {
+        return JOptionPane.showConfirmDialog(null,
+                changeFactor,
+                "Change Alarm",
+                JOptionPane.YES_NO_CANCEL_OPTION);
+    }
+
+    private void nameAlreadyExistError() {
+        JOptionPane.showMessageDialog(null,
+                "That Alarm Already Exists!",
+                "Error", JOptionPane.ERROR_MESSAGE);
     }
 
     private void addAlarmDaysError(String s) {
@@ -400,9 +422,9 @@ public class AlarmController implements ActionListener {
 
     private String getInputAlarmName(String title) {
         return JOptionPane.showInputDialog(null,
-                    "Enter Alarm Name:",
-                    title,
-                    JOptionPane.QUESTION_MESSAGE);
+                "Enter Alarm Name:",
+                title,
+                JOptionPane.QUESTION_MESSAGE);
     }
 
     private void getWarningAddAlarmName() {
