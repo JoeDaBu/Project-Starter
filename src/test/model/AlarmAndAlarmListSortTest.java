@@ -111,7 +111,7 @@ public class AlarmAndAlarmListSortTest {
         }
     }
 
-    //Note: this test and the one below it are time dependent and were tested on monday @ 12:48 am
+    //Note: this test and the next 8 below it are time dependent tests.
     @Test
     public void testSorterImminentHard() {
         try {
