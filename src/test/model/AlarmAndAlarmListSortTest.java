@@ -127,19 +127,20 @@ public class AlarmAndAlarmListSortTest {
         } catch (EmptyList emptyList) {
             fail("Caught an EmptyList expected a non empty list");
         }
+        System.out.println(testList.getAlarms().get(0).alarmToString());
         ArrayList<Alarm> testArray = testList.getAlarms();
-        assertEquals(testArray.get(0), test10);
-        assertEquals(testArray.get(1), test8);
-        assertEquals(testArray.get(2), test);
-        assertEquals(testArray.get(3), test11);
-        assertEquals(testArray.get(4), test2);
-        assertEquals(testArray.get(5), test12);
-        assertEquals(testArray.get(6), test3);
-        assertEquals(testArray.get(7), test6);
-        assertEquals(testArray.get(8), test7);
-        assertEquals(testArray.get(9), test5);
-        assertEquals(testArray.get(10), test9);
-        assertEquals(testArray.get(11), test4);
+        assertEquals(testArray.get(0), test);
+        assertEquals(testArray.get(1), test11);
+        assertEquals(testArray.get(2), test2);
+        assertEquals(testArray.get(3), test12);
+        assertEquals(testArray.get(4), test3);
+        assertEquals(testArray.get(5), test6);
+        assertEquals(testArray.get(6), test7);
+        assertEquals(testArray.get(7), test5);
+        assertEquals(testArray.get(8), test10);
+        assertEquals(testArray.get(9), test9);
+        assertEquals(testArray.get(10), test4);
+        assertEquals(testArray.get(11), test8);
     }
 
     @Test
@@ -160,11 +161,11 @@ public class AlarmAndAlarmListSortTest {
     @Test
     public void testGetNegative() {
         ArrayList<Integer> testList = test2.getNegative();
-        assertEquals(testList.size(), 1);
+        assertEquals(testList.size(), 0);
         ArrayList<Integer> testList2 = test6.getNegative();
-        assertEquals(testList2.size(), 7);
+        assertEquals(testList2.size(), 0);
         ArrayList<Integer> testList3 = test.getNegative();
-        assertEquals(testList3.size(), 2);
+        assertEquals(testList3.size(), 0);
     }
 
     @Test
@@ -179,9 +180,16 @@ public class AlarmAndAlarmListSortTest {
         ArrayList<Integer> testList = test2.getPositive();
         assertEquals(testList.size(), 0);
         ArrayList<Integer> testList2 = test6.getPositive();
-        assertEquals(testList2.size(), 0);
+        assertEquals(testList2.size(), 6);
         ArrayList<Integer> testList3 = test.getPositive();
-        assertEquals(testList3.size(), 0);
+        assertEquals(testList3.size(), 1);
+        ArrayList<Integer> testList4 = test3.getPositive();
+        assertEquals(testList4.size(), 1);
+        ArrayList<Integer> testList5 = test4.getPositive();
+        assertEquals(testList5.size(), 1);
+        ArrayList<Integer> testList6 = test10.getPositive();
+        assertEquals(testList6.size(), 1);
+
     }
 
     @Test
@@ -199,13 +207,21 @@ public class AlarmAndAlarmListSortTest {
         ArrayList<Integer> positive = new ArrayList<>();
         positive.add(6);
         positive.add(3);
-        assertEquals(test6.categorizeLists(negative, positive), -7140000);
+        assertEquals(test6.categorizeLists(negative, positive), 3);
     }
 
     @Test
     public void testNextOccurrence() {
         assertEquals(test8.nextOccurrence(), test8.getToday());
+        assertEquals(test10.nextOccurrence(), 5);
         assertEquals(test2.nextOccurrence(), 5);
+    }
+
+    @Test
+    public void testGetToday() {
+        assertEquals(test10.getToday(), 5);
+        assertEquals(test6.getToday(), 5);
+        assertEquals(test8.getToday(), 5);
     }
 
     @Test

@@ -179,12 +179,12 @@ public class Alarm implements Writable {
         ArrayList<Integer> negative = getNegative();
         ArrayList<Integer> positive = getPositive();
         int timeTo = 1000000000;
-        if ((negative.isEmpty()) && (positive.isEmpty())) {
-            return getToday();
-        } else if (getToday() == -1) {
-            timeTo = categorizeLists(negative, positive);
-        } else if (getToday() < 518400000) {
-            return getToday();
+        int lists = categorizeLists(negative, positive);
+        int today = getToday();
+        if ((lists < today) || (today == -1)) {
+            timeTo = lists;
+        } else {
+            timeTo = today;
         }
         return timeTo;
     }
@@ -216,7 +216,7 @@ public class Alarm implements Writable {
     public ArrayList<Integer> getPositive() {
         ArrayList<Integer> positive = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
+        int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         if (day == 0) {
             day = 7;
         }
@@ -233,7 +233,7 @@ public class Alarm implements Writable {
     public ArrayList<Integer> getNegative() {
         ArrayList<Integer> negative = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
-        int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
+        int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         if (day == 0) {
             day = 7;
         }
@@ -251,7 +251,7 @@ public class Alarm implements Writable {
         ArrayList<Integer> today = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int timeTill = -1;
-        int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
+        int day = calendar.get(Calendar.DAY_OF_WEEK) - 1;
         if (day == 0) {
             day = 7;
         }
