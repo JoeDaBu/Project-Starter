@@ -12,7 +12,7 @@ import java.util.TimerTask;
 //The counter of time panel
 public class ClockPanel extends JPanel {
 
-    private Timer timer;
+    private final Timer timer;
     private SimpleDateFormat timeFormat;
     private JLabel timeLabel;
     private String time;
@@ -29,9 +29,9 @@ public class ClockPanel extends JPanel {
         Border border = BorderFactory.createLineBorder(Color.green, 5); //creates a border
         setLayout(new FlowLayout(FlowLayout.CENTER, 5, 0));
         setLabels();
-        setBackground(new Color(0,0,0));
+        setBackground(new Color(0, 0, 0));
         setBorder(border);
-        setBounds(0,0, 390, 170);
+        setBounds(0, 0, 390, 170);
         setVisible(true);
 
         timer = new Timer();

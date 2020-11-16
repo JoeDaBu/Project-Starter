@@ -6,32 +6,33 @@ import model.AlarmList;
 import javax.swing.*;
 import java.awt.*;
 
+//The Class To Run the GUI App
 public class AlarmClock extends JFrame implements Observer {
-    private final BaseClock baseClock;
-    private AlarmControllerPanelLabels controllerLabels;
-    private MenuBar menuBar;
-    private AlarmControllerPanelButtons buttons;
-    private ClockPanel clockPanel;
-    private AlarmController controller;
-    private Update update;
-    public AlarmList alarmList;
-
     private static final int HEIGHT = 356;
     private static final int WIDTH = 422;
+    private final BaseClock baseClock;
+    private final AlarmControllerPanelLabels controllerLabels;
+    private final MenuBar menuBar;
+    private final AlarmControllerPanelButtons buttons;
+    private final ClockPanel clockPanel;
+    private final AlarmController controller;
+    private final Update update;
+    public String name;
 
+    //Effects: Initializes everything in GUI
     public AlarmClock() {
-        alarmList = new AlarmList("My Alarm List");
+        name();
         clockPanel = new ClockPanel();
-        controller = new AlarmController();
+        controller = new AlarmController(name);
         buttons = new AlarmControllerPanelButtons(controller);
-        menuBar = new MenuBar();
+        menuBar = new MenuBar(controller, this);
         setJMenuBar(menuBar);
         baseClock = new BaseClock(clockPanel, buttons);
         add(baseClock);
         controllerLabels = new AlarmControllerPanelLabels();
         //add(controllerLabels);
-        update = new Update(this, controllerLabels, controller);
-        setTitle("Alarm Clock");//Sets time of gui
+        update = new Update(this, controllerLabels, controller, menuBar);
+        setTitle(name);//Sets time of gui
         setDefaultCloseOperation(EXIT_ON_CLOSE);//action of the x button/change later
         setResizable(false);//prevents the frame from changing in size
         setLayout(new GridLayout());//or null
@@ -48,6 +49,21 @@ public class AlarmClock extends JFrame implements Observer {
 //        pack();
         //new panel
         //pack()
+    }
+
+    //Modifies: this
+    //Effects: sets name to a user input
+    private void name() {
+        name = getString();
+    }
+
+    //Effects: gets a name from the user
+    private String getString() {
+        String name = JOptionPane.showInputDialog(null,
+                "Name Your New AlarmList",
+                "A New Beginning",
+                JOptionPane.PLAIN_MESSAGE);
+        return name;
     }
 
     //new static method
@@ -69,10 +85,58 @@ public class AlarmClock extends JFrame implements Observer {
 
     @Override
     public void updateRemove(String name, Alarm alarm) {
-
+        add(controllerLabels);
+        pack();
     }
 
-    /*public void update(AlarmControllerPanelLabels alarmControllerPanelLabels) {
+    @Override
+    public void updateView(String name) {
+        add(controllerLabels);
+        pack();
+    }
+
+    @Override
+    public void updateChange(String oldName, Alarm oldAlarm, String newName, Alarm newAlarm) {
+        add(controllerLabels);
+        pack();
+    }
+
+    @Override
+    public void updateShow() {
+        Boolean show = AlarmControllerPanelLabels.getShow();
+        if (show) {
+            remove(controllerLabels);
+            pack();
+//        setSize(new Dimension(WIDTH,HEIGHT));
+        } else {
+            add(controllerLabels);
+            pack();
+        }
+    }
+
+    @Override
+    public void updateSort(AlarmList type) {
+        pack();
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public void updateName(String name) {
+        this.name = name;
+        setTitle(name);
+    }
+
+    @Override
+    public void updateRemoveAll() {
+        remove(controllerLabels);
+        pack();
+    }
+
+/*public void update(AlarmControllerPanelLabels alarmControllerPanelLabels) {
         add(alarmControllerPanelLabels);
     }*/
 }

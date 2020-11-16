@@ -4,7 +4,6 @@ import model.exceptions.ItemAlreadyExists;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import ui.Task.AlarmTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
@@ -14,14 +13,13 @@ import static model.DaysOfTheWeek.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AlarmAndListTest {
-    public Alarm test;
-    public AlarmList listTest;
-    AlarmTask task;
-
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
+    public Alarm test;
+    public AlarmList listTest;
+    AlarmTask task;
 
     @BeforeEach
     public void createAlarmsAndLists() {

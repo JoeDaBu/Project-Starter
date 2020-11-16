@@ -3,7 +3,8 @@ package model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static model.DaysOfTheWeek.*;
+import static model.DaysOfTheWeek.Friday;
+import static model.DaysOfTheWeek.Monday;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DaysOfTheWeekTest {

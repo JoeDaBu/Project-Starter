@@ -7,7 +7,6 @@ import model.exceptions.ListObjectNonExistent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
 import static model.DaysOfTheWeek.*;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,7 +51,7 @@ public class DaysListTest {
         } catch (EmptyList emptyList) {
             fail("TestList is a non empty list");
         } catch (ListObjectNonExistent listObjectNonExistent) {
-           //expected
+            //expected
         }
     }
 

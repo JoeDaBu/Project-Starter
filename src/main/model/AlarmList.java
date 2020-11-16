@@ -130,6 +130,39 @@ public class AlarmList implements Writable {
     }
 
     //Modifies: this
+    //Effects: sorts alarms by most imminent
+    public void sortByImminent() throws EmptyList {
+        if (alarms.size() == 0) {
+            throw new EmptyList();
+        } else {
+            alarms = imminent();
+        }
+    }
+
+    //Requires: A non empty list
+    //Effects: sorts the list alarms by most imminent, with the earliest first
+    public ArrayList<Alarm> imminent() {
+        ArrayList<Alarm> alarmsByEarliest = new ArrayList<>();
+        alarmsByEarliest.add(alarms.get(0));
+        for (int i = 1; i < alarms.size(); i++) {
+            int time = alarms.get(i).nextOccurrence();
+            int latestTime = alarmsByEarliest.get(alarmsByEarliest.size() - 1).nextOccurrence();
+            if (time > latestTime) {
+                alarmsByEarliest.add(alarms.get(i));
+            } else {
+                for (int t = 0; t < alarmsByEarliest.size(); t++) {
+                    int earlyTime = alarmsByEarliest.get(t).nextOccurrence();
+                    if (time <= earlyTime) {
+                        alarmsByEarliest.add(t, alarms.get(i));
+                        break;
+                    }
+                }
+            }
+        }
+        return alarmsByEarliest;
+    }
+
+    //Modifies: this
     //Effects: sorts alarms list by name
     public ArrayList<Alarm> alphabeticallySorter() throws EmptyList {
         int size = alarms.size();

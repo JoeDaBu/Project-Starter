@@ -2,7 +2,6 @@ package model;
 
 import org.json.JSONObject;
 import persistence.Writable;
-import ui.Task.AlarmTask;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -173,6 +172,122 @@ public class Alarm implements Writable {
             return nextOrSame.getDayOfMonth();
 
         }
+    }
+
+    //Effects: get the next occurrence of the alarm
+    public int nextOccurrence() {
+        ArrayList<Integer> negative = getNegative();
+        ArrayList<Integer> positive = getPositive();
+        int timeTo = 1000000000;
+        if ((negative.isEmpty()) && (positive.isEmpty())) {
+            return getToday();
+        } else if (getToday() == -1) {
+            timeTo = categorizeLists(negative, positive);
+        } else if (getToday() < 518400000) {
+            return getToday();
+        }
+        return timeTo;
+    }
+
+    //Effects: checks negative and positives list to find the next occurrence of the alarm
+    private int categorizeLists(ArrayList<Integer> negative, ArrayList<Integer> positive) {
+        int timeTo;
+        if (positive.isEmpty()) {
+            int smallestInt = 0;
+            for (int i = 0; i < negative.size(); i++) {
+                if (negative.get(i) < smallestInt) {
+                    smallestInt = negative.get(i);
+                }
+            }
+            timeTo = (((smallestInt + 7) * 86400000) + getTimeTo());
+        } else {
+            int smallestInt = 1000000000;
+            for (int i = 0; i < positive.size(); i++) {
+                if (positive.get(i) < smallestInt) {
+                    smallestInt = negative.get(i);
+                }
+            }
+            timeTo = (smallestInt * 86400000) + getTimeTo();
+        }
+        return timeTo;
+    }
+
+    //Effects: creates the positive list of occurrences
+    private ArrayList<Integer> getPositive() {
+        ArrayList<Integer> positive = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
+        if (day == 0) {
+            day = 7;
+        }
+        for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            int nextDay = (daysOfTheWeek.get(i).dayNum - day);
+            if (nextDay > 0) {
+                positive.add(nextDay);
+            }
+        }
+        return positive;
+    }
+
+    //Effects: create the negative list of occurrences
+    private ArrayList<Integer> getNegative() {
+        ArrayList<Integer> negative = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
+        if (day == 0) {
+            day = 7;
+        }
+        for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            int nextDay = (daysOfTheWeek.get(i).dayNum - day);
+            if (nextDay < 0) {
+                negative.add(nextDay);
+            }
+        }
+        return negative;
+    }
+
+    //Effects: if the alarm goes off today gets how long ago it went off or time till it goes off
+    private Integer getToday() {
+        ArrayList<Integer> today = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int timeTill = -1;
+        int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
+        if (day == 0) {
+            day = 7;
+        }
+        for (int i = 0; i < daysOfTheWeek.size(); i++) {
+            int nextDay = (daysOfTheWeek.get(i).dayNum - day);
+            if (nextDay == 0) {
+                today.add(nextDay);
+            }
+        }
+        if (!(today.isEmpty())) {
+            if (today()) {
+                timeTill = getTimeTo();
+            } else {
+                timeTill = getTimeTo() + 604800000;
+            }
+        } else {
+            timeTill = -1;
+        }
+        return timeTill;
+    }
+
+    //Effects: returns is the alarm will go off later in the day
+    private Boolean today() {
+        Calendar calendar = Calendar.getInstance();
+        Boolean hourPrior = (hours > calendar.get(Calendar.HOUR_OF_DAY));
+        Boolean hourEqual = (hours == calendar.get(Calendar.HOUR_OF_DAY));
+        Boolean timePrior = hourEqual && (calendar.get(Calendar.MINUTE) < minutes);
+        return (timePrior || hourPrior);
+    }
+
+    //Effects: gets the time till or past since the all goes/went off
+    private int getTimeTo() {
+        Calendar calendar = Calendar.getInstance();
+        int hoursTill = hours - calendar.get(Calendar.HOUR_OF_DAY);
+        int minutesTill = minutes - calendar.get(Calendar.MINUTE);
+        return ((hoursTill * 3600000) + (minutesTill * 60000));
     }
 
     @Override

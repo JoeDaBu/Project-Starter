@@ -34,18 +34,28 @@ public class AlarmListSortTest {
         } catch (ItemAlreadyExists itemAlreadyExists) {
             fail();
         }
-        test = new Alarm("t1", 9, 30, dofWeek);
+        DaysList dofWeek2 = new DaysList();
+        DaysList dofWeek3 = new DaysList();
+        dofWeek3.add(Friday);
+        dofWeek3.add(Monday);
+        DaysList dofWeek4 = new DaysList();
+        dofWeek4.add(Sunday);
+        DaysList dofWeek5 = new DaysList();
+        dofWeek5.add(Thursday);
+        DaysList dofWeek6 = new DaysList();
+        dofWeek6.add(Wednesday);
+        test = new Alarm("t1", 9, 30, dofWeek3);
         test2 = new Alarm("e2", 9, 35, dofWeek);
-        test3 = new Alarm("a3", 10, 30, dofWeek);
-        test4 = new Alarm("v4", 1, 0, dofWeek);
-        test5 = new Alarm("jo", 23, 59, dofWeek);
-        test6 = new Alarm("g", 23, 59, dofWeek);
-        test7 = new Alarm("ga", 13, 59, dofWeek);
+        test3 = new Alarm("a3", 10, 30, dofWeek3);
+        test4 = new Alarm("v4", 1, 0, dofWeek4);
+        test5 = new Alarm("jo", 23, 59, dofWeek5);
+        test6 = new Alarm("g", 23, 59, dofWeek2);
+        test7 = new Alarm("ga", 13, 59, dofWeek6);
         test8 = new Alarm("gan", 0, 0, dofWeek);
-        test9 = new Alarm("gand", 0, 0, dofWeek);
-        test10 = new Alarm("gando", 0, 0, dofWeek);
+        test9 = new Alarm("gand", 0, 0, dofWeek4);
+        test10 = new Alarm("gando", 0, 0, dofWeek3);
         test11 = new Alarm("gandol", 9, 31, dofWeek);
-        test12 = new Alarm("gandolf", 9, 36, dofWeek);
+        test12 = new Alarm("gandolf", 9, 36, dofWeek2);
         testList = new AlarmList("testList");
         testList.addAlarm(test);
         testList.addAlarm(test2);
@@ -79,6 +89,18 @@ public class AlarmListSortTest {
     }
 
     @Test
+    public void testSortImminentEmpty() {
+        AlarmList testList2 = new AlarmList("testList2");
+        ArrayList<Alarm> t = null;
+        try {
+            testList2.sortByImminent();
+            fail("expected an empty list exception");
+        } catch (EmptyList emptyList) {
+            //expected
+        }
+    }
+
+    @Test
     public void testSortTimeEmptyList() {
         AlarmList testList2 = new AlarmList("testList2");
         ArrayList<Alarm> t = null;
@@ -90,9 +112,54 @@ public class AlarmListSortTest {
         }
     }
 
+    //Note: this test and the one below it are time dependent and were tested on monday @ 12:48 am
+    @Test
+    public void testSorterImminentHard() {
+        try {
+            testList.addAlarm(test5);
+            testList.addAlarm(test6);
+            testList.addAlarm(test7);
+            testList.addAlarm(test8);
+            testList.addAlarm(test9);
+            testList.addAlarm(test10);
+            testList.addAlarm(test11);
+            testList.addAlarm(test12);
+            testList.sortByImminent();
+        } catch (EmptyList emptyList) {
+            fail("Caught an EmptyList expected a non empty list");
+        }
+        ArrayList<Alarm> testArray = testList.getAlarms();
+        assertEquals(testArray.get(0), test10);
+        assertEquals(testArray.get(1), test8);
+        assertEquals(testArray.get(2), test);
+        assertEquals(testArray.get(3), test11);
+        assertEquals(testArray.get(4), test2);
+        assertEquals(testArray.get(5), test12);
+        assertEquals(testArray.get(6), test3);
+        assertEquals(testArray.get(7), test6);
+        assertEquals(testArray.get(8), test7);
+        assertEquals(testArray.get(9), test5);
+        assertEquals(testArray.get(10), test9);
+        assertEquals(testArray.get(11), test4);
+    }
+
+    @Test
+    public void testSorterImminent() {
+        try {
+            testList.addAlarm(test5);
+            testList.sortByImminent();
+        } catch (EmptyList emptyList) {
+            fail("Caught an EmptyList expected a non empty list");
+        }
+        ArrayList<Alarm> testArray = testList.getAlarms();
+        assertEquals(testArray.get(0), test);
+        assertEquals(testArray.get(1), test2);
+        assertEquals(testArray.get(2), test3);
+        assertEquals(testArray.get(3), test5);
+    }
+
     @Test
     public void testSorterTime() {
-        ArrayList<Alarm> t = null;
         try {
             testList.addAlarm(test5);
             testList.addAlarm(test6);
@@ -106,7 +173,6 @@ public class AlarmListSortTest {
         } catch (EmptyList emptyList) {
             fail("Caught an EmptyList expected a non empty list");
         }
-        System.out.println(testList);
         ArrayList<Alarm> testArray = testList.getAlarms();
         assertEquals(testArray.get(0), test10);
         assertEquals(testArray.get(1), test9);
@@ -122,16 +188,15 @@ public class AlarmListSortTest {
         assertEquals(testArray.get(11), test5);
     }
 
+
     @Test
     public void testSorterTimeHard() {
-        ArrayList<Alarm> t = null;
         try {
             testList.addAlarm(test5);
             testList.sortAlarmsByTime();
         } catch (EmptyList emptyList) {
             fail("Caught an EmptyList expected a non empty list");
         }
-        System.out.println(testList);
         ArrayList<Alarm> testArray = testList.getAlarms();
         assertEquals(testArray.get(0), test4);
         assertEquals(testArray.get(1), test);
@@ -140,17 +205,27 @@ public class AlarmListSortTest {
     }
 
     @Test
+    public void testSorter2Imminent() {
+        AlarmList testList2 = new AlarmList("testList2");
+        testList2.addAlarm(test);
+        try {
+            testList2.sortByImminent();
+        } catch (EmptyList emptyList) {
+            fail("Expected a non empty list");
+        }
+        assertEquals(testList2.getAlarms().get(0), test);
+    }
+
+    @Test
     public void testSorter2Time() {
         AlarmList testList2 = new AlarmList("testList2");
         testList2.addAlarm(test);
-        ArrayList<Alarm> t = null;
         try {
             testList2.sortAlarmsByTime();
         } catch (EmptyList emptyList) {
             fail("Expected a non empty list");
         }
-        t = testList2.getAlarms();
-        assertEquals(t.get(0), test);
+        assertEquals(testList2.getAlarms().get(0), test);
     }
 
     @Test
@@ -177,7 +252,7 @@ public class AlarmListSortTest {
 
     @Test
     public void testShowAlarms() {
-        String a = "t1 9:30 [Monday], e2 9:35 [Monday], a3 10:30 [Monday], v4 1:0 [Monday]";
+        String a = "t1 9:30 [Monday, Friday], e2 9:35 [Monday], a3 10:30 [Monday, Friday], v4 1:0 [Sunday]";
         assertEquals(a, testList.showAlarms());
     }
 

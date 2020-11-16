@@ -3,7 +3,6 @@ package persistence;
 import model.Alarm;
 import model.DaysList;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class JsonTest {

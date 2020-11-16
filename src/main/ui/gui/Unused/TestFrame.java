@@ -86,3 +86,15 @@ public class TestFrame extends JFrame {
 
 }
 */
+//@Override
+//public void updateShow() {
+//        Boolean show = controllerLabels.getShow();
+//        if (show) {
+//        remove(controllerLabels);
+//        pack();
+////        setSize(new Dimension(WIDTH,HEIGHT));
+//        } else {
+//        add(controllerLabels);
+//        pack();
+//        }
+//        }
