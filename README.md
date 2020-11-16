@@ -26,6 +26,8 @@
 - As a user, when I start the application I want to be given the option to load my AlarmList
 
 ##Phase 3 User Stories
+- As a user, I want to be able to add multiple alarms to my gui
+- As a user, I want to be able to load and save the state of the GUI application
 - As a user, I want my alarms to write a message when they do off
 - As a user, I want to be able to sort alarms by time they will go off
 

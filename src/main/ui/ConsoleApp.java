@@ -82,6 +82,7 @@ public class ConsoleApp {
         System.out.println("\tshow alarms--show");
         System.out.println("\tsort alarms by time--st");
         System.out.println("\tsort alarms by name--sn");
+        System.out.println("\tsort alarms by imminent--si");
         System.out.println("\tsave alarms--save");
         System.out.println("\tload alarms--load");
         System.out.println("\tquit--q");
@@ -285,6 +286,20 @@ public class ConsoleApp {
             printAlarms(selected);
         } catch (EmptyList emptyList) {
             assert selected.numAlarms() == 0;
+            System.out.println("There Are No Alarms To Sort");
+        }
+    }
+
+    //Modifies: this
+    //Effects: sorts the selected alarm list based on most imminent,
+    //other wise if there are no alarms says so
+    private void doSortAlarmsImminent() {
+        AlarmList selected = selectAlarmList();
+        try {
+            selected.sortByImminent();
+            System.out.println("Successfully Sorted Alarms");
+            printAlarms(selected);
+        } catch (EmptyList emptyList) {
             System.out.println("There Are No Alarms To Sort");
         }
     }
@@ -657,8 +672,9 @@ public class ConsoleApp {
         Boolean viewAlarmValid = (command.equals("v") || command.equals("view alarm"));
         Boolean sortAlarmTimeValid = (command.equals("st") || command.equals("sort by time"));
         Boolean sortAlarmNameValid = (command.equals("sn") || command.equals("sort by name"));
+        Boolean sortAlarmImminentValid = (command.equals("si") || command.equals("sort by imminent"));
         Boolean showAlarmsValid = (command.equals("show") || command.equals("show alarms"));
-        Boolean validSort = sortAlarmNameValid || sortAlarmTimeValid;
+        Boolean validSort = sortAlarmNameValid || sortAlarmTimeValid || sortAlarmImminentValid;
         Boolean validPartModifyAlarms = addAlarmValid || removeAlarmValid || changeAlarmValid || validSort;
         Boolean validModifyAlarms = validPartModifyAlarms || showAlarmsValid || viewAlarmValid;
         return validModifyAlarms;
@@ -680,15 +696,27 @@ public class ConsoleApp {
         } else if (command.equals("v") || command.equals("view alarm")) {
             System.out.println("You Chose To View an Alarm");
             doViewAlarm();
-        } else if (command.equals("st") || command.equals("sort by time")) {
+        } else if (command.equals("show") || command.equals("show alarms")) {
+            System.out.println("You Chose To Show the Alarms");
+            doShowAlarms();
+        } else {
+            modifyAlarmsSort(command);
+        }
+    }
+
+    //Requires:Command to be a valid command
+    //Modifies: this
+    //Effects: modifies the sorts the alarmList according to a given command
+    private void modifyAlarmsSort(String command) {
+        if (command.equals("st") || command.equals("sort by time")) {
             System.out.println("You Chose To Sort the Alarms By Time");
             doSortAlarmsTime();
         } else if (command.equals("sn") || command.equals("sort by name")) {
             System.out.println("You Chose To Sort the Alarms By Name");
             doSortAlarmsName();
-        } else if (command.equals("show") || command.equals("show alarms")) {
-            System.out.println("You Chose To Show the Alarms");
-            doShowAlarms();
+        } else if (command.equals("si") || command.equals("sort by imminent")) {
+            System.out.println("You Chose To Sort the Alarms By Imminent");
+            doSortAlarmsImminent();
         }
     }
 
