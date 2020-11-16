@@ -93,7 +93,7 @@ public class ClockPanel extends JPanel {
     //Effects: Gets the time and sets labels
     public void tickTock() {
         Calendar t2 = Calendar.getInstance();//gets current time
-        t2.add(Calendar.MILLISECOND, 550);//adds time to time retrieved
+        t2.add(Calendar.MILLISECOND, 580);//adds time to time retrieved
         Date t = t2.getTime();//set t to time gotten
         time = timeFormat.format(t);//formats the time for the timeLabel
         timeLabel.setText(time);//sets the time for the time label
