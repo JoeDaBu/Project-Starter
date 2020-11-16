@@ -8,10 +8,9 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 
 import static model.DaysOfTheWeek.*;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.fail;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class AlarmListSortTest {
+public class AlarmAndAlarmListSortTest {
     public Alarm test;
     public Alarm test2;
     public Alarm test3;
@@ -159,6 +158,57 @@ public class AlarmListSortTest {
     }
 
     @Test
+    public void testGetNegative() {
+        ArrayList<Integer> testList = test2.getNegative();
+        assertEquals(testList.size(), 1);
+        ArrayList<Integer> testList2 = test6.getNegative();
+        assertEquals(testList2.size(), 7);
+        ArrayList<Integer> testList3 = test.getNegative();
+        assertEquals(testList3.size(), 2);
+    }
+
+    @Test
+    public void testGetNextOccurrence() {
+        assertEquals(test2.getNextOccurrence(Monday), 16);
+        assertEquals(test6.getNextOccurrence(Monday), 16);
+        assertEquals(test8.getNextOccurrence(Monday), 23);
+    }
+
+    @Test
+    public void testGetPositive() {
+        ArrayList<Integer> testList = test2.getPositive();
+        assertEquals(testList.size(), 0);
+        ArrayList<Integer> testList2 = test6.getPositive();
+        assertEquals(testList2.size(), 0);
+        ArrayList<Integer> testList3 = test.getPositive();
+        assertEquals(testList3.size(), 0);
+    }
+
+    @Test
+    public void testToday() {
+        assertTrue(test2.today());
+        assertTrue(test6.today());
+        assertTrue(test.today());
+    }
+
+    @Test
+    public void testCategorizeLists() {
+        ArrayList<Integer> negative = new ArrayList<>();
+        negative.add(-1);
+        negative.add(-5);
+        ArrayList<Integer> positive = new ArrayList<>();
+        positive.add(6);
+        positive.add(3);
+        assertEquals(test6.categorizeLists(negative, positive), -7140000);
+    }
+
+    @Test
+    public void testNextOccurrence() {
+        assertEquals(test8.nextOccurrence(), test8.getToday());
+        assertEquals(test2.nextOccurrence(), 5);
+    }
+
+    @Test
     public void testSorterTime() {
         try {
             testList.addAlarm(test5);
@@ -257,9 +307,22 @@ public class AlarmListSortTest {
     }
 
     @Test
+    public void testShowAlarmsGUI() {
+        String a = "t1 9:30 [Monday, Friday], e2 9:35 [Monday]\n" +
+                "a3 10:30 [Monday, Friday], v4 1:0 [Sunday]";
+        assertEquals(a, testList.showAlarmsGui());
+    }
+
+    @Test
     public void testShowNoAlarms() {
         AlarmList testList2 = new AlarmList("testList2");
         assertEquals(testList2.showAlarms(), "There Are No Alarms to Show");
+    }
+
+    @Test
+    public void testShowNoAlarmsGUI() {
+        AlarmList testList2 = new AlarmList("testList2");
+        assertEquals(testList2.showAlarmsGui(), "There Are No Alarms to Show");
     }
 
     @Test
@@ -267,6 +330,13 @@ public class AlarmListSortTest {
         AlarmList testList2 = new AlarmList("testList2");
         testList2.addAlarm(test);
         assertEquals(testList2.showAlarms(), test.alarmToString());
+    }
+
+    @Test
+    public void testShowOneAlarmGUI() {
+        AlarmList testList2 = new AlarmList("testList2");
+        testList2.addAlarm(test);
+        assertEquals(testList2.showAlarmsGui(), test.alarmToString());
     }
 
     @Test

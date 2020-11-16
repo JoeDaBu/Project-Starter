@@ -190,7 +190,7 @@ public class Alarm implements Writable {
     }
 
     //Effects: checks negative and positives list to find the next occurrence of the alarm
-    private int categorizeLists(ArrayList<Integer> negative, ArrayList<Integer> positive) {
+    public int categorizeLists(ArrayList<Integer> negative, ArrayList<Integer> positive) {
         int timeTo;
         if (positive.isEmpty()) {
             int smallestInt = 0;
@@ -204,7 +204,7 @@ public class Alarm implements Writable {
             int smallestInt = 1000000000;
             for (int i = 0; i < positive.size(); i++) {
                 if (positive.get(i) < smallestInt) {
-                    smallestInt = negative.get(i);
+                    smallestInt = positive.get(i);
                 }
             }
             timeTo = (smallestInt * 86400000) + getTimeTo();
@@ -213,7 +213,7 @@ public class Alarm implements Writable {
     }
 
     //Effects: creates the positive list of occurrences
-    private ArrayList<Integer> getPositive() {
+    public ArrayList<Integer> getPositive() {
         ArrayList<Integer> positive = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
@@ -230,7 +230,7 @@ public class Alarm implements Writable {
     }
 
     //Effects: create the negative list of occurrences
-    private ArrayList<Integer> getNegative() {
+    public ArrayList<Integer> getNegative() {
         ArrayList<Integer> negative = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int day = calendar.get(Calendar.DAY_OF_WEEK - 1);
@@ -247,7 +247,7 @@ public class Alarm implements Writable {
     }
 
     //Effects: if the alarm goes off today gets how long ago it went off or time till it goes off
-    private Integer getToday() {
+    public Integer getToday() {
         ArrayList<Integer> today = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         int timeTill = -1;
@@ -274,7 +274,7 @@ public class Alarm implements Writable {
     }
 
     //Effects: returns is the alarm will go off later in the day
-    private Boolean today() {
+    public Boolean today() {
         Calendar calendar = Calendar.getInstance();
         Boolean hourPrior = (hours > calendar.get(Calendar.HOUR_OF_DAY));
         Boolean hourEqual = (hours == calendar.get(Calendar.HOUR_OF_DAY));
