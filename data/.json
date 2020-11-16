@@ -1,0 +1,19 @@
+{
+  "alarms": [
+    {
+      "hour": 2,
+      "Days of the Week": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "minutes": 4,
+      "name": "Joe"
+    }
+  ],
+  "name": "Joe"
+}
