@@ -111,7 +111,7 @@ public class AlarmAndAlarmListSortTest {
         }
     }
 
-    //Note: this test and the next 8 below it are time dependent tests.
+    //Note: this test and the next 10 below it are time dependent tests.
     @Test
     public void testSorterImminentHard() {
         try {
