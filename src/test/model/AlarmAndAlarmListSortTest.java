@@ -47,13 +47,13 @@ public class AlarmAndAlarmListSortTest {
         test2 = new Alarm("e2", 9, 35, dofWeek5);
         test3 = new Alarm("a3", 10, 30, dofWeek3);
         test4 = new Alarm("v4", 1, 0, dofWeek4);
-        test5 = new Alarm("jo", 23, 59, dofWeek5);
+        test5 = new Alarm("jo", 12, 55, dofWeek5);
         test6 = new Alarm("g", 23, 59, dofWeek2);
         test7 = new Alarm("ga", 13, 59, dofWeek6);
         test8 = new Alarm("gan", 0, 0, dofWeek);
         test9 = new Alarm("gand", 0, 0, dofWeek4);
         test10 = new Alarm("gando", 0, 0, dofWeek3);
-        test11 = new Alarm("gandol", 9, 31, dofWeek);
+        test11 = new Alarm("gandol", 12, 10, dofWeek5);
         test12 = new Alarm("gandolf", 9, 36, dofWeek2);
         testList = new AlarmList("testList");
         testList.addAlarm(test);
@@ -175,6 +175,9 @@ public class AlarmAndAlarmListSortTest {
         assertEquals(test2.getNextOccurrence(Monday), 16);
         assertEquals(test6.getNextOccurrence(Monday), 16);
         assertEquals(test8.getNextOccurrence(Monday), 23);
+        assertEquals(test11.getNextOccurrence(Thursday), 26);
+        assertEquals(test5.getNextOccurrence(Thursday), 19);
+        assertEquals(test2.getNextOccurrence(Thursday), 26);
     }
 
     @Test
@@ -196,9 +199,11 @@ public class AlarmAndAlarmListSortTest {
 
     @Test
     public void testToday() {
-        assertTrue(test2.today());
+        assertFalse(test2.today());
         assertTrue(test6.today());
         assertTrue(test.today());
+        assertFalse(test5.today());
+        assertTrue(test11.today());
     }
 
     @Test
@@ -212,6 +217,8 @@ public class AlarmAndAlarmListSortTest {
         assertEquals(test6.categorizeLists(negative, positive), 3);
         ArrayList<Integer> negative2 = new ArrayList<>();
         negative.add(-4);
+        negative.add(-5);
+        negative.add(-1);
         negative.add(-6);
         assertEquals(test.categorizeLists(negative2, new ArrayList<>()), 3);
     }
