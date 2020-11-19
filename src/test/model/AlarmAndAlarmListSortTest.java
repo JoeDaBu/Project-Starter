@@ -53,7 +53,7 @@ public class AlarmAndAlarmListSortTest {
         test8 = new Alarm("gan", 0, 0, dofWeek);
         test9 = new Alarm("gand", 0, 0, dofWeek4);
         test10 = new Alarm("gando", 0, 0, dofWeek3);
-        test11 = new Alarm("gandol", 12, 10, dofWeek5);
+        test11 = new Alarm("gandol", 0, 10, dofWeek5);
         test12 = new Alarm("gandolf", 9, 36, dofWeek2);
         testList = new AlarmList("testList");
         testList.addAlarm(test);
@@ -216,10 +216,10 @@ public class AlarmAndAlarmListSortTest {
         positive.add(3);
         assertEquals(test6.categorizeLists(negative, positive), 3);
         ArrayList<Integer> negative2 = new ArrayList<>();
-        negative.add(-4);
-        negative.add(-5);
-        negative.add(-1);
-        negative.add(-6);
+        negative2.add(-4);
+        negative2.add(-5);
+        negative2.add(-1);
+        negative2.add(-6);
         assertEquals(test.categorizeLists(negative2, new ArrayList<>()), 3);
     }
 
