@@ -44,7 +44,7 @@ public class AlarmAndAlarmListSortTest {
         DaysList dofWeek6 = new DaysList();
         dofWeek6.add(Wednesday);
         test = new Alarm("t1", 9, 30, dofWeek3);
-        test2 = new Alarm("e2", 9, 35, dofWeek);
+        test2 = new Alarm("e2", 9, 35, dofWeek5);
         test3 = new Alarm("a3", 10, 30, dofWeek3);
         test4 = new Alarm("v4", 1, 0, dofWeek4);
         test5 = new Alarm("jo", 23, 59, dofWeek5);
