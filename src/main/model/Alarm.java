@@ -273,7 +273,7 @@ public class Alarm implements Writable {
         return timeTill;
     }
 
-    //Effects: returns is the alarm will go off later in the day
+    //Effects: returns if the alarm will go off later in the day
     public Boolean today() {
         Calendar calendar = Calendar.getInstance();
         Boolean hourPrior = (hours > calendar.get(Calendar.HOUR_OF_DAY));
