@@ -28,7 +28,6 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
         show = true;
         view = true;
         showImage = true;
-        setBackground(Color.lightGray);
         setImage();
         setLayout();
         bgImage = bgImage2;
@@ -45,8 +44,7 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
         try {
             Image image;
             image = ImageIO.read(new File("./data/geometric-cool-elephant-wall-clocks.jpg"));
-            bgImage2 = image.getScaledInstance(WIDTH - 20,300, Image.SCALE_SMOOTH);
-
+            bgImage2 = image.getScaledInstance(WIDTH - 60,290, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             System.out.println("Image Error");
         }
@@ -69,7 +67,7 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.drawImage(bgImage, 20, 0, null);
+        g.drawImage(bgImage, 40, 5, null);
     }
 
     @Override

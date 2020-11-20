@@ -5,6 +5,7 @@ import model.AlarmList;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
 
 //The Class To Run the GUI App
 public class AlarmClock extends JFrame implements Observer {
@@ -21,6 +22,8 @@ public class AlarmClock extends JFrame implements Observer {
 
     //Effects: Initializes everything in GUI
     public AlarmClock() {
+        ImageIcon imageIcon = new ImageIcon("./data/geometric-cool-elephant-wall-clocks.jpg");
+        setIconImage(imageIcon.getImage());
         clockPanel = new ClockPanel();
         controller = new AlarmController(name);
         buttons = new AlarmControllerPanelButtons(controller);
