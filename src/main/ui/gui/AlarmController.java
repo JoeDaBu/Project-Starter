@@ -30,6 +30,7 @@ public class AlarmController implements ActionListener {
     JButton showAlarms;
     JButton sort;
     JButton changeName;
+    JButton imageToggle;
     private Update update;
     //JButton save; show be in menu bar
     //JButton load; should be in menu bar
@@ -44,6 +45,7 @@ public class AlarmController implements ActionListener {
         showButton();
         sortButton();
         changeNameButton();
+        imageToggleButton();
     }
 
     //JOptionPane.showMessageDialog - shows a simple dialog
@@ -67,6 +69,8 @@ public class AlarmController implements ActionListener {
             doSortAlarms();
         } else if (e.getSource() == changeName) {
             doChangeName();
+        } else if (e.getSource() == imageToggle) {
+            doImageToggle();
         }
     }
 
@@ -125,6 +129,15 @@ public class AlarmController implements ActionListener {
                 cancelActionMessage();
             }
         }
+    }
+
+    //Effects: toggles the image
+    private void doImageToggle() {
+        JOptionPane.showMessageDialog(null,
+                "Image Toggled",
+                "Toggle",
+                JOptionPane.INFORMATION_MESSAGE);
+        update.updateImage();
     }
 
     //Effects: shows all alarms in a popup
@@ -596,6 +609,15 @@ public class AlarmController implements ActionListener {
         changeName.setBounds(XBOUNDS, YBOUNDS, WIDTH, HEIGHT);
         changeName.setText("Change Name");
         changeName.setFocusable(false);
+    }
+
+    //Effects: adds and initializes a button
+    private void imageToggleButton() {
+        imageToggle = new JButton();
+        imageToggle.addActionListener(this);
+        imageToggle.setBounds(XBOUNDS, YBOUNDS, WIDTH, HEIGHT);
+        imageToggle.setText("Image Toggle");
+        imageToggle.setFocusable(false);
     }
 
     //Requires: days of the week inputs to be lower case

@@ -60,6 +60,13 @@ public class Update {
         }
     }
 
+    //Effects: notifies all observers to toggle image
+    public void updateImage() {
+        for (Observer o : updaters) {
+            o.updateImage();
+        }
+    }
+
     //Effects: notifies all observers to toggle show all alarms
     public void updateShow() {
         for (Observer o : updaters) {
@@ -73,6 +80,8 @@ public class Update {
             o.updateSort(controller.alarmListGUI);
         }
     }
+
+
 
     //Effects: notifies all observers to change name
     public void updateName(String name) {

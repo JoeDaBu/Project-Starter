@@ -3,8 +3,11 @@ package ui.gui;
 import model.Alarm;
 import model.AlarmList;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 //Class of all alarm labels
@@ -13,16 +16,27 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
     private static int HEIGHT;
     private static int rows = 0;
     private static Boolean show;
+    private static Boolean showImage;
     private static Boolean view;
     private ArrayList<AlarmLabel> labels;
+    private static Image bgImage;
 
     //Effects: initializes and sets up the panel
     public AlarmControllerPanelLabels() {
         labels = new ArrayList<>();
         show = true;
         view = true;
+        showImage = true;
+        try {
+            Image image;
+            image = ImageIO.read(new File("./data/geometric-cool-elephant-wall-clocks.jpg"));
+            bgImage = image.getScaledInstance(WIDTH - 20,300, Image.SCALE_SMOOTH);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         setLayout();
-        setBackground(Color.lightGray);
+//        setBackground(Color.lightGray);
         setMinimumSize(new Dimension(0, 0));
         //setBounds(0,0, WIDTH,HEIGHT);
         //setPreferredSize();
@@ -42,6 +56,14 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
     //Effects: sets the layout of the panel
     private void setLayout() {
         setLayout(new GridLayout(rows, 1));
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        if (showImage) {
+            super.paintComponent(g);
+            g.drawImage(bgImage, 20, 0, null);
+        }
     }
 
     @Override
@@ -118,6 +140,19 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
             show = false;
         } else {
             show = true;
+            changeRender();
+        }
+    }
+
+    @Override
+    public void updateImage() {
+        if (showImage) {
+            setBackground(Color.lightGray);
+            setOpaque(true);
+            show = false;
+        } else {
+            showImage = true;
+            setOpaque(false);
             changeRender();
         }
     }

@@ -29,6 +29,7 @@ public class AlarmControllerPanelButtons extends JPanel {
         add(controller.showAlarms);
         add(controller.sort);
         add(controller.changeName);
+        add(controller.imageToggle);
     }
 
     public AlarmController getController() {

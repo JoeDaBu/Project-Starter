@@ -232,6 +232,17 @@ class AlarmAndListTest {
     }
 
     @Test
+    public void testDayToString() {
+        assertEquals(test.dayToStringAbbr("", "", Monday), "Mon");
+        assertEquals(test.dayToStringAbbr("", "", Friday), "Fri");
+        assertEquals(test.dayToStringAbbr("", "", Tuesday), "Tue");
+        assertEquals(test.dayToStringAbbr("", "", Thursday), "Thu");
+        assertEquals(test.dayToStringAbbr("", "", Sunday), "Sun");
+        assertEquals(test.dayToStringAbbr("", "", Saturday), "Sat");
+        assertEquals(test.dayToStringAbbr("", "", Wednesday), "Wed");
+    }
+
+    @Test
     public void testTimer2() {
         DaysList daysList = new DaysList();
         Alarm a = new Alarm("Joe", 9, 30, daysList);

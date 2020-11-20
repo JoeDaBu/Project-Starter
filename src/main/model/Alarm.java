@@ -118,7 +118,44 @@ public class Alarm implements Writable {
     //it goes off, and on what days
     public String alarmToString() {
         String day = Arrays.toString(daysOfTheWeek.toArray());
-        return alarmName + " " + hours + ":" + minutes + " " + day;
+        return alarmBodyToString() + day;
+    }
+
+    //Effects: retruns everything but days of the alarm as a string
+    public String alarmBodyToString() {
+        return alarmName + " " + hours + ":" + minutes + " ";
+    }
+
+    //Effects: converts the daysList to a string with the abbreviated form
+    public String daysToStringAbbr() {
+        String days = "[";
+        days += dayToStringAbbr("", "", daysOfTheWeek.get(0));
+        for (int i = 1; i < daysOfTheWeek.size(); i++) {
+            days += dayToStringAbbr(", ", "", daysOfTheWeek.get(i));
+        }
+        days += "]";
+        return days;
+    }
+
+    //Effects: returns the abbreviated form of the day as a string
+    public String dayToStringAbbr(String begin, String after, DaysOfTheWeek d) {
+        String day = "";
+        if (d == Monday) {
+            day = begin + "Mon" + after;
+        } else if (d == Tuesday) {
+            day = begin + "Tue" + after;
+        } else if (d == Wednesday) {
+            day = begin + "Wed" + after;
+        } else if (d == Friday) {
+            day = begin + "Fri" + after;
+        } else if (d == Sunday) {
+            day = begin + "Sun" + after;
+        } else if (d == Saturday) {
+            day = begin + "Sat" + after;
+        } else {
+            day = begin + "Thu" + after;
+        }
+        return day;
     }
 
     //Modifies: This

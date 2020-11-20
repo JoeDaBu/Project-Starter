@@ -23,6 +23,9 @@ public interface Observer {
     //Effects: toggles the view of all alarms
     void updateShow();
 
+    //Effects: toggles the view of the image
+    void updateImage();
+
     //Modifies: this
     //Effects: sorts the alarms
     void updateSort(AlarmList alarmList);

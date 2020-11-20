@@ -63,6 +63,13 @@ public class AlarmAndAlarmListSortTest {
     }
 
     @Test
+    public void testDaysToStringAbbr() {
+        assertEquals(test.daysToStringAbbr(), "[Mon, Fri]");
+        assertEquals(test11.daysToStringAbbr(), "[Thu]");
+        assertEquals(test6.daysToStringAbbr(), "[Mon, Tue, Wed, Thu, Fri, Sat, Sun]");
+    }
+
+    @Test
     public void testAlphabeticalSort() {
         try {
             testList.alphabeticallySorter();

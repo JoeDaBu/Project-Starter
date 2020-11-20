@@ -115,6 +115,11 @@ public class AlarmClock extends JFrame implements Observer {
     }
 
     @Override
+    public void updateImage() {
+        pack();
+    }
+
+    @Override
     public void updateSort(AlarmList type) {
         pack();
     }
