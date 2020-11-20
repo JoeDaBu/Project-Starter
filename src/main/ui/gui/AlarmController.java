@@ -141,8 +141,8 @@ public class AlarmController implements ActionListener {
     //Effects: toggles the image
     private void doImageToggle() {
         JOptionPane.showMessageDialog(null,
-                "Image Toggled",
-                "Toggle",
+                "Image Closed",
+                "Close",
                 JOptionPane.INFORMATION_MESSAGE);
         update.updateImage();
     }
@@ -623,7 +623,7 @@ public class AlarmController implements ActionListener {
         imageToggle = new JButton();
         imageToggle.addActionListener(this);
         imageToggle.setBounds(XBOUNDS, YBOUNDS, WIDTH, HEIGHT);
-        imageToggle.setText("Image Toggle");
+        imageToggle.setText("Close Image");
         imageToggle.setFocusable(false);
     }
 
