@@ -48,7 +48,14 @@ public class AlarmController implements ActionListener {
         imageToggleButton();
     }
 
-    //JOptionPane.showMessageDialog - shows a simple dialog
+    public AlarmList getAlarmListGUI() {
+        return alarmListGUI;
+    }
+
+    public void setAlarmListName(String name) {
+        this.alarmListGUI.setName(name);
+    }
+//JOptionPane.showMessageDialog - shows a simple dialog
     //JOptionPane.showConfirmDialog - shows a choice dialog depending on option type
     //JOptionPane.showInputDialog - shows a input dialog which has a user input
     //JOptionPane.showOptionDialog - shows a combination of all prior shows dialog

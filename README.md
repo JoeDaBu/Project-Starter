@@ -48,3 +48,9 @@ Found at: https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 Icon Image is from:
 https://society6.com/product/geometric-cool-elephant_wall-clock
 
+The implementation of the alarm sound is taken directly from:
+CPSC 210/ALarmSystem
+
+The alarm sound file is taken from:
+https://soundcloud.com/mirefixtape/when-the-shitpost-levels-too-high
+

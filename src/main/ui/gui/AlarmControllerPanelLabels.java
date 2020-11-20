@@ -19,7 +19,8 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
     private static Boolean showImage;
     private static Boolean view;
     private ArrayList<AlarmLabel> labels;
-    private static Image bgImage;
+    private static Image bgImage2;
+    private Image bgImage;
 
     //Effects: initializes and sets up the panel
     public AlarmControllerPanelLabels() {
@@ -27,21 +28,28 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
         show = true;
         view = true;
         showImage = true;
-        try {
-            Image image;
-            image = ImageIO.read(new File("./data/geometric-cool-elephant-wall-clocks.jpg"));
-            bgImage = image.getScaledInstance(WIDTH - 20,300, Image.SCALE_SMOOTH);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        setBackground(Color.lightGray);
+        setImage();
         setLayout();
+        bgImage = bgImage2;
 //        setBackground(Color.lightGray);
         setMinimumSize(new Dimension(0, 0));
         //setBounds(0,0, WIDTH,HEIGHT);
         //setPreferredSize();
 
         setVisible(true);
+    }
+
+    //Effects: gets the image from file
+    private void setImage() {
+        try {
+            Image image;
+            image = ImageIO.read(new File("./data/geometric-cool-elephant-wall-clocks.jpg"));
+            bgImage2 = image.getScaledInstance(WIDTH - 20,300, Image.SCALE_SMOOTH);
+
+        } catch (IOException e) {
+            System.out.println("Image Error");
+        }
     }
 
     public static Boolean getShow() {
@@ -60,10 +68,8 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
 
     @Override
     protected void paintComponent(Graphics g) {
-        if (showImage) {
-            super.paintComponent(g);
-            g.drawImage(bgImage, 20, 0, null);
-        }
+        super.paintComponent(g);
+        g.drawImage(bgImage, 20, 0, null);
     }
 
     @Override
@@ -147,12 +153,13 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
     @Override
     public void updateImage() {
         if (showImage) {
-            setBackground(Color.lightGray);
-            setOpaque(true);
+            bgImage = null;
             show = false;
+            changeRender();
         } else {
+            bgImage = bgImage2;
+            paintComponent(getGraphics());
             showImage = true;
-            setOpaque(false);
             changeRender();
         }
     }

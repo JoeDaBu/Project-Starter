@@ -21,7 +21,6 @@ public class AlarmClock extends JFrame implements Observer {
 
     //Effects: Initializes everything in GUI
     public AlarmClock() {
-        name();
         clockPanel = new ClockPanel();
         controller = new AlarmController(name);
         buttons = new AlarmControllerPanelButtons(controller);
@@ -32,7 +31,9 @@ public class AlarmClock extends JFrame implements Observer {
         controllerLabels = new AlarmControllerPanelLabels();
         //add(controllerLabels);
         update = new Update(this, controllerLabels, controller, menuBar);
-        setTitle(name);//Sets time of gui
+        name();
+        setTitle(name);
+        controller.setAlarmListName(name);
         setDefaultCloseOperation(EXIT_ON_CLOSE);//action of the x button/change later
         setResizable(false);//prevents the frame from changing in size
         setLayout(new GridLayout());//or null
@@ -54,7 +55,22 @@ public class AlarmClock extends JFrame implements Observer {
     //Modifies: this
     //Effects: sets name to a user input
     private void name() {
-        name = getString();
+        String[] choices = {"New", "Load", "Cancel"};
+        int choice = JOptionPane.showOptionDialog(null,
+                "Chose How To Begin",
+                "Paths",
+                JOptionPane.YES_NO_CANCEL_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                choices,
+                -1);
+        if (choice == 0) {
+            name = getString();
+        } else if (choice == 1) {
+            menuBar.doLoad();
+        } else {
+            System.exit(0);
+        }
     }
 
     //Effects: gets a name from the user

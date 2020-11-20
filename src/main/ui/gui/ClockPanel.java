@@ -80,7 +80,7 @@ public class ClockPanel extends JPanel {
     //Modifies: This
     //Effects: Prepares the time label to receive a time
     private void setTimeLabel() {
-        timeFormat = new SimpleDateFormat("hh:mm:ss a"); //sets how to showcase time
+        timeFormat = new SimpleDateFormat("HH:mm:ss"); //sets how to showcase time
         timeLabel = new JLabel();//initializes the label
         timeLabel.setFont(new Font("Times New Roman", Font.BOLD, 50));//declares font to use
         timeLabel.setForeground(new Color(0xFFFF0000, true));//sets foreground color
@@ -96,7 +96,7 @@ public class ClockPanel extends JPanel {
         t2.add(Calendar.MILLISECOND, 580);//adds time to time retrieved
         Date t = t2.getTime();//set t to time gotten
         time = timeFormat.format(t);//formats the time for the timeLabel
-        timeLabel.setText(time);//sets the time for the time label
+        timeLabel.setText("    " + time + "    ");//sets the time for the time label
         day = dayFormat.format(t);
         dayLabel.setText("  " + day + "  ");
         date = dateFormat.format(t);

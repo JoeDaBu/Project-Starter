@@ -115,7 +115,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
 
     //Modifies: this
     //Effects: loads the alarmList of the Gui
-    private void doLoad() {
+    public void doLoad() {
         JSON_STORE = persistenceLocation("Load From:", "Load");
         jsonReader = new JsonReader(JSON_STORE);
         update.updateRemoveAll();
