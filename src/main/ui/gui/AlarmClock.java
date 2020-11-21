@@ -12,6 +12,7 @@ public class AlarmClock extends JFrame implements Observer {
     private static final int WIDTH = 422;
     private final BaseClock baseClock;
     private final AlarmControllerPanelLabels controllerLabelsWithImage;
+    private final AlarmControllerPanelLabels controllerLabelsWithoutImage;
     private final MenuBar menuBar;
     private final AlarmControllerPanelButtons buttons;
     private final ClockPanel clockPanel;
@@ -20,6 +21,7 @@ public class AlarmClock extends JFrame implements Observer {
     private static Boolean hasImageShowing;
     public String name;
 
+    //Modifies: AlarmController, baseClock, menuBar, AlarmControllerButtons,
     //Effects: Initializes everything in GUI
     public AlarmClock() {
         hasImageShowing = true;
@@ -33,10 +35,10 @@ public class AlarmClock extends JFrame implements Observer {
         baseClock = new BaseClock(clockPanel, buttons);
         add(baseClock);
         controllerLabelsWithImage = new LabelsWithImage();
+        controllerLabelsWithoutImage = new LabelsWithoutImage();
         //add(controllerLabels);
         update = new Update(controller, menuBar);
-        update.addObservers(this);
-        update.addObservers(controllerLabelsWithImage);
+        addingObservers();
         name();
         setTitle(name);
         controller.setAlarmListName(name);
@@ -51,6 +53,14 @@ public class AlarmClock extends JFrame implements Observer {
 //        label.setIcon(image);
 //        add(label);
         pack();//or use set sizes
+    }
+
+    //Modifies: Update
+    //Effects: Adds Observers to update
+    private void addingObservers() {
+        update.addObservers(this);
+        update.addObservers(controllerLabelsWithImage);
+        update.addObservers(controllerLabelsWithoutImage);
     }
 
     //Modifies: this
@@ -150,6 +160,7 @@ public class AlarmClock extends JFrame implements Observer {
     @Override
     public void updateRemoveAll() {
         remove(controllerLabelsWithImage);
+        remove(controllerLabelsWithoutImage);
         pack();
     }
 
