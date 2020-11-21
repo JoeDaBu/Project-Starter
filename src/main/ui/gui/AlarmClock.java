@@ -137,8 +137,6 @@ public class AlarmClock extends JFrame implements Observer {
 
     @Override
     public void updateImage() {
-//        if (hasImageShowing) {
-//        }
     }
 
     @Override
