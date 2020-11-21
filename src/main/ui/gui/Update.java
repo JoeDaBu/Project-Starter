@@ -27,6 +27,12 @@ public class Update {
         updaters.add(o);
     }
 
+    //Modifies This
+    //Effects: removes the observer o frm the list updaters
+    public void removeObserver(Observer o) {
+        updaters.remove(o);
+    }
+
     //Effects: notifies all observers to add an alarm
     public void updateAdd(String name, Alarm alarm) {
         for (Observer o : updaters) {
@@ -57,9 +63,15 @@ public class Update {
 
     //Effects: notifies all observers to toggle image
     public void updateImage() {
+        AlarmClock toUpdate = null;
         for (Observer o : updaters) {
-            o.updateImage();
+            if (!(o.getClass() == AlarmClock.class)) {
+                o.updateImage();
+            } else {
+                toUpdate = (AlarmClock) o;
+            }
         }
+        toUpdate.updateImage();
     }
 
     //Effects: notifies all observers to toggle show all alarms
@@ -76,8 +88,6 @@ public class Update {
         }
     }
 
-
-
     //Effects: notifies all observers to change name
     public void updateName(String name) {
         for (Observer o : updaters) {
@@ -85,6 +95,7 @@ public class Update {
         }
     }
 
+    //Effects: notifies all observers to remove all
     public void updateRemoveAll() {
         for (Observer o : updaters) {
             o.updateRemoveAll();

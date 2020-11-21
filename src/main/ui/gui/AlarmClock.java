@@ -11,7 +11,8 @@ public class AlarmClock extends JFrame implements Observer {
     private static final int HEIGHT = 356;
     private static final int WIDTH = 422;
     private final BaseClock baseClock;
-    private final AlarmControllerPanelLabels controllerLabelsWithImage;
+    private AlarmControllerPanelLabels controllerLabelsWithImage;
+    private final AlarmControllerPanelLabels controllerLabelsWithoutImage;
     private final MenuBar menuBar;
     private final AlarmControllerPanelButtons buttons;
     private final ClockPanel clockPanel;
@@ -33,6 +34,7 @@ public class AlarmClock extends JFrame implements Observer {
         setJMenuBar(menuBar);
         baseClock = new BaseClock(clockPanel, buttons);
         add(baseClock);
+        controllerLabelsWithoutImage = new LabelsWithoutImage();
         controllerLabelsWithImage = new LabelsWithImage();
         //add(controllerLabels);
         update = new Update(controller, menuBar);
@@ -103,8 +105,13 @@ public class AlarmClock extends JFrame implements Observer {
 
     @Override
     public void updateAdd(String name, Alarm alarm) {
-        add(controllerLabelsWithImage);
-        pack();
+        if (hasImageShowing) {
+            add(controllerLabelsWithImage);
+            pack();
+        } else {
+            add(controllerLabelsWithoutImage);
+            pack();
+        }
     }
 
     @Override
@@ -121,19 +128,49 @@ public class AlarmClock extends JFrame implements Observer {
 
     @Override
     public void updateShow() {
-        Boolean show = AlarmControllerPanelLabels.getShow();
-        if (show) {
-            remove(controllerLabelsWithImage);
+        if (hasImageShowing) {
+            if (controllerLabelsWithImage.getShow()) {
+                remove(controllerLabelsWithImage);
+            } else {
+                add(controllerLabelsWithImage);
+            }
             pack();
-//        setSize(new Dimension(WIDTH,HEIGHT));
         } else {
-            add(controllerLabelsWithImage);
+            if (controllerLabelsWithoutImage.getShow()) {
+                remove(controllerLabelsWithoutImage);
+            } else {
+                add(controllerLabelsWithoutImage);
+            }
             pack();
         }
     }
 
     @Override
     public void updateImage() {
+        if (hasImageShowing) {
+            update.removeObserver(controllerLabelsWithImage);
+            controllerLabelsWithImage.updateRemoveAll();
+            update.addObservers(controllerLabelsWithoutImage);
+            remove(controllerLabelsWithImage);
+            pack();
+            hasImageShowing = false;
+//            controllerLabelsWithImage = new LabelsWithImage();
+            for (Alarm a : controller.alarmListGUI.getAlarms()) {
+                controller.getUpdate().updateAdd(a.getAlarmName(), a);
+            }
+            add(controllerLabelsWithoutImage);
+        } else {
+            update.removeObserver(controllerLabelsWithoutImage);
+            controllerLabelsWithoutImage.updateRemoveAll();
+            update.addObservers(controllerLabelsWithImage);
+            remove(controllerLabelsWithoutImage);
+            pack();
+            hasImageShowing = true;
+            for (Alarm a : controller.alarmListGUI.getAlarms()) {
+                controller.getUpdate().updateAdd(a.getAlarmName(), a);
+            }
+            add(controllerLabelsWithImage);
+        }
     }
 
     @Override
@@ -155,6 +192,7 @@ public class AlarmClock extends JFrame implements Observer {
     @Override
     public void updateRemoveAll() {
         remove(controllerLabelsWithImage);
+        remove(controllerLabelsWithoutImage);
         pack();
     }
 

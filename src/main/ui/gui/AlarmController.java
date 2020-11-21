@@ -17,7 +17,7 @@ import static model.DaysOfTheWeek.*;
 
 //The Class for all the buttons and their actions in the GUI
 public class AlarmController implements ActionListener {
-
+    private static Boolean toggled;
     private static final int WIDTH = 100;
     private static final int HEIGHT = 10;
     private static final int XBOUNDS = 100;
@@ -39,6 +39,7 @@ public class AlarmController implements ActionListener {
     //Effects: Creates all buttons and initializes the alarmList in gui
     AlarmController(String name) {
         alarmListGUI = new AlarmList(name);
+        toggled = false;
         addButton();
         removeButton();
         changeButton();
@@ -169,8 +170,16 @@ public class AlarmController implements ActionListener {
 
     //Effects: toggles the image
     private void doImageToggle() {
+        String onOrOff = "";
+        if (toggled) {
+            toggled = false;
+            onOrOff = "Opened";
+        } else {
+            toggled = true;
+            onOrOff = "Closed";
+        }
         JOptionPane.showMessageDialog(null,
-                "Image Closed",
+                "Image " + onOrOff,
                 "Close",
                 JOptionPane.INFORMATION_MESSAGE);
         update.updateImage();
@@ -651,7 +660,7 @@ public class AlarmController implements ActionListener {
         imageToggle = new JButton();
         imageToggle.addActionListener(this);
         imageToggle.setBounds(XBOUNDS, YBOUNDS, WIDTH, HEIGHT);
-        imageToggle.setText("Close Image");
+        imageToggle.setText("Toggle Image");
         imageToggle.setFocusable(false);
     }
 

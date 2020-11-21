@@ -34,12 +34,5 @@ public class LabelsWithImage extends AlarmControllerPanelLabels implements Obser
 
     @Override
     public void updateImage() {
-        if (showing) {
-            setVisible(false);
-            showing = false;
-        } else {
-            setVisible(true);
-            showing = true;
-        }
     }
 }
