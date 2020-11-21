@@ -31,6 +31,7 @@ public class AlarmController implements ActionListener {
     JButton sort;
     JButton changeName;
     JButton imageToggle;
+    JButton removeAll;
     private Update update;
     //JButton save; show be in menu bar
     //JButton load; should be in menu bar
@@ -46,6 +47,7 @@ public class AlarmController implements ActionListener {
         sortButton();
         changeNameButton();
         imageToggleButton();
+        removeAllButton();
     }
 
     public AlarmList getAlarmListGUI() {
@@ -78,6 +80,33 @@ public class AlarmController implements ActionListener {
             doChangeName();
         } else if (e.getSource() == imageToggle) {
             doImageToggle();
+        } else if (e.getSource() == removeAll) {
+            doRemoveAll();
+        }
+    }
+
+    //Modifies: this
+    //Effects removes all alarms
+    private void doRemoveAll() {
+        if (alarmListGUI.numAlarms() == 0) {
+            JOptionPane.showMessageDialog(null, "Have You No Mercy!"
+                            + " There Are No Alarms Left To Wake People From The Terror Of Sleep! "
+                            + "Who Will Now Cry Beep Beep Beep, at 7am in the morning!", "The Caveman User",
+                    JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            Integer choice = JOptionPane.showConfirmDialog(null,
+                    "Are you Sure You Want To Remove All?",
+                    "Remove All",
+                    JOptionPane.YES_NO_OPTION);
+            if (choice == 0) {
+                JOptionPane.showMessageDialog(null, "A Great Tragedy", "Doomsday",
+                        JOptionPane.INFORMATION_MESSAGE);
+                update.updateRemoveAll();
+                alarmListGUI = new AlarmList("Dead Alarm List");
+            } else {
+                JOptionPane.showMessageDialog(null, "Glory To The Clock", "A Close Call",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 
@@ -624,6 +653,15 @@ public class AlarmController implements ActionListener {
         imageToggle.setBounds(XBOUNDS, YBOUNDS, WIDTH, HEIGHT);
         imageToggle.setText("Close Image");
         imageToggle.setFocusable(false);
+    }
+
+    //Effects: adds and initializes a button
+    private void removeAllButton() {
+        removeAll = new JButton();
+        removeAll.addActionListener(this);
+        removeAll.setBounds(XBOUNDS, YBOUNDS, WIDTH, HEIGHT);
+        removeAll.setText("Remove All");
+        removeAll.setFocusable(false);
     }
 
     //Requires: days of the week inputs to be lower case
