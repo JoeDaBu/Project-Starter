@@ -85,11 +85,9 @@ public abstract class AlarmControllerPanelLabels extends JPanel implements Obser
         for (AlarmLabel alarmLabel : labels) {
             if (alarmLabel.getName().equals(name)) {
                 if (view) {
-                    alarmLabel.setOpaque(false);
                     alarmLabel.setVisible(false);
                     view = false;
                 } else {
-                    alarmLabel.setOpaque(true);
                     alarmLabel.setVisible(true);
                     view = true;
                     changeRender();
