@@ -65,6 +65,7 @@ public abstract class AlarmControllerPanelLabels extends JPanel implements Obser
 
     }
 
+
     @Override
     public void updateRemove(String name, Alarm alarm) {
         AlarmLabel toRemove = null;
