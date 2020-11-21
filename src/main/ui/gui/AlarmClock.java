@@ -5,23 +5,24 @@ import model.AlarmList;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
 
 //The Class To Run the GUI App
 public class AlarmClock extends JFrame implements Observer {
     private static final int HEIGHT = 356;
     private static final int WIDTH = 422;
     private final BaseClock baseClock;
-    private final AlarmControllerPanelLabels controllerLabels;
+    private final AlarmControllerPanelLabels controllerLabelsWithImage;
     private final MenuBar menuBar;
     private final AlarmControllerPanelButtons buttons;
     private final ClockPanel clockPanel;
     private final AlarmController controller;
     private final Update update;
+    private static Boolean hasImageShowing;
     public String name;
 
     //Effects: Initializes everything in GUI
     public AlarmClock() {
+        hasImageShowing = true;
         ImageIcon imageIcon = new ImageIcon("./data/geometric-cool-elephant-wall-clocks.jpg");
         setIconImage(imageIcon.getImage());
         clockPanel = new ClockPanel();
@@ -31,9 +32,11 @@ public class AlarmClock extends JFrame implements Observer {
         setJMenuBar(menuBar);
         baseClock = new BaseClock(clockPanel, buttons);
         add(baseClock);
-        controllerLabels = new AlarmControllerPanelLabels();
+        controllerLabelsWithImage = new LabelsWithImage();
         //add(controllerLabels);
-        update = new Update(this, controllerLabels, controller, menuBar);
+        update = new Update(controller, menuBar);
+        update.addObservers(this);
+        update.addObservers(controllerLabelsWithImage);
         name();
         setTitle(name);
         controller.setAlarmListName(name);
@@ -48,11 +51,6 @@ public class AlarmClock extends JFrame implements Observer {
 //        label.setIcon(image);
 //        add(label);
         pack();//or use set sizes
-        getContentPane().setBackground(new Color(255, 255, 255));//changes color of background
-        //update();
-//        pack();
-        //new panel
-        //pack()
     }
 
     //Modifies: this
@@ -98,44 +96,40 @@ public class AlarmClock extends JFrame implements Observer {
 
     @Override
     public void updateAdd(String name, Alarm alarm) {
-        add(controllerLabels);
+        add(controllerLabelsWithImage);
         pack();
     }
 
     @Override
     public void updateRemove(String name, Alarm alarm) {
-        add(controllerLabels);
-        pack();
     }
 
     @Override
     public void updateView(String name) {
-        add(controllerLabels);
-        pack();
     }
 
     @Override
     public void updateChange(String oldName, Alarm oldAlarm, String newName, Alarm newAlarm) {
-        add(controllerLabels);
-        pack();
     }
 
     @Override
     public void updateShow() {
         Boolean show = AlarmControllerPanelLabels.getShow();
         if (show) {
-            remove(controllerLabels);
+            remove(controllerLabelsWithImage);
             pack();
 //        setSize(new Dimension(WIDTH,HEIGHT));
         } else {
-            add(controllerLabels);
+            add(controllerLabelsWithImage);
             pack();
         }
     }
 
     @Override
     public void updateImage() {
-        pack();
+        if (hasImageShowing) {
+
+        }
     }
 
     @Override
@@ -156,7 +150,7 @@ public class AlarmClock extends JFrame implements Observer {
 
     @Override
     public void updateRemoveAll() {
-        remove(controllerLabels);
+        remove(controllerLabelsWithImage);
         pack();
     }
 

@@ -8,29 +8,24 @@ import java.util.ArrayList;
 public class Update {
 
     private final AlarmController controller;
-    private final AlarmControllerPanelLabels labels;
-    private final AlarmClock alarmClock;
     private final MenuBar menuBar;
     private final ArrayList<Observer> updaters;
 
     //Effects: initializes and sets up all objects that need to be changed
-    public Update(AlarmClock alarmClock,
-                  AlarmControllerPanelLabels labels,
-                  AlarmController controller,
+    public Update(AlarmController controller,
                   MenuBar menuBar) {
         updaters = new ArrayList<>();
-        this.alarmClock = alarmClock;
-        this.labels = labels;
         this.menuBar = menuBar;
         this.menuBar.setUpdate(this);
         this.controller = controller;
         this.controller.setUpdate(this);
-        updaters.add(alarmClock);
-        updaters.add(labels);
     }
 
-//    public void addObservers() {
-//    }
+    //Modifies: this
+    //Effects: adds an observer to the list of updaters
+    public void addObservers(Observer o) {
+        updaters.add(o);
+    }
 
     //Effects: notifies all observers to add an alarm
     public void updateAdd(String name, Alarm alarm) {

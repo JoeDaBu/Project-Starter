@@ -9,28 +9,23 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 //Class of all alarm labels
-public class AlarmControllerPanelLabels extends JPanel implements Observer {
-    private static final int WIDTH = 390;
-    private static int HEIGHT;
-    private static int rows = 0;
-    private static Boolean show;
-    private static Boolean showImage;
-    private static Boolean view;
-    private ArrayList<AlarmLabel> labels;
-    private static Image bgImage2;
-    private Image bgImage;
+public abstract class AlarmControllerPanelLabels extends JPanel implements Observer {
+    protected static final int WIDTH = 390;
+    protected static int HEIGHT;
+    protected static int rows = 0;
+    protected static Boolean show;
+    protected static Boolean view;
+    protected ArrayList<AlarmLabel> labels;
 
     //Effects: initializes and sets up the panel
     public AlarmControllerPanelLabels() {
         labels = new ArrayList<>();
         show = true;
         view = true;
-        showImage = true;
-        setImage();
         setLayout();
-        bgImage = bgImage2;
 //        setBackground(Color.lightGray);
         setMinimumSize(new Dimension(0, 0));
         //setBounds(0,0, WIDTH,HEIGHT);
@@ -39,36 +34,25 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
         setVisible(true);
     }
 
-    //Effects: gets the image from file
-    private void setImage() {
-        try {
-            Image image;
-            image = ImageIO.read(new File("./data/geometric-cool-elephant-wall-clocks.jpg"));
-            bgImage2 = image.getScaledInstance(WIDTH - 60,290, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            System.out.println("Image Error");
-        }
-    }
-
     public static Boolean getShow() {
         return show;
     }
 
     //Effects:sets the preferred size of the panel
-    private void setPreferredSize() {
+    protected void setPreferredSize() {
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     //Effects: sets the layout of the panel
-    private void setLayout() {
+    protected void setLayout() {
         setLayout(new GridLayout(rows, 1));
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(bgImage, 40, 5, null);
-    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        g.drawImage(bgImage, 40, 5, null);
+//    }
 
     @Override
     public void updateAdd(String name, Alarm alarm) {
@@ -83,14 +67,15 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
 
     @Override
     public void updateRemove(String name, Alarm alarm) {
-        HEIGHT -= 20;
+        AlarmLabel toRemove = null;
         rows--;
         for (AlarmLabel alarmLabel : labels) {
             if (alarmLabel.getName().equals(name)) {
-                remove(alarmLabel);
-                labels.remove(alarmLabel);
+                toRemove = alarmLabel;
             }
         }
+        remove(toRemove);
+        labels.remove(toRemove);
         changeRender();
     }
 
@@ -113,7 +98,7 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
     }
 
     //Effects: renders any changes made
-    private void changeRender() {
+    protected void changeRender() {
         setLayout();
         setPreferredSize();
         setVisible(true);
@@ -128,7 +113,6 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
             if (labels.get(i).getName().equals(oldName)) {
                 remove(labels.get(i));
                 m = i;
-
             }
         }
         AlarmLabel alarmLabel = new AlarmLabel(newName, newAlarm);
@@ -144,20 +128,6 @@ public class AlarmControllerPanelLabels extends JPanel implements Observer {
             show = false;
         } else {
             show = true;
-            changeRender();
-        }
-    }
-
-    @Override
-    public void updateImage() {
-        if (showImage) {
-            bgImage = null;
-            show = false;
-            changeRender();
-        } else {
-            bgImage = bgImage2;
-            paintComponent(getGraphics());
-            showImage = true;
             changeRender();
         }
     }

@@ -164,25 +164,24 @@ public class AlarmController implements ActionListener {
     //Modifies: this
     //Effects: removes an alarm from the list
     private void doRemoveAlarm() {
-        if (alarmListGUI.numAlarms() == 0) {
-            noItemsExist();
-        } else {
-            try {
-                Boolean keepGoing = true;
-                while (keepGoing) {
-                    String name = findAlarmName();
-                    Alarm a = alarmListGUI.removeAlarm(name);
-                    if (a == null) {
-                        alarmDoesNotExist();
-                    } else {
-                        successfulRemoval(a);
-                        update.updateRemove(name, a);
-                        keepGoing = false;
-                    }
+        Boolean keepGoing = true;
+        try {
+
+            while (keepGoing) {
+                Alarm oldAlarm = alarmListGUI.viewAlarm(findAlarmName());
+                if (oldAlarm == null) {
+                    alarmDoesNotExist();
+                } else {
+                    alarmListGUI.removeAlarm(oldAlarm.getAlarmName());
+                    successfulRemoval(oldAlarm);
+                    keepGoing = false;
+                    update.updateRemove(oldAlarm.getAlarmName(), oldAlarm);
                 }
-            } catch (Exception e) {
-                cancelActionMessage();
             }
+        } catch (EmptyList emptyList) {
+            noItemsExist();
+        } catch (CancelException e) {
+            cancelActionMessage();
         }
     }
 
