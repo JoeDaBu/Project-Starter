@@ -166,6 +166,8 @@ public class AlarmAndAlarmListSortTest {
         assertEquals(testList2.size(), 0);
         ArrayList<Integer> testList3 = test.getNegative();
         assertEquals(testList3.size(), 0);
+        ArrayList<Integer> testList4 = test10.getNegative();
+        assertEquals(testList4.size(), -2);
     }
 
     @Test
@@ -208,6 +210,10 @@ public class AlarmAndAlarmListSortTest {
         positive.add(6);
         positive.add(3);
         assertEquals(test6.categorizeLists(negative, positive), 3);
+        ArrayList<Integer> negative2 = new ArrayList<>();
+        negative.add(-4);
+        negative.add(-6);
+        assertEquals(test.categorizeLists(negative2, new ArrayList<>()), 3);
     }
 
     @Test
@@ -222,6 +228,9 @@ public class AlarmAndAlarmListSortTest {
         assertEquals(test10.getToday(), 5);
         assertEquals(test6.getToday(), 5);
         assertEquals(test8.getToday(), 5);
+        assertEquals(test9.today(), false);
+        assertEquals(test.today(), false);
+        assertEquals(test5.today(), true);
     }
 
     @Test
