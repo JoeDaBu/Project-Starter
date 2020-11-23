@@ -4,9 +4,11 @@ import ui.gui.AlarmClock;
 
 import javax.swing.*;
 
+//The main class that runs the gui and ui
 public class Main {
+
+    //Effects: runs the ui or gui
     public static void main(String[] args) {
-        //Update update = new Update();
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
@@ -15,6 +17,5 @@ public class Main {
         });
         //AlarmClock alarmClock = new AlarmClock();
         //new ConsoleApp();
-        //TestFrame testFrame = new TestFrame();
     }
 }

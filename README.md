@@ -26,10 +26,21 @@
 - As a user, I want my alarms to write a message when they do off
 - As a user, I want to be able to sort alarms by time they will go off
 
-##Phase 4 Task2
+##Phase 4: Task 2
 - Tested and designed the and DaysList as a robust class. 4 methods throw a checked exception. sortDays(), addDay(daysOfTheWeek day), removeDay(DaysOfTheWeek day), changeDay(DaysOfTheWeek changeDay, DaysOfTheWeek newDay), all throw checked exceptions.
 - Type Hierarchy in GUI: AlarmClock, AlarmControllerPanelLabels, LabelsWithImage, LabelsWithoutImage, are all in a type hierarchy under the Observer class.
-- Bi-directional associations, between: Update and AlarmClock, Update and AlarmController, Update and MenuBar, MenuBar and AlarmController.
+- Bi-directional associations, between: Update and AlarmController, Update and MenuBar.
+
+##Phase 4: Task 3
+- Not Initializing everything in alarm clock
+- Redoing the default every day list and its implementations, moving it into daysList
+- Making labels with and without image into one class that has a method to swap in between the two
+- Refactoring many show blank dialogs into a few methods
+- Refactoring the creation of buttons into one method
+- Moving many methods in alarm to daysList: daysToStringAbbr(), dayToStingAbbr(String begin, String after, DaysOfTheWeek d)
+- Moving methods in alarm to DaysOfTheWeek: getPositive, getNegative
+- Refactoring much of the console app.
+- A better implementation of the observer pattern
   
 ### For the Future
 - As a user, I want to be able select the audio type to be played when the alarm to go off

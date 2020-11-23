@@ -11,19 +11,11 @@ import static model.DaysOfTheWeek.*;
 
 //list of days of the week
 public class DaysList {
-    public static final ArrayList<DaysOfTheWeek> defaultList = new ArrayList<>();
-    ArrayList<DaysOfTheWeek> daysList;
+    public ArrayList<DaysOfTheWeek> daysList;
 
     //Effects: creates a new empty list of days
     public DaysList() {
         daysList = new ArrayList<>();
-        defaultList.add(Monday);
-        defaultList.add(Tuesday);
-        defaultList.add(Wednesday);
-        defaultList.add(Thursday);
-        defaultList.add(Friday);
-        defaultList.add(Saturday);
-        defaultList.add(Sunday);
     }
 
     //Effects: reestablishing the size method

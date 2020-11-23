@@ -3,6 +3,7 @@ package ui.gui;
 import model.Alarm;
 import model.AlarmList;
 
+//The class that observers the actions of alarmController and MenuBar
 public interface Observer {
 
     //Modifies: this

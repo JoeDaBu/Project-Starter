@@ -5,7 +5,7 @@ import java.awt.*;
 
 //The panel containing all the buttons
 public class AlarmControllerPanelButtons extends JPanel {
-    AlarmController controller;
+    public AlarmController controller;
 
     //Modifies: this
     //Effects: initializes and sets up the panel

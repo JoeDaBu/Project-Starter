@@ -1,9 +1,9 @@
 package ui.gui;
 
+//The alarm labels without an attached image
 public class LabelsWithoutImage extends AlarmControllerPanelLabels implements Observer {
-    private static final Boolean hasImage = false;
-    private static Boolean showing = false;
 
+    //Effects: initializes and sets up the panel without an image
     public LabelsWithoutImage() {
         super();
     }

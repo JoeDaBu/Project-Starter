@@ -55,6 +55,8 @@ public class AlarmController implements ActionListener {
         return alarmListGUI;
     }
 
+    //Modifies: this
+    //Effects: sets the alarm list name to name
     public void setAlarmListName(String name) {
         this.alarmListGUI.setName(name);
     }

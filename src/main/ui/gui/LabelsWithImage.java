@@ -5,11 +5,11 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
+//the alarm labels with an attached image
 public class LabelsWithImage extends AlarmControllerPanelLabels implements Observer {
     private static Image bgImage2;
-    private static final Boolean hasImage = true;
-    private static Boolean showing = true;
 
+    //Effects: initializes and sets up the panel with an image
     public LabelsWithImage() {
         super();
         setImage();
