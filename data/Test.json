@@ -1,83 +1,81 @@
 {
-  "alarms": [
-    {
-      "hour": 5,
-      "Days of the Week": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 3,
-      "name": "Joe"
-    },
-    {
-      "hour": 1,
-      "Days of the Week": [
-        "Monday"
-      ],
-      "minutes": 30,
-      "name": "Joe4"
-    },
-    {
-      "hour": 3,
-      "Days of the Week": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 30,
-      "name": "Gandolf"
-    },
-    {
-      "hour": 0,
-      "Days of the Week": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 0,
-      "name": "NotGandolf0"
-    },
-    {
-      "hour": 0,
-      "Days of the Week": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 0,
-      "name": "Zebra"
-    },
-    {
-      "hour": 20,
-      "Days of the Week": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 30,
-      "name": "Apple"
-    }
-  ],
-  "name": "Joe"
+    "alarms": [
+        {
+            "hour": 5,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 3,
+            "name": "Joe"
+        },
+        {
+            "hour": 1,
+            "Days of the Week": ["Monday"],
+            "minutes": 30,
+            "name": "Joe4"
+        },
+        {
+            "hour": 3,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 30,
+            "name": "Gandolf"
+        },
+        {
+            "hour": 0,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 0,
+            "name": "NotGandolf0"
+        },
+        {
+            "hour": 0,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 0,
+            "name": "Zebra"
+        },
+        {
+            "hour": 20,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 30,
+            "name": "Apple"
+        }
+    ],
+    "name": "Joe"
 }

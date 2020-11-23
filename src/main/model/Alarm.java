@@ -1,5 +1,6 @@
 package model;
 
+import model.exceptions.ItemAlreadyExists;
 import org.json.JSONObject;
 import persistence.Writable;
 
@@ -48,13 +49,17 @@ public class Alarm implements Writable {
     //Effects:Creates the default day when no input is put in for dofWeek
     public DaysList everyday() {
         DaysList defaultList = new DaysList();
-        defaultList.add(Monday);
-        defaultList.add(Tuesday);
-        defaultList.add(Wednesday);
-        defaultList.add(Thursday);
-        defaultList.add(Friday);
-        defaultList.add(Saturday);
-        defaultList.add(Sunday);
+        try {
+            defaultList.addDay(Monday);
+            defaultList.addDay(Tuesday);
+            defaultList.addDay(Wednesday);
+            defaultList.addDay(Thursday);
+            defaultList.addDay(Friday);
+            defaultList.addDay(Saturday);
+            defaultList.addDay(Sunday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            System.out.println("Impossble dup day added in everyday() in alarm");
+        }
         return defaultList;
     }
 
@@ -121,7 +126,7 @@ public class Alarm implements Writable {
         return alarmBodyToString() + day;
     }
 
-    //Effects: retruns everything but days of the alarm as a string
+    //Effects: returns everything but days of the alarm as a string
     public String alarmBodyToString() {
         return alarmName + " " + hours + ":" + minutes + " ";
     }

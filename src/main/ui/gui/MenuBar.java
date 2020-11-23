@@ -17,10 +17,7 @@ import java.io.IOException;
 public class MenuBar extends JMenuBar implements ActionListener {
     private static String JSON_STORE;
     private final AlarmController controller;
-    private final AlarmClock alarmClock;
     JMenu menu;
-    JMenu menu2;
-    JMenu menu3;
     JMenuItem menuItem1;
     JMenuItem menuItem2;
     JMenuItem menuItem3;
@@ -30,8 +27,7 @@ public class MenuBar extends JMenuBar implements ActionListener {
     private String loadedName;
 
     //Effects: initializes and sets up the menu bar
-    MenuBar(AlarmController controller, AlarmClock alarmClock) {
-        this.alarmClock = alarmClock;
+    public MenuBar(AlarmController controller) {
         this.controller = controller;
         menu = new JMenu("File");
         menu.setMnemonic('F');

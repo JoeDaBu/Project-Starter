@@ -30,36 +30,36 @@ public class AlarmAndAlarmListSortTest {
         DaysList dofWeek = new DaysList();
         try {
             dofWeek.addDay(Monday);
+            DaysList dofWeek2 = new DaysList();
+            DaysList dofWeek3 = new DaysList();
+            dofWeek3.addDay(Friday);
+            dofWeek3.addDay(Monday);
+            DaysList dofWeek4 = new DaysList();
+            dofWeek4.addDay(Sunday);
+            DaysList dofWeek5 = new DaysList();
+            dofWeek5.addDay(Thursday);
+            DaysList dofWeek6 = new DaysList();
+            dofWeek6.addDay(Wednesday);
+            test = new Alarm("t1", 9, 30, dofWeek3);
+            test2 = new Alarm("e2", 9, 35, dofWeek5);
+            test3 = new Alarm("a3", 10, 30, dofWeek3);
+            test4 = new Alarm("v4", 1, 0, dofWeek4);
+            test5 = new Alarm("jo", 12, 10, dofWeek5);
+            test6 = new Alarm("g", 23, 59, dofWeek2);
+            test7 = new Alarm("ga", 13, 59, dofWeek6);
+            test8 = new Alarm("gan", 0, 0, dofWeek);
+            test9 = new Alarm("gand", 0, 0, dofWeek4);
+            test10 = new Alarm("gando", 0, 0, dofWeek3);
+            test11 = new Alarm("gandol", 12, 00, dofWeek5);
+            test12 = new Alarm("gandolf", 9, 36, dofWeek2);
+            testList = new AlarmList("testList");
+            testList.addAlarm(test);
+            testList.addAlarm(test2);
+            testList.addAlarm(test3);
+            testList.addAlarm(test4);
         } catch (ItemAlreadyExists itemAlreadyExists) {
             fail();
         }
-        DaysList dofWeek2 = new DaysList();
-        DaysList dofWeek3 = new DaysList();
-        dofWeek3.add(Friday);
-        dofWeek3.add(Monday);
-        DaysList dofWeek4 = new DaysList();
-        dofWeek4.add(Sunday);
-        DaysList dofWeek5 = new DaysList();
-        dofWeek5.add(Thursday);
-        DaysList dofWeek6 = new DaysList();
-        dofWeek6.add(Wednesday);
-        test = new Alarm("t1", 9, 30, dofWeek3);
-        test2 = new Alarm("e2", 9, 35, dofWeek5);
-        test3 = new Alarm("a3", 10, 30, dofWeek3);
-        test4 = new Alarm("v4", 1, 0, dofWeek4);
-        test5 = new Alarm("jo", 12, 10, dofWeek5);
-        test6 = new Alarm("g", 23, 59, dofWeek2);
-        test7 = new Alarm("ga", 13, 59, dofWeek6);
-        test8 = new Alarm("gan", 0, 0, dofWeek);
-        test9 = new Alarm("gand", 0, 0, dofWeek4);
-        test10 = new Alarm("gando", 0, 0, dofWeek3);
-        test11 = new Alarm("gandol", 12, 00, dofWeek5);
-        test12 = new Alarm("gandolf", 9, 36, dofWeek2);
-        testList = new AlarmList("testList");
-        testList.addAlarm(test);
-        testList.addAlarm(test2);
-        testList.addAlarm(test3);
-        testList.addAlarm(test4);
     }
 
     @Test
@@ -136,18 +136,18 @@ public class AlarmAndAlarmListSortTest {
         }
         System.out.println(testList.getAlarms().get(0).alarmToString());
         ArrayList<Alarm> testArray = testList.getAlarms();
-        assertEquals(testArray.get(0), test);
-        assertEquals(testArray.get(1), test11);
-        assertEquals(testArray.get(2), test2);
-        assertEquals(testArray.get(3), test12);
-        assertEquals(testArray.get(4), test3);
-        assertEquals(testArray.get(5), test6);
+        assertEquals(testArray.get(0), test6);
+        assertEquals(testArray.get(1), test10);
+        assertEquals(testArray.get(2), test8);
+        assertEquals(testArray.get(3), test);
+        assertEquals(testArray.get(4), test12);
+        assertEquals(testArray.get(5), test3);
         assertEquals(testArray.get(6), test7);
-        assertEquals(testArray.get(7), test5);
-        assertEquals(testArray.get(8), test10);
-        assertEquals(testArray.get(9), test9);
-        assertEquals(testArray.get(10), test4);
-        assertEquals(testArray.get(11), test8);
+        assertEquals(testArray.get(7), test2);
+        assertEquals(testArray.get(8), test11);
+        assertEquals(testArray.get(9), test5);
+        assertEquals(testArray.get(10), test9);
+        assertEquals(testArray.get(11), test4);
     }
 
     @Test
@@ -179,11 +179,11 @@ public class AlarmAndAlarmListSortTest {
 
     @Test
     public void testGetNextOccurrence() {
-        assertEquals(test2.getNextOccurrence(Monday), 16);
-        assertEquals(test6.getNextOccurrence(Monday), 16);
+        assertEquals(test2.getNextOccurrence(Monday), 23);
+        assertEquals(test6.getNextOccurrence(Monday), 23);
         assertEquals(test8.getNextOccurrence(Monday), 23);
         assertEquals(test11.getNextOccurrence(Thursday), 26);
-        assertEquals(test5.getNextOccurrence(Thursday), 19);
+        assertEquals(test5.getNextOccurrence(Thursday), 26);
         assertEquals(test2.getNextOccurrence(Thursday), 26);
     }
 
@@ -258,7 +258,7 @@ public class AlarmAndAlarmListSortTest {
     public void testToday2() {
         assertEquals(test9.today(), false);
         assertEquals(test.today(), false);
-        assertEquals(test5.today(), true);
+        assertEquals(test5.today(), false);
     }
 
     @Test
@@ -282,13 +282,13 @@ public class AlarmAndAlarmListSortTest {
         assertEquals(testArray.get(2), test8);
         assertEquals(testArray.get(3), test4);
         assertEquals(testArray.get(4), test);
-        assertEquals(testArray.get(5), test11);
-        assertEquals(testArray.get(6), test2);
-        assertEquals(testArray.get(7), test12);
-        assertEquals(testArray.get(8), test3);
-        assertEquals(testArray.get(9), test7);
-        assertEquals(testArray.get(10), test6);
-        assertEquals(testArray.get(11), test5);
+        assertEquals(testArray.get(5), test2);
+        assertEquals(testArray.get(6), test12);
+        assertEquals(testArray.get(7), test3);
+        assertEquals(testArray.get(8), test11);
+        assertEquals(testArray.get(9), test5);
+        assertEquals(testArray.get(10), test7);
+        assertEquals(testArray.get(11), test6);
     }
 
 
@@ -355,13 +355,13 @@ public class AlarmAndAlarmListSortTest {
 
     @Test
     public void testShowAlarms() {
-        String a = "t1 9:30 [Monday, Friday], e2 9:35 [Monday], a3 10:30 [Monday, Friday], v4 1:0 [Sunday]";
+        String a = "t1 9:30 [Monday, Friday], e2 9:35 [Thursday], a3 10:30 [Monday, Friday], v4 1:0 [Sunday]";
         assertEquals(a, testList.showAlarms());
     }
 
     @Test
     public void testShowAlarmsGUI() {
-        String a = "t1 9:30 [Monday, Friday], e2 9:35 [Monday]\n" +
+        String a = "t1 9:30 [Monday, Friday], e2 9:35 [Thursday]\n" +
                 "a3 10:30 [Monday, Friday], v4 1:0 [Sunday]";
         assertEquals(a, testList.showAlarmsGui());
     }

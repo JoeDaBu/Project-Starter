@@ -1,28 +1,28 @@
 {
-  "alarms": [
-    {
-      "hour": 9,
-      "Days of the Week": [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 30,
-      "name": "AM"
-    },
-    {
-      "hour": 23,
-      "Days of the Week": [
-        "Saturday",
-        "Sunday"
-      ],
-      "minutes": 30,
-      "name": "PM"
-    }
-  ],
-  "name": "My alarm list"
+    "alarms": [
+        {
+            "hour": 9,
+            "Days of the Week": [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 30,
+            "name": "AM"
+        },
+        {
+            "hour": 23,
+            "Days of the Week": [
+                "Saturday",
+                "Sunday"
+            ],
+            "minutes": 30,
+            "name": "PM"
+        }
+    ],
+    "name": "My alarm list"
 }

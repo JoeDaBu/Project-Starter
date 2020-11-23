@@ -254,9 +254,13 @@ class AlarmAndListTest {
     @Test
     public void testTimer3() {
         DaysList daysList = new DaysList();
-        daysList.add(Monday);
-        daysList.add(Friday);
-        daysList.add(Wednesday);
+        try {
+            daysList.addDay(Monday);
+            daysList.addDay(Friday);
+            daysList.addDay(Wednesday);
+        } catch (ItemAlreadyExists itemAlreadyExists) {
+            System.out.println("Impossible dup in testTimer3() in alarm and list test");
+        }
         Alarm a = new Alarm("Joe", 9, 30, daysList);
         assertEquals(a.getTimerList().size(), 3);
         a.cancelAlarmTask();

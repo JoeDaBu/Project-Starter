@@ -30,7 +30,7 @@ public class AlarmClock extends JFrame implements Observer {
         clockPanel = new ClockPanel();
         controller = new AlarmController(name);
         buttons = new AlarmControllerPanelButtons(controller);
-        menuBar = new MenuBar(controller, this);
+        menuBar = new MenuBar(controller);
         setJMenuBar(menuBar);
         baseClock = new BaseClock(clockPanel, buttons);
         add(baseClock);

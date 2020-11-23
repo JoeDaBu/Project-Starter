@@ -46,11 +46,16 @@ public class DaysList {
         add(day);
     }
 
+    //Requires: No duplicate days are added
     //Modifies: this
     //Effects: adds day to days list
-    public void add(DaysOfTheWeek day) {
+    private void add(DaysOfTheWeek day) {
         daysList.add(day);
-        daysList = sortDaysSorter();
+        try {
+            sortDays();
+        } catch (EmptyList emptyList) {
+            System.out.println("Impossible Reached In Add Day");
+        }
     }
 
     //Modifies: this

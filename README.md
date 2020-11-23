@@ -26,6 +26,11 @@
 - As a user, I want my alarms to write a message when they do off
 - As a user, I want to be able to sort alarms by time they will go off
 
+##Phase 4 Task2
+- Tested and designed the and DaysList as a robust class. 4 methods throw a checked exception. sortDays(), addDay(daysOfTheWeek day), removeDay(DaysOfTheWeek day), changeDay(DaysOfTheWeek changeDay, DaysOfTheWeek newDay), all throw checked exceptions.
+- Type Hierarchy in GUI: AlarmClock, AlarmControllerPanelLabels, LabelsWithImage, LabelsWithoutImage, are all in a type hierarchy under the Observer class.
+- Bi-directional associations, between: Update and AlarmClock, Update and AlarmController, Update and MenuBar, MenuBar and AlarmController.
+  
 ### For the Future
 - As a user, I want to be able select the audio type to be played when the alarm to go off
 - As a user, I want to be able select the puzzle to complete in order to stop the alarm

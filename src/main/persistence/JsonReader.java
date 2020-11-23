@@ -4,6 +4,7 @@ import model.Alarm;
 import model.AlarmList;
 import model.DaysList;
 import model.DaysOfTheWeek;
+import model.exceptions.ItemAlreadyExists;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -71,7 +72,11 @@ public class JsonReader {
         for (Object json : jsonArrayDofWeek) {
             DaysOfTheWeek nextDay = DaysOfTheWeek.valueOf(json.toString());
 
-            dofWeek.add(nextDay);
+            try {
+                dofWeek.addDay(nextDay);
+            } catch (ItemAlreadyExists itemAlreadyExists) {
+                System.out.println("Impossible Duplicate Days in add Alarm JSON Reader");
+            }
         }
         Alarm alarm = new Alarm(name, hour, minutes, dofWeek);
         al.addAlarm(alarm);
