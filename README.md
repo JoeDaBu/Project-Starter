@@ -34,7 +34,6 @@
 ##Phase 4: Task 3
 - Not Initializing everything in alarm clock
 - Redoing the default every day list and its implementations, moving it into daysList
-- Making labels with and without image into one class that has a method to swap in between the two
 - Refactoring many show blank dialogs into a few methods
 - Refactoring the creation of buttons into one method
 - Moving many methods in alarm to daysList: daysToStringAbbr(), dayToStingAbbr(String begin, String after, DaysOfTheWeek d)

@@ -58,7 +58,7 @@ public class Alarm implements Writable {
             defaultList.addDay(Saturday);
             defaultList.addDay(Sunday);
         } catch (ItemAlreadyExists itemAlreadyExists) {
-            System.out.println("Impossble dup day added in everyday() in alarm");
+            System.out.println("Impossible dup day added in everyday() in alarm");
         }
         return defaultList;
     }

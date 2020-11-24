@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 //the alarm labels with an attached image
-public class LabelsWithImage extends AlarmControllerPanelLabels implements Observer {
+public class LabelsWithImage extends AlarmControllerPanelLabels {
     private static Image bgImage2;
 
     //Effects: initializes and sets up the panel with an image
