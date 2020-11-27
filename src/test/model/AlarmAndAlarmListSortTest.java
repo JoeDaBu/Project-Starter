@@ -179,12 +179,12 @@ public class AlarmAndAlarmListSortTest {
 
     @Test
     public void testGetNextOccurrence() {
-        assertEquals(test2.getNextOccurrence(Monday), 23);
-        assertEquals(test6.getNextOccurrence(Monday), 23);
-        assertEquals(test8.getNextOccurrence(Monday), 23);
-        assertEquals(test11.getNextOccurrence(Thursday), 26);
-        assertEquals(test5.getNextOccurrence(Thursday), 26);
-        assertEquals(test2.getNextOccurrence(Thursday), 26);
+        assertEquals(test2.getNextOccurrenceDay(Monday), 23);
+        assertEquals(test6.getNextOccurrenceDay(Monday), 23);
+        assertEquals(test8.getNextOccurrenceDay(Monday), 23);
+        assertEquals(test11.getNextOccurrenceDay(Thursday), 26);
+        assertEquals(test5.getNextOccurrenceDay(Thursday), 26);
+        assertEquals(test2.getNextOccurrenceDay(Thursday), 26);
     }
 
     @Test

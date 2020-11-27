@@ -177,9 +177,9 @@ public class Alarm implements Writable {
     public void createAlarmTask() {
         for (int i = 0; i < daysOfTheWeek.size(); i++) { //for every day of the alarm creates a timer
             Calendar date = Calendar.getInstance();//gets current time
-            date.set(Calendar.YEAR, Year.now().getValue());
-            date.set(Calendar.MONTH, Calendar.getInstance().get(Calendar.MONTH));
-            date.set(Calendar.DAY_OF_MONTH, getNextOccurrence(daysOfTheWeek.get(i)));
+            date.set(Calendar.YEAR, getNextOccurrenceYear(daysOfTheWeek.get(i)));
+            date.set(Calendar.MONTH, getNextOccurrenceMonth(daysOfTheWeek.get(i)) - 1);
+            date.set(Calendar.DAY_OF_MONTH, getNextOccurrenceDay(daysOfTheWeek.get(i)));
             //sets the date to next occurrence of the input day of the week
             date.set(Calendar.HOUR_OF_DAY, hours);//sets date hours to hours
             date.set(Calendar.MINUTE, minutes);//sets date minutes to minutes
@@ -195,8 +195,46 @@ public class Alarm implements Writable {
         }
     }
 
+    //Effects: returns the integer value of when the specified day will occur in which year
+    public int getNextOccurrenceYear(DaysOfTheWeek days) {
+        DayOfWeek day = (DayOfWeek.of(days.showDayNum()));
+        LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(day));
+
+        Calendar current = Calendar.getInstance();
+        Boolean today = (nextOrSame.getDayOfMonth() == current.get(Calendar.DAY_OF_MONTH));
+        Boolean hourPrior = (hours < current.get(Calendar.HOUR_OF_DAY));
+        Boolean hourEqual = (hours == current.get(Calendar.HOUR_OF_DAY));
+        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) > minutes);
+
+        if (today && (timePrior || hourPrior)) {
+            LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
+            return next.getYear();
+        } else {
+            return nextOrSame.getYear();
+        }
+    }
+
+    //Effects: returns the integer value of when the specified day will occur in which month
+    public int getNextOccurrenceMonth(DaysOfTheWeek days) {
+        DayOfWeek day = (DayOfWeek.of(days.showDayNum()));
+        LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(day));
+
+        Calendar current = Calendar.getInstance();
+        Boolean today = (nextOrSame.getDayOfMonth() == current.get(Calendar.DAY_OF_MONTH));
+        Boolean hourPrior = (hours < current.get(Calendar.HOUR_OF_DAY));
+        Boolean hourEqual = (hours == current.get(Calendar.HOUR_OF_DAY));
+        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) > minutes);
+
+        if (today && (timePrior || hourPrior)) {
+            LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
+            return next.getMonthValue();
+        } else {
+            return nextOrSame.getMonthValue();
+        }
+    }
+
     //Effects: returns the integer value of when the specified day will occur next in the month, or if its today
-    public int getNextOccurrence(DaysOfTheWeek days) {
+    public int getNextOccurrenceDay(DaysOfTheWeek days) {
         DayOfWeek day = (DayOfWeek.of((days.showDayNum())));
         LocalDate nextOrSame = LocalDate.now().with(TemporalAdjusters.nextOrSame(day));
 
@@ -209,10 +247,8 @@ public class Alarm implements Writable {
         if (today && (timePrior || hourPrior)) {
             LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
             return next.getDayOfMonth();
-
         } else {
             return nextOrSame.getDayOfMonth();
-
         }
     }
 
