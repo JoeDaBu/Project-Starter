@@ -185,7 +185,6 @@ public class Alarm implements Writable {
             date.set(Calendar.MINUTE, minutes);//sets date minutes to minutes
             date.set(Calendar.SECOND, 0);
             date.set(Calendar.MILLISECOND, 0);
-
             Timer timer = new Timer(alarmName);//initializes a new timer with name alarmName
             AlarmTask task = new AlarmTask();//initializes a new alarmTask
             timer.schedule(task, date.getTime(), 604800000);
@@ -204,7 +203,7 @@ public class Alarm implements Writable {
         Boolean today = (nextOrSame.getDayOfMonth() == current.get(Calendar.DAY_OF_MONTH));
         Boolean hourPrior = (hours < current.get(Calendar.HOUR_OF_DAY));
         Boolean hourEqual = (hours == current.get(Calendar.HOUR_OF_DAY));
-        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) > minutes);
+        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) >= minutes);
 
         if (today && (timePrior || hourPrior)) {
             LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
@@ -223,7 +222,7 @@ public class Alarm implements Writable {
         Boolean today = (nextOrSame.getDayOfMonth() == current.get(Calendar.DAY_OF_MONTH));
         Boolean hourPrior = (hours < current.get(Calendar.HOUR_OF_DAY));
         Boolean hourEqual = (hours == current.get(Calendar.HOUR_OF_DAY));
-        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) > minutes);
+        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) >= minutes);
 
         if (today && (timePrior || hourPrior)) {
             LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
@@ -242,7 +241,7 @@ public class Alarm implements Writable {
         Boolean today = (nextOrSame.getDayOfMonth() == current.get(Calendar.DAY_OF_MONTH));
         Boolean hourPrior = (hours < current.get(Calendar.HOUR_OF_DAY));
         Boolean hourEqual = (hours == current.get(Calendar.HOUR_OF_DAY));
-        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) > minutes);
+        Boolean timePrior = hourEqual && (current.get(Calendar.MINUTE) >= minutes);
 
         if (today && (timePrior || hourPrior)) {
             LocalDate next = LocalDate.now().with(TemporalAdjusters.next(day));
